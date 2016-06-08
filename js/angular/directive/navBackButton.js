@@ -1,17 +1,17 @@
 /**
  * @ngdoc directive
- * @name ionNavBackButton
- * @module ionic
+ * @name auiNavBackButton
+ * @module atajoui
  * @restrict E
- * @parent ionNavBar
+ * @parent auiNavBar
  * @description
- * Creates a back button inside an {@link ionic.directive:ionNavBar}.
+ * Creates a back button inside an {@link atajoui.directive:auiNavBar}.
  *
  * The back button will appear when the user is able to go back in the current navigation stack. By
  * default, the markup of the back button is automatically built using platform-appropriate defaults
  * (iOS back button icon on iOS and Android icon on Android).
  *
- * Additionally, the button is automatically set to `$ionicGoBack()` on click/tap. By default, the
+ * Additionally, the button is automatically set to `$atajoUiGoBack()` on click/tap. By default, the
  * app will navigate back one view when the back button is clicked.  More advanced behavior is also
  * possible, as outlined below.
  *
@@ -20,45 +20,45 @@
  * Recommended markup for default settings:
  *
  * ```html
- * <ion-nav-bar>
- *   <ion-nav-back-button>
- *   </ion-nav-back-button>
- * </ion-nav-bar>
+ * <aui-nav-bar>
+ *   <aui-nav-back-button>
+ *   </aui-nav-back-button>
+ * </aui-nav-bar>
  * ```
  *
  * With custom inner markup, and automatically adds a default click action:
  *
  * ```html
- * <ion-nav-bar>
- *   <ion-nav-back-button class="button-clear">
- *     <i class="ion-arrow-left-c"></i> Back
- *   </ion-nav-back-button>
- * </ion-nav-bar>
+ * <aui-nav-bar>
+ *   <aui-nav-back-button class="button-clear">
+ *     <i class="aui-arrow-left-c"></i> Back
+ *   </aui-nav-back-button>
+ * </aui-nav-bar>
  * ```
  *
- * With custom inner markup and custom click action, using {@link ionic.service:$ionicHistory}:
+ * With custom inner markup and custom click action, using {@link atajoui.service:$atajoUiHistory}:
  *
  * ```html
- * <ion-nav-bar ng-controller="MyCtrl">
- *   <ion-nav-back-button class="button-clear"
+ * <aui-nav-bar ng-controller="MyCtrl">
+ *   <aui-nav-back-button class="button-clear"
  *     ng-click="myGoBack()">
- *     <i class="ion-arrow-left-c"></i> Back
- *   </ion-nav-back-button>
- * </ion-nav-bar>
+ *     <i class="aui-arrow-left-c"></i> Back
+ *   </aui-nav-back-button>
+ * </aui-nav-bar>
  * ```
  * ```js
- * function MyCtrl($scope, $ionicHistory) {
+ * function MyCtrl($scope, $atajoUiHistory) {
  *   $scope.myGoBack = function() {
- *     $ionicHistory.goBack();
+ *     $atajoUiHistory.goBack();
  *   };
  * }
  * ```
  */
-IonicModule
-.directive('ionNavBackButton', ['$ionicConfig', '$document', function($ionicConfig, $document) {
+AtajoUiModule
+.directive('auiNavBackButton', ['$atajoUiConfig', '$document', function($atajoUiConfig, $document) {
   return {
     restrict: 'E',
-    require: '^ionNavBar',
+    require: '^auiNavBar',
     compile: function(tElement, tAttrs) {
 
       // clone the back button, but as a <div>
@@ -68,7 +68,7 @@ IonicModule
       }
 
       if (!tAttrs.ngClick) {
-        buttonEle.setAttribute('ng-click', '$ionicGoBack()');
+        buttonEle.setAttribute('ng-click', '$atajoUiGoBack()');
       }
 
       buttonEle.className = 'button back-button hide buttons ' + (tElement.attr('class') || '');
@@ -96,10 +96,10 @@ IonicModule
       }
 
       function hasIconClass(ele) {
-        return /ion-|icon/.test(ele.className);
+        return /aui-|icon/.test(ele.className);
       }
 
-      var defaultIcon = $ionicConfig.backButton.icon();
+      var defaultIcon = $atajoUiConfig.backButton.icon();
       if (!hasIcon && defaultIcon && defaultIcon !== 'none') {
         buttonEle.innerHTML = '<i class="icon ' + defaultIcon + '"></i> ' + buttonEle.innerHTML;
         buttonEle.className += ' button-clear';
@@ -109,10 +109,10 @@ IonicModule
         var buttonTextEle = $document[0].createElement('span');
         buttonTextEle.className = 'back-text';
 
-        if (!hasButtonText && $ionicConfig.backButton.text()) {
-          buttonTextEle.innerHTML += '<span class="default-title">' + $ionicConfig.backButton.text() + '</span>';
+        if (!hasButtonText && $atajoUiConfig.backButton.text()) {
+          buttonTextEle.innerHTML += '<span class="default-title">' + $atajoUiConfig.backButton.text() + '</span>';
         }
-        if (!hasPreviousTitle && $ionicConfig.backButton.previousTitleText()) {
+        if (!hasPreviousTitle && $atajoUiConfig.backButton.previousTitleText()) {
           buttonTextEle.innerHTML += '<span class="previous-title"></span>';
         }
         buttonEle.appendChild(buttonTextEle);

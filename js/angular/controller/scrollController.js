@@ -1,25 +1,25 @@
 /**
  * @private
  */
-IonicModule
+AtajoUiModule
 
-.controller('$ionicScroll', [
+.controller('$atajoUiScroll', [
   '$scope',
   'scrollViewOptions',
   '$timeout',
   '$window',
   '$location',
   '$document',
-  '$ionicScrollDelegate',
-  '$ionicHistory',
+  '$atajoUiScrollDelegate',
+  '$atajoUiHistory',
 function($scope,
          scrollViewOptions,
          $timeout,
          $window,
          $location,
          $document,
-         $ionicScrollDelegate,
-         $ionicHistory) {
+         $atajoUiScrollDelegate,
+         $atajoUiHistory) {
 
   var self = this;
   // for testing
@@ -34,29 +34,29 @@ function($scope,
   var $element = self.$element = jqLite(element);
   var scrollView;
   if (self.isNative()) {
-    scrollView = self.scrollView = new ionic.views.ScrollNative(scrollViewOptions);
+    scrollView = self.scrollView = new atajoui.views.ScrollNative(scrollViewOptions);
   } else {
-    scrollView = self.scrollView = new ionic.views.Scroll(scrollViewOptions);
+    scrollView = self.scrollView = new atajoui.views.Scroll(scrollViewOptions);
   }
 
 
   //Attach self to element as a controller so other directives can require this controller
-  //through `require: '$ionicScroll'
+  //through `require: '$atajoUiScroll'
   //Also attach to parent so that sibling elements can require this
   ($element.parent().length ? $element.parent() : $element)
-    .data('$$ionicScrollController', self);
+    .data('$$atajoUiScrollController', self);
 
-  var deregisterInstance = $ionicScrollDelegate._registerInstance(
+  var deregisterInstance = $atajoUiScrollDelegate._registerInstance(
     self, scrollViewOptions.delegateHandle, function() {
-      return $ionicHistory.isActiveScope($scope);
+      return $atajoUiHistory.isActiveScope($scope);
     }
   );
 
   if (!isDefined(scrollViewOptions.bouncing)) {
-    ionic.Platform.ready(function() {
+    atajoui.Platform.ready(function() {
       if (scrollView && scrollView.options) {
         scrollView.options.bouncing = true;
-        if (ionic.Platform.isAndroid()) {
+        if (atajoui.Platform.isAndroid()) {
           // No bouncing by default on Android
           scrollView.options.bouncing = false;
           // Faster scroll decel
@@ -196,8 +196,8 @@ function($scope,
   self.freezeScrollShut = scrollView.freezeShut;
 
   self.freezeAllScrolls = function(shouldFreeze) {
-    for (var i = 0; i < $ionicScrollDelegate._instances.length; i++) {
-      $ionicScrollDelegate._instances[i].freezeScroll(shouldFreeze);
+    for (var i = 0; i < $atajoUiScrollDelegate._instances.length; i++) {
+      $atajoUiScrollDelegate._instances[i].freezeScroll(shouldFreeze);
     }
   };
 

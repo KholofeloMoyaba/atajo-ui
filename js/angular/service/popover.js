@@ -1,10 +1,10 @@
 /**
  * @ngdoc service
- * @name $ionicPopover
- * @module ionic
+ * @name $atajoUiPopover
+ * @module atajoui
  * @description
  *
- * Related: {@link ionic.controller:ionicPopover ionicPopover controller}.
+ * Related: {@link atajoui.controller:atajoUiPopover atajoUiPopover controller}.
  *
  * The Popover is a view that floats above an app’s content. Popovers provide an
  * easy way to present or gather information from the user and are
@@ -14,7 +14,7 @@
  * - Select a commonly used tool or configuration
  * - Present a list of actions to perform inside one of your views
  *
- * Put the content of the popover inside of an `<ion-popover-view>` element.
+ * Put the content of the popover inside of an `<aui-popover-view>` element.
  *
  * @usage
  * ```html
@@ -23,29 +23,29 @@
  * </p>
  *
  * <script id="my-popover.html" type="text/ng-template">
- *   <ion-popover-view>
- *     <ion-header-bar>
+ *   <aui-popover-view>
+ *     <aui-header-bar>
  *       <h1 class="title">My Popover Title</h1>
- *     </ion-header-bar>
- *     <ion-content>
+ *     </aui-header-bar>
+ *     <aui-content>
  *       Hello!
- *     </ion-content>
- *   </ion-popover-view>
+ *     </aui-content>
+ *   </aui-popover-view>
  * </script>
  * ```
  * ```js
- * angular.module('testApp', ['ionic'])
- * .controller('MyController', function($scope, $ionicPopover) {
+ * angular.module('testApp', ['atajoui'])
+ * .controller('MyController', function($scope, $atajoUiPopover) {
  *
  *   // .fromTemplate() method
- *   var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
+ *   var template = '<aui-popover-view><aui-header-bar> <h1 class="title">My Popover Title</h1> </aui-header-bar> <aui-content> Hello! </aui-content></aui-popover-view>';
  *
- *   $scope.popover = $ionicPopover.fromTemplate(template, {
+ *   $scope.popover = $atajoUiPopover.fromTemplate(template, {
  *     scope: $scope
  *   });
  *
  *   // .fromTemplateUrl() method
- *   $ionicPopover.fromTemplateUrl('my-popover.html', {
+ *   $atajoUiPopover.fromTemplateUrl('my-popover.html', {
  *     scope: $scope
  *   }).then(function(popover) {
  *     $scope.popover = popover;
@@ -75,9 +75,9 @@
  */
 
 
-IonicModule
-.factory('$ionicPopover', ['$ionicModal', '$ionicPosition', '$document', '$window',
-function($ionicModal, $ionicPosition, $document, $window) {
+AtajoUiModule
+.factory('$atajoUiPopover', ['$atajoUiModal', '$atajoUiPosition', '$document', '$window',
+function($atajoUiModal, $atajoUiPosition, $document, $window) {
 
   var POPOVER_BODY_PADDING = 6;
 
@@ -85,12 +85,12 @@ function($ionicModal, $ionicPosition, $document, $window) {
     viewType: 'popover',
     hideDelay: 1,
     animation: 'none',
-    positionView: positionView
+    positauiView: positauiView
   };
 
-  function positionView(target, popoverEle) {
+  function positauiView(target, popoverEle) {
     var targetEle = jqLite(target.target || target);
-    var buttonOffset = $ionicPosition.offset(targetEle);
+    var buttonOffset = $atajoUiPosition.offset(targetEle);
     var popoverWidth = popoverEle.prop('offsetWidth');
     var popoverHeight = popoverEle.prop('offsetHeight');
     // Use innerWidth and innerHeight, because clientWidth and clientHeight
@@ -136,10 +136,10 @@ function($ionicModal, $ionicPosition, $document, $window) {
 
   /**
    * @ngdoc controller
-   * @name ionicPopover
-   * @module ionic
+   * @name atajoUiPopover
+   * @module atajoui
    * @description
-   * Instantiated by the {@link ionic.service:$ionicPopover} service.
+   * Instantiated by the {@link atajoui.service:$atajoUiPopover} service.
    *
    * Be sure to call [remove()](#remove) when you are done with each popover
    * to clean it up and avoid memory leaks.
@@ -151,7 +151,7 @@ function($ionicModal, $ionicPosition, $document, $window) {
 
   /**
    * @ngdoc method
-   * @name ionicPopover#initialize
+   * @name atajoUiPopover#initialize
    * @description Creates a new popover controller instance.
    * @param {object} options An options object with the following properties:
    *  - `{object=}` `scope` The scope to be a child of.
@@ -166,7 +166,7 @@ function($ionicModal, $ionicPosition, $document, $window) {
 
   /**
    * @ngdoc method
-   * @name ionicPopover#show
+   * @name atajoUiPopover#show
    * @description Show this popover instance.
    * @param {$event} $event The $event or target element which the popover should align
    * itself next to.
@@ -175,47 +175,47 @@ function($ionicModal, $ionicPosition, $document, $window) {
 
   /**
    * @ngdoc method
-   * @name ionicPopover#hide
+   * @name atajoUiPopover#hide
    * @description Hide this popover instance.
    * @returns {promise} A promise which is resolved when the popover is finished animating out.
    */
 
   /**
    * @ngdoc method
-   * @name ionicPopover#remove
+   * @name atajoUiPopover#remove
    * @description Remove this popover instance from the DOM and clean up.
    * @returns {promise} A promise which is resolved when the popover is finished animating out.
    */
 
   /**
    * @ngdoc method
-   * @name ionicPopover#isShown
+   * @name atajoUiPopover#isShown
    * @returns boolean Whether this popover is currently shown.
    */
 
   return {
     /**
      * @ngdoc method
-     * @name $ionicPopover#fromTemplate
+     * @name $atajoUiPopover#fromTemplate
      * @param {string} templateString The template string to use as the popovers's
      * content.
      * @param {object} options Options to be passed to the initialize method.
-     * @returns {object} An instance of an {@link ionic.controller:ionicPopover}
-     * controller (ionicPopover is built on top of $ionicPopover).
+     * @returns {object} An instance of an {@link atajoui.controller:atajoUiPopover}
+     * controller (atajoUiPopover is built on top of $atajoUiPopover).
      */
     fromTemplate: function(templateString, options) {
-      return $ionicModal.fromTemplate(templateString, ionic.Utils.extend({}, POPOVER_OPTIONS, options));
+      return $atajoUiModal.fromTemplate(templateString, atajoui.Utils.extend({}, POPOVER_OPTIONS, options));
     },
     /**
      * @ngdoc method
-     * @name $ionicPopover#fromTemplateUrl
+     * @name $atajoUiPopover#fromTemplateUrl
      * @param {string} templateUrl The url to load the template from.
      * @param {object} options Options to be passed to the initialize method.
      * @returns {promise} A promise that will be resolved with an instance of
-     * an {@link ionic.controller:ionicPopover} controller (ionicPopover is built on top of $ionicPopover).
+     * an {@link atajoui.controller:atajoUiPopover} controller (atajoUiPopover is built on top of $atajoUiPopover).
      */
     fromTemplateUrl: function(url, options) {
-      return $ionicModal.fromTemplateUrl(url, ionic.Utils.extend({}, POPOVER_OPTIONS, options));
+      return $atajoUiModal.fromTemplateUrl(url, atajoui.Utils.extend({}, POPOVER_OPTIONS, options));
     }
   };
 

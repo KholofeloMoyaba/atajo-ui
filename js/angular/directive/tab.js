@@ -1,26 +1,26 @@
 /**
  * @ngdoc directive
- * @name ionTab
- * @module ionic
+ * @name auiTab
+ * @module atajoui
  * @restrict E
- * @parent ionic.directive:ionTabs
+ * @parent atajoui.directive:auiTabs
  *
  * @description
  * Contains a tab's content.  The content only exists while the given tab is selected.
  *
- * Each ionTab has its own view history.
+ * Each auiTab has its own view history.
  *
  * @usage
  * ```html
- * <ion-tab
+ * <aui-tab
  *   title="Tab!"
  *   icon="my-icon"
  *   href="#/tab/tab-link"
  *   on-select="onTabSelected()"
  *   on-deselect="onTabDeselected()">
- * </ion-tab>
+ * </aui-tab>
  * ```
- * For a complete, working tab bar example, see the {@link ionic.directive:ionTabs} documentation.
+ * For a complete, working tab bar example, see the {@link atajoui.directive:auiTabs} documentation.
  *
  * @param {string} title The title of the tab.
  * @param {string=} href The link that this tab will navigate to when tapped.
@@ -31,17 +31,17 @@
  * @param {expression=} badge-style The style of badge to put on this tab (eg: badge-positive).
  * @param {expression=} on-select Called when this tab is selected.
  * @param {expression=} on-deselect Called when this tab is deselected.
- * @param {expression=} ng-click By default, the tab will be selected on click. If ngClick is set, it will not.  You can explicitly switch tabs using {@link ionic.service:$ionicTabsDelegate#select $ionicTabsDelegate.select()}.
+ * @param {expression=} ng-click By default, the tab will be selected on click. If ngClick is set, it will not.  You can explicitly switch tabs using {@link atajoui.service:$atajoUiTabsDelegate#select $atajoUiTabsDelegate.select()}.
  * @param {expression=} hidden Whether the tab is to be hidden or not.
  * @param {expression=} disabled Whether the tab is to be disabled or not.
  */
-IonicModule
-.directive('ionTab', [
+AtajoUiModule
+.directive('auiTab', [
   '$compile',
-  '$ionicConfig',
-  '$ionicBind',
-  '$ionicViewSwitcher',
-function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
+  '$atajoUiConfig',
+  '$atajoUiBind',
+  '$atajoUiViewSwitcher',
+function($compile, $atajoUiConfig, $atajoUiBind, $atajoUiViewSwitcher) {
 
   //Returns ' key="value"' if value exists
   function attrStr(k, v) {
@@ -49,15 +49,15 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
   }
   return {
     restrict: 'E',
-    require: ['^ionTabs', 'ionTab'],
-    controller: '$ionicTab',
+    require: ['^auiTabs', 'auiTab'],
+    controller: '$atajoUiTab',
     scope: true,
     compile: function(element, attr) {
 
       //We create the tabNavTemplate in the compile phase so that the
       //attributes we pass down won't be interpolated yet - we want
       //to pass down the 'raw' versions of the attributes
-      var tabNavTemplate = '<ion-tab-nav' +
+      var tabNavTemplate = '<aui-tab-nav' +
         attrStr('ng-click', attr.ngClick) +
         attrStr('title', attr.title) +
         attrStr('icon', attr.icon) +
@@ -68,7 +68,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
         attrStr('hidden', attr.hidden) +
         attrStr('disabled', attr.disabled) +
         attrStr('class', attr['class']) +
-        '></ion-tab-nav>';
+        '></aui-tab-nav>';
 
       //Remove the contents of the element so we can compile them later, if tab is selected
       var tabContentEle = document.createElement('div');
@@ -80,7 +80,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
 
       var navViewName, isNavView;
       if (childElementCount) {
-        if (tabContentEle.children[0].tagName === 'ION-NAV-VIEW') {
+        if (tabContentEle.children[0].tagName === 'AUI-NAV-VIEW') {
           // get the name if it's a nav-view
           navViewName = tabContentEle.children[0].getAttribute('name');
           tabContentEle.children[0].classList.add('view-container');
@@ -102,7 +102,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
         var isTabContentAttached = false;
         $scope.$tabSelected = false;
 
-        $ionicBind($scope, $attr, {
+        $atajoUiBind($scope, $attr, {
           onSelect: '&',
           onDeselect: '&',
           title: '@',
@@ -113,7 +113,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
         tabsCtrl.add($scope);
         $scope.$on('$destroy', function() {
           if (!$scope.$tabsDestroy) {
-            // if the containing ionTabs directive is being destroyed
+            // if the containing auiTabs directive is being destroyed
             // then don't bother going through the controllers remove
             // method, since remove will reset the active tab as each tab
             // is being destroyed, causing unnecessary view loads and transitions
@@ -139,8 +139,8 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
         }
 
         var tabNavElement = jqLite(tabNavTemplate);
-        tabNavElement.data('$ionTabsController', tabsCtrl);
-        tabNavElement.data('$ionTabController', tabCtrl);
+        tabNavElement.data('$auiTabsController', tabsCtrl);
+        tabNavElement.data('$auiTabController', tabCtrl);
         tabsCtrl.$tabsElement.append($compile(tabNavElement)($scope));
 
 
@@ -155,21 +155,21 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
               // create a new scope and append it
               childScope = $scope.$new();
               childElement = jqLite(tabContentEle);
-              $ionicViewSwitcher.viewEleIsActive(childElement, true);
+              $atajoUiViewSwitcher.viewEleIsActive(childElement, true);
               tabsCtrl.$element.append(childElement);
               $compile(childElement)(childScope);
               isTabContentAttached = true;
             }
 
             // remove the hide class so the tabs content shows up
-            $ionicViewSwitcher.viewEleIsActive(childElement, true);
+            $atajoUiViewSwitcher.viewEleIsActive(childElement, true);
 
           } else if (isTabContentAttached && childElement) {
             // this tab should NOT be selected, and it is already in the DOM
 
-            if ($ionicConfig.views.maxCache() > 0) {
+            if ($atajoUiConfig.views.maxCache() > 0) {
               // keep the tabs in the DOM, only css hide it
-              $ionicViewSwitcher.viewEleIsActive(childElement, false);
+              $atajoUiViewSwitcher.viewEleIsActive(childElement, false);
 
             } else {
               // do not keep tabs in the DOM
@@ -188,11 +188,11 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
 
         $scope.$watch('$tabSelected', tabSelected);
 
-        $scope.$on('$ionicView.afterEnter', function() {
-          $ionicViewSwitcher.viewEleIsActive(childElement, $scope.$tabSelected);
+        $scope.$on('$atajoUiView.afterEnter', function() {
+          $atajoUiViewSwitcher.viewEleIsActive(childElement, $scope.$tabSelected);
         });
 
-        $scope.$on('$ionicView.clearCache', function() {
+        $scope.$on('$atajoUiView.clearCache', function() {
           if (!$scope.$tabSelected) {
             destroyTab();
           }

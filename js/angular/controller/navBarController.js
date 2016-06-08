@@ -1,18 +1,18 @@
-IonicModule
+AtajoUiModule
 
-.controller('$ionicNavBar', [
+.controller('$atajoUiNavBar', [
   '$scope',
   '$element',
   '$attrs',
   '$compile',
   '$timeout',
-  '$ionicNavBarDelegate',
-  '$ionicConfig',
-  '$ionicHistory',
-function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $ionicConfig, $ionicHistory) {
+  '$atajoUiNavBarDelegate',
+  '$atajoUiConfig',
+  '$atajoUiHistory',
+function($scope, $element, $attrs, $compile, $timeout, $atajoUiNavBarDelegate, $atajoUiConfig, $atajoUiHistory) {
 
   var CSS_HIDE = 'hide';
-  var DATA_NAV_BAR_CTRL = '$ionNavBarController';
+  var DATA_NAV_BAR_CTRL = '$auiNavBarController';
   var PRIMARY_BUTTONS = 'primaryButtons';
   var SECONDARY_BUTTONS = 'secondaryButtons';
   var BACK_BUTTON = 'backButton';
@@ -26,29 +26,29 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
   $element.parent().data(DATA_NAV_BAR_CTRL, self);
 
-  var delegateHandle = $attrs.delegateHandle || 'navBar' + ionic.Utils.nextUid();
+  var delegateHandle = $attrs.delegateHandle || 'navBar' + atajoui.Utils.nextUid();
 
-  var deregisterInstance = $ionicNavBarDelegate._registerInstance(self, delegateHandle);
+  var deregisterInstance = $atajoUiNavBarDelegate._registerInstance(self, delegateHandle);
 
 
   self.init = function() {
     $element.addClass('nav-bar-container');
-    ionic.DomUtil.cachedAttr($element, 'nav-bar-transition', $ionicConfig.views.transition());
+    atajoui.DomUtil.cachedAttr($element, 'nav-bar-transition', $atajoUiConfig.views.transition());
 
     // create two nav bar blocks which will trade out which one is shown
     self.createHeaderBar(false);
     self.createHeaderBar(true);
 
-    $scope.$emit('ionNavBar.init', delegateHandle);
+    $scope.$emit('auiNavBar.init', delegateHandle);
   };
 
 
   self.createHeaderBar = function(isActive) {
     var containerEle = jqLite('<div class="nav-bar-block">');
-    ionic.DomUtil.cachedAttr(containerEle, 'nav-bar', isActive ? 'active' : 'cached');
+    atajoui.DomUtil.cachedAttr(containerEle, 'nav-bar', isActive ? 'active' : 'cached');
 
-    var alignTitle = $attrs.alignTitle || $ionicConfig.navBar.alignTitle();
-    var headerBarEle = jqLite('<ion-header-bar>').addClass($attrs['class']).attr('align-title', alignTitle);
+    var alignTitle = $attrs.alignTitle || $atajoUiConfig.navBar.alignTitle();
+    var headerBarEle = jqLite('<aui-header-bar>').addClass($attrs['class']).attr('align-title', alignTitle);
     if (isDefined($attrs.noTapScroll)) headerBarEle.attr('no-tap-scroll', $attrs.noTapScroll);
     var titleEle = jqLite('<div class="title title-' + alignTitle + '">');
     var navEle = {};
@@ -65,7 +65,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
       // create default button elements
       navEle[itemType] = createNavElement(itemType);
       // append and position buttons
-      positionItem(navEle[itemType], itemType);
+      positauiItem(navEle[itemType], itemType);
     });
 
     // add header-item to the root children
@@ -77,9 +77,9 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     containerEle.append(headerBarEle);
     $element.append($compile(containerEle)($scope.$new()));
 
-    var headerBarCtrl = headerBarEle.data('$ionHeaderBarController');
-    headerBarCtrl.backButtonIcon = $ionicConfig.backButton.icon();
-    headerBarCtrl.backButtonText = $ionicConfig.backButton.text();
+    var headerBarCtrl = headerBarEle.data('$auiHeaderBarController');
+    headerBarCtrl.backButtonIcon = $atajoUiConfig.backButton.icon();
+    headerBarCtrl.backButtonText = $atajoUiConfig.backButton.text();
 
     var headerBarInstance = {
       isActive: isActive,
@@ -97,7 +97,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
           }
 
           // there's a custom nav bar item
-          positionItem(navBarItemEle, itemType);
+          positauiItem(navBarItemEle, itemType);
 
           if (navEle[itemType]) {
             // make sure the default on this itemType is hidden
@@ -152,7 +152,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
       }
     };
 
-    function positionItem(ele, itemType) {
+    function positauiItem(ele, itemType) {
       if (!ele) return;
 
       if (itemType === 'title') {
@@ -160,8 +160,8 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
         titleEle.append(ele);
 
       } else if (itemType == 'rightButtons' ||
-                (itemType == SECONDARY_BUTTONS && $ionicConfig.navBar.positionSecondaryButtons() != 'left') ||
-                (itemType == PRIMARY_BUTTONS && $ionicConfig.navBar.positionPrimaryButtons() == 'right')) {
+                (itemType == SECONDARY_BUTTONS && $atajoUiConfig.navBar.positionSecondaryButtons() != 'left') ||
+                (itemType == PRIMARY_BUTTONS && $atajoUiConfig.navBar.positionPrimaryButtons() == 'right')) {
         // right side
         if (!rightButtonsEle) {
           rightButtonsEle = jqLite('<div class="buttons buttons-right">');
@@ -208,7 +208,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
   self.update = function(viewData) {
     var showNavBar = !viewData.hasHeaderBar && viewData.showNavBar;
-    viewData.transition = $ionicConfig.views.transition();
+    viewData.transition = $atajoUiConfig.views.transition();
 
     if (!showNavBar) {
       viewData.direction = 'none';
@@ -246,15 +246,15 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
   self.transition = function(enteringHeaderBar, leavingHeaderBar, viewData) {
     var enteringHeaderBarCtrl = enteringHeaderBar.controller();
-    var transitionFn = $ionicConfig.transitions.navBar[viewData.navBarTransition] || $ionicConfig.transitions.navBar.none;
+    var transitionFn = $atajoUiConfig.transitions.navBar[viewData.navBarTransition] || $atajoUiConfig.transitions.navBar.none;
     var transitionId = viewData.transitionId;
 
     enteringHeaderBarCtrl.beforeEnter(viewData);
 
     var navBarTransition = transitionFn(enteringHeaderBar, leavingHeaderBar, viewData.direction, viewData.shouldAnimate && self.isInitialized);
 
-    ionic.DomUtil.cachedAttr($element, 'nav-bar-transition', viewData.navBarTransition);
-    ionic.DomUtil.cachedAttr($element, 'nav-bar-direction', viewData.direction);
+    atajoui.DomUtil.cachedAttr($element, 'nav-bar-transition', viewData.navBarTransition);
+    atajoui.DomUtil.cachedAttr($element, 'nav-bar-direction', viewData.direction);
 
     if (navBarTransition.shouldAnimate && viewData.renderEnd) {
       navBarAttr(enteringHeaderBar, 'stage');
@@ -371,15 +371,15 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     self.visibleBar(val);
 
     // set non primary to hide second
-    for (var x = 0; x < $ionicNavBarDelegate._instances.length; x++) {
-      if ($ionicNavBarDelegate._instances[x] !== self) $ionicNavBarDelegate._instances[x].visibleBar(false);
+    for (var x = 0; x < $atajoUiNavBarDelegate._instances.length; x++) {
+      if ($atajoUiNavBarDelegate._instances[x] !== self) $atajoUiNavBarDelegate._instances[x].visibleBar(false);
     }
   };
 
 
   /**
    * @ngdoc method
-   * @name $ionicNavBar#showBackButton
+   * @name $atajoUiNavBar#showBackButton
    * @description Show/hide the nav bar back button when there is a
    * back view. If the back button is not possible, for example, the
    * first view in the stack, then this will not force the back button
@@ -398,7 +398,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
   /**
    * @ngdoc method
-   * @name $ionicNavBar#showActiveBackButton
+   * @name $atajoUiNavBar#showActiveBackButton
    * @description Show/hide only the active header bar's back button.
    */
   self.showActiveBackButton = function(shouldShow) {
@@ -418,7 +418,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
       headerBar = headerBar || getOnScreenHeaderBar();
       headerBar && headerBar.title(newTitleText);
       $scope.$title = newTitleText;
-      $ionicHistory.currentTitle(newTitleText);
+      $atajoUiHistory.currentTitle(newTitleText);
     }
     return $scope.$title;
   };
@@ -452,12 +452,12 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
     return self.title();
   };
   self.back = function() {
-    deprecatedWarning('back()', '$ionicHistory.goBack()');
-    $ionicHistory.goBack();
+    deprecatedWarning('back()', '$atajoUiHistory.goBack()');
+    $atajoUiHistory.goBack();
   };
   self.getPreviousTitle = function() {
-    deprecatedWarning('getPreviousTitle()', '$ionicHistory.backTitle()');
-    $ionicHistory.goBack();
+    deprecatedWarning('getPreviousTitle()', '$atajoUiHistory.backTitle()');
+    $atajoUiHistory.goBack();
   };
   function deprecatedWarning(oldMethod, newMethod) {
     var warn = console.warn || console.log;
@@ -488,11 +488,11 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
 
 
   function navBarAttr(ctrl, val) {
-    ctrl && ionic.DomUtil.cachedAttr(ctrl.containerEle(), 'nav-bar', val);
+    ctrl && atajoui.DomUtil.cachedAttr(ctrl.containerEle(), 'nav-bar', val);
   }
 
   function navSwipeAttr(val) {
-    ionic.DomUtil.cachedAttr($element, 'nav-swipe', val);
+    atajoui.DomUtil.cachedAttr($element, 'nav-swipe', val);
   }
 
 

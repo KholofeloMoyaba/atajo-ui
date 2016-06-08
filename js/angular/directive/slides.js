@@ -1,33 +1,33 @@
 
 /**
  * @ngdoc directive
- * @name ionSlides
- * @module ionic
- * @delegate ionic.service:$ionicSlideBoxDelegate
+ * @name auiSlides
+ * @module atajoui
+ * @delegate atajoui.service:$atajoUiSlideBoxDelegate
  * @restrict E
  * @description
  * The Slides component is a powerful multi-page container where each page can be swiped or dragged between.
  *
- * Note: this is a new version of the Ionic Slide Box based on the [Swiper](http://www.idangero.us/swiper/#.Vmc1J-ODFBc) widget from
+ * Note: this is a new version of the AtajoUi Slide Box based on the [Swiper](http://www.idangero.us/swiper/#.Vmc1J-ODFBc) widget from
  * [idangerous](http://www.idangero.us/).
  *
  * ![SlideBox](http://ionicframework.com.s3.amazonaws.com/docs/controllers/slideBox.gif)
  *
  * @usage
  * ```html
- * <ion-content scroll="false">
- *   <ion-slides  options="options" slider="data.slider">
- *     <ion-slide-page>
+ * <aui-content scroll="false">
+ *   <aui-slides  options="options" slider="data.slider">
+ *     <aui-slide-page>
  *       <div class="box blue"><h1>BLUE</h1></div>
- *     </ion-slide-page>
- *     <ion-slide-page>
+ *     </aui-slide-page>
+ *     <aui-slide-page>
  *       <div class="box yellow"><h1>YELLOW</h1></div>
- *     </ion-slide-page>
- *     <ion-slide-page>
+ *     </aui-slide-page>
+ *     <aui-slide-page>
  *       <div class="box pink"><h1>PINK</h1></div>
- *     </ion-slide-page>
- *   </ion-slides>
- * </ion-content>
+ *     </aui-slide-page>
+ *   </aui-slides>
+ * </aui-content>
  * ```
  *
  * ```js
@@ -37,16 +37,16 @@
  *   speed: 500,
  * }
  *
- * $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
+ * $scope.$on("$atajoUiSlides.sliderInitialized", function(event, data){
  *   // data.slider is the instance of Swiper
  *   $scope.slider = data.slider;
  * });
  *
- * $scope.$on("$ionicSlides.slideChangeStart", function(event, data){
+ * $scope.$on("$atajoUiSlides.slideChangeStart", function(event, data){
  *   console.log('Slide change is beginning');
  * });
  *
- * $scope.$on("$ionicSlides.slideChangeEnd", function(event, data){
+ * $scope.$on("$atajoUiSlides.slideChangeEnd", function(event, data){
  *   // note: the indexes are 0-based
  *   $scope.activeIndex = data.slider.activeIndex;
  *   $scope.previousIndex = data.slider.previousIndex;
@@ -60,15 +60,15 @@
  *
  * <table class="table">
  *   <tr>
- *     <td><code>$ionicSlides.slideChangeStart</code></td>
+ *     <td><code>$atajoUiSlides.slideChangeStart</code></td>
  *     <td>This event is emitted when a slide change begins</td>
  *   </tr>
  *   <tr>
- *     <td><code>$ionicSlides.slideChangeEnd</code></td>
+ *     <td><code>$atajoUiSlides.slideChangeEnd</code></td>
  *     <td>This event is emitted when a slide change completes</td>
  *   </tr>
  *   <tr>
- *     <td><code>$ionicSlides.sliderInitialized</code></td>
+ *     <td><code>$atajoUiSlides.sliderInitialized</code></td>
  *     <td>This event is emitted when the slider is initialized. It provides access to an instance of the slider.</td>
  *   </tr>
  * </table>
@@ -80,7 +80,7 @@
  * In the event that the slides are looped, use the `updateLoop` method on the slider to ensure the slides update correctly.
  *
  * ```
- * $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
+ * $scope.$on("$atajoUiSlides.sliderInitialized", function(event, data){
  *   // grab an instance of the slider
  *   $scope.slider = data.slider;
  * });
@@ -94,8 +94,8 @@
  * ```
  *
  */
-IonicModule
-.directive('ionSlides', [
+AtajoUiModule
+.directive('auiSlides', [
   '$animate',
   '$timeout',
   '$compile',
@@ -140,7 +140,7 @@ function($animate, $timeout, $compile) {
         });
       };
 
-      this.rapidUpdate = ionic.debounce(function() {
+      this.rapidUpdate = atajoui.debounce(function() {
         _this.update();
       }, 50);
 
@@ -160,9 +160,9 @@ function($animate, $timeout, $compile) {
       this._options = newOptions;
 
       $timeout(function() {
-        var slider = new ionic.views.Swiper($element.children()[0], newOptions, $scope, $compile);
+        var slider = new atajoui.views.Swiper($element.children()[0], newOptions, $scope, $compile);
 
-        $scope.$emit("$ionicSlides.sliderInitialized", { slider: slider });
+        $scope.$emit("$atajoUiSlides.sliderInitialized", { slider: slider });
 
         _this.__slider = slider;
         $scope.slider = _this.__slider;
@@ -187,18 +187,18 @@ function($animate, $timeout, $compile) {
     }
   };
 }])
-.directive('ionSlidePage', [function() {
+.directive('auiSlidePage', [function() {
   return {
     restrict: 'E',
-    require: '?^ionSlides',
+    require: '?^auiSlides',
     transclude: true,
     replace: true,
     template: '<div class="swiper-slide" ng-transclude></div>',
-    link: function($scope, $element, $attr, ionSlidesCtrl) {
-      ionSlidesCtrl.rapidUpdate();
+    link: function($scope, $element, $attr, auiSlidesCtrl) {
+      auiSlidesCtrl.rapidUpdate();
 
       $scope.$on('$destroy', function() {
-        ionSlidesCtrl.rapidUpdate();
+        auiSlidesCtrl.rapidUpdate();
       });
     }
   };

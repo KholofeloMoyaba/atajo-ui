@@ -1,16 +1,16 @@
 
 /**
  * @ngdoc service
- * @name $ionicPlatform
- * @module ionic
+ * @name $atajoUiPlatform
+ * @module atajoui
  * @description
- * An angular abstraction of {@link ionic.utility:ionic.Platform}.
+ * An angular abstraction of {@link atajoui.utility:atajoui.Platform}.
  *
  * Used to detect the current platform, as well as do things like override the
  * Android back button in PhoneGap/Cordova.
  */
-IonicModule
-.constant('IONIC_BACK_PRIORITY', {
+AtajoUiModule
+.constant('ATAJOUI_BACK_PRIORITY', {
   view: 100,
   sideMenu: 150,
   modal: 200,
@@ -18,42 +18,42 @@ IonicModule
   popup: 400,
   loading: 500
 })
-.provider('$ionicPlatform', function() {
+.provider('$atajoUiPlatform', function() {
   return {
-    $get: ['$q', '$ionicScrollDelegate', function($q, $ionicScrollDelegate) {
+    $get: ['$q', '$atajoUiScrollDelegate', function($q, $atajoUiScrollDelegate) {
       var self = {
 
         /**
          * @ngdoc method
-         * @name $ionicPlatform#onHardwareBackButton
+         * @name $atajoUiPlatform#onHardwareBackButton
          * @description
          * Some platforms have a hardware back button, so this is one way to
          * bind to it.
          * @param {function} callback the callback to trigger when this event occurs
          */
         onHardwareBackButton: function(cb) {
-          ionic.Platform.ready(function() {
+          atajoui.Platform.ready(function() {
             document.addEventListener('backbutton', cb, false);
           });
         },
 
         /**
          * @ngdoc method
-         * @name $ionicPlatform#offHardwareBackButton
+         * @name $atajoUiPlatform#offHardwareBackButton
          * @description
          * Remove an event listener for the backbutton.
          * @param {function} callback The listener function that was
          * originally bound.
          */
         offHardwareBackButton: function(fn) {
-          ionic.Platform.ready(function() {
+          atajoui.Platform.ready(function() {
             document.removeEventListener('backbutton', fn);
           });
         },
 
         /**
          * @ngdoc method
-         * @name $ionicPlatform#registerBackButtonAction
+         * @name $atajoUiPlatform#registerBackButtonAction
          * @description
          * Register a hardware back button action. Only one action will execute
          * when the back button is clicked, so this method decides which of
@@ -95,7 +95,7 @@ IonicModule
           }
 
           var action = {
-            id: (actionId ? actionId : ionic.Utils.nextUid()),
+            id: (actionId ? actionId : atajoui.Utils.nextUid()),
             priority: (priority ? priority : 0),
             fn: fn
           };
@@ -126,12 +126,12 @@ IonicModule
         },
 
         is: function(type) {
-          return ionic.Platform.is(type);
+          return atajoui.Platform.is(type);
         },
 
         /**
          * @ngdoc method
-         * @name $ionicPlatform#on
+         * @name $atajoUiPlatform#on
          * @description
          * Add Cordova event listeners, such as `pause`, `resume`, `volumedownbutton`, `batterylow`,
          * `offline`, etc. More information about available event types can be found in
@@ -141,11 +141,11 @@ IonicModule
          * @returns {function} Returns a deregistration function to remove the event listener.
          */
         on: function(type, cb) {
-          ionic.Platform.ready(function() {
+          atajoui.Platform.ready(function() {
             document.addEventListener(type, cb, false);
           });
           return function() {
-            ionic.Platform.ready(function() {
+            atajoui.Platform.ready(function() {
               document.removeEventListener(type, cb);
             });
           };
@@ -153,7 +153,7 @@ IonicModule
 
         /**
          * @ngdoc method
-         * @name $ionicPlatform#ready
+         * @name $atajoUiPlatform#ready
          * @description
          * Trigger a callback once the device is ready,
          * or immediately if the device is already ready.
@@ -163,10 +163,10 @@ IonicModule
         ready: function(cb) {
           var q = $q.defer();
 
-          ionic.Platform.ready(function() {
+          atajoui.Platform.ready(function() {
 
             window.addEventListener('statusTap', function() {
-              $ionicScrollDelegate.scrollTop(true);
+              $atajoUiScrollDelegate.scrollTop(true);
             });
 
             q.resolve();

@@ -1,18 +1,18 @@
-IonicModule
-.controller('$ionicNavView', [
+AtajoUiModule
+.controller('$atajoUiNavView', [
   '$scope',
   '$element',
   '$attrs',
   '$compile',
   '$controller',
-  '$ionicNavBarDelegate',
-  '$ionicNavViewDelegate',
-  '$ionicHistory',
-  '$ionicViewSwitcher',
-  '$ionicConfig',
-  '$ionicScrollDelegate',
-  '$ionicSideMenuDelegate',
-function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, $ionicNavViewDelegate, $ionicHistory, $ionicViewSwitcher, $ionicConfig, $ionicScrollDelegate, $ionicSideMenuDelegate) {
+  '$atajoUiNavBarDelegate',
+  '$atajoUiNavViewDelegate',
+  '$atajoUiHistory',
+  '$atajoUiViewSwitcher',
+  '$atajoUiConfig',
+  '$atajoUiScrollDelegate',
+  '$atajoUiSideMenuDelegate',
+function($scope, $element, $attrs, $compile, $controller, $atajoUiNavBarDelegate, $atajoUiNavViewDelegate, $atajoUiHistory, $atajoUiViewSwitcher, $atajoUiConfig, $atajoUiScrollDelegate, $atajoUiSideMenuDelegate) {
 
   var DATA_ELE_IDENTIFIER = '$eleId';
   var DATA_DESTROY_ELE = '$destroyEle';
@@ -25,7 +25,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   var isPrimary = false;
   var navBarDelegate;
   var activeEleId;
-  var navViewAttr = $ionicViewSwitcher.navViewAttr;
+  var navViewAttr = $atajoUiViewSwitcher.navViewAttr;
   var disableRenderStartViewId, disableAnimation;
 
   self.scope = $scope;
@@ -44,26 +44,26 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     var viewData = { name: navViewName, state: null };
     $element.data('$uiView', viewData);
 
-    var deregisterInstance = $ionicNavViewDelegate._registerInstance(self, $attrs.delegateHandle);
+    var deregisterInstance = $atajoUiNavViewDelegate._registerInstance(self, $attrs.delegateHandle);
     $scope.$on('$destroy', function() {
       deregisterInstance();
 
       // ensure no scrolls have been left frozen
       if (self.isSwipeFreeze) {
-        $ionicScrollDelegate.freezeAllScrolls(false);
+        $atajoUiScrollDelegate.freezeAllScrolls(false);
       }
     });
 
-    $scope.$on('$ionicHistory.deselect', self.cacheCleanup);
-    $scope.$on('$ionicTabs.top', onTabsTop);
-    $scope.$on('$ionicSubheader', onBarSubheader);
+    $scope.$on('$atajoUiHistory.deselect', self.cacheCleanup);
+    $scope.$on('$atajoUiTabs.top', onTabsTop);
+    $scope.$on('$atajoUiSubheader', onBarSubheader);
 
-    $scope.$on('$ionicTabs.beforeLeave', onTabsLeave);
-    $scope.$on('$ionicTabs.afterLeave', onTabsLeave);
-    $scope.$on('$ionicTabs.leave', onTabsLeave);
+    $scope.$on('$atajoUiTabs.beforeLeave', onTabsLeave);
+    $scope.$on('$atajoUiTabs.afterLeave', onTabsLeave);
+    $scope.$on('$atajoUiTabs.leave', onTabsLeave);
 
-    ionic.Platform.ready(function() {
-      if ( ionic.Platform.isWebView() && ionic.Platform.isIOS() ) {
+    atajoui.Platform.ready(function() {
+      if ( atajoui.Platform.isWebView() && atajoui.Platform.isIOS() ) {
           self.initSwipeBack();
       }
     });
@@ -73,16 +73,16 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
 
   self.register = function(viewLocals) {
-    var leavingView = extend({}, $ionicHistory.currentView());
+    var leavingView = extend({}, $atajoUiHistory.currentView());
 
     // register that a view is coming in and get info on how it should transition
-    var registerData = $ionicHistory.register($scope, viewLocals);
+    var registerData = $atajoUiHistory.register($scope, viewLocals);
 
     // update which direction
     self.update(registerData);
 
     // begin rendering and transitioning
-    var enteringView = $ionicHistory.getViewById(registerData.viewId) || {};
+    var enteringView = $atajoUiHistory.getViewById(registerData.viewId) || {};
 
     var renderStart = (disableRenderStartViewId !== registerData.viewId);
     self.render(registerData, viewLocals, enteringView, leavingView, renderStart, true);
@@ -97,7 +97,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     // this may get updated later by a child navView
     direction = registerData.direction;
 
-    var parentNavViewCtrl = $element.parent().inheritedData('$ionNavViewController');
+    var parentNavViewCtrl = $element.parent().inheritedData('$auiNavViewController');
     if (parentNavViewCtrl) {
       // this navView is nested inside another one
       // update the parent to use this direction and not
@@ -124,7 +124,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   self.render = function(registerData, viewLocals, enteringView, leavingView, renderStart, renderEnd) {
     // register the view and figure out where it lives in the various
     // histories and nav stacks, along with how views should enter/leave
-    var switcher = $ionicViewSwitcher.create(self, viewLocals, enteringView, leavingView, renderStart, renderEnd);
+    var switcher = $atajoUiViewSwitcher.create(self, viewLocals, enteringView, leavingView, renderStart, renderEnd);
 
     // init the rendering of views for this navView directive
     switcher.init(registerData, function() {
@@ -176,14 +176,14 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
         // this is a leaving element or was the former active element, or is an cached element
         if (viewElement.data(DATA_DESTROY_ELE) || viewElement.data(DATA_NO_CACHE)) {
           // this element shouldn't stay cached
-          $ionicViewSwitcher.destroyViewEle(viewElement);
+          $atajoUiViewSwitcher.destroyViewEle(viewElement);
 
         } else {
           // keep in the DOM, mark as cached
           navViewAttr(viewElement, VIEW_STATUS_CACHED);
 
           // disconnect the leaving scope
-          ionic.Utils.disconnectScope(viewElement.scope());
+          atajoui.Utils.disconnectScope(viewElement.scope());
         }
       }
     }
@@ -192,7 +192,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
     // ensure no scrolls have been left frozen
     if (self.isSwipeFreeze) {
-      $ionicScrollDelegate.freezeAllScrolls(false);
+      $atajoUiScrollDelegate.freezeAllScrolls(false);
     }
   };
 
@@ -217,7 +217,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
     var viewElements = $element.children();
     for (var x = 0, l = viewElements.length; x < l; x++) {
       if (viewElements.eq(x).data(DATA_DESTROY_ELE)) {
-        $ionicViewSwitcher.destroyViewEle(viewElements.eq(x));
+        $atajoUiViewSwitcher.destroyViewEle(viewElements.eq(x));
       }
     }
   };
@@ -235,18 +235,18 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
         for (y = 0; y < stateIds.length; y++) {
           if (eleIdentifier === stateIds[y]) {
-            $ionicViewSwitcher.destroyViewEle(viewElement);
+            $atajoUiViewSwitcher.destroyViewEle(viewElement);
           }
         }
         continue;
       }
 
       if (navViewAttr(viewElement) == VIEW_STATUS_CACHED) {
-        $ionicViewSwitcher.destroyViewEle(viewElement);
+        $atajoUiViewSwitcher.destroyViewEle(viewElement);
 
       } else if (navViewAttr(viewElement) == VIEW_STATUS_ACTIVE) {
         viewScope = viewElement.scope();
-        viewScope && viewScope.$broadcast('$ionicView.clearCache');
+        viewScope && viewScope.$broadcast('$atajoUiView.clearCache');
       }
 
     }
@@ -289,7 +289,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
   /**
    * @ngdoc method
-   * @name $ionicNavView#enableBackButton
+   * @name $atajoUiNavView#enableBackButton
    * @description Enable/disable if the back button can be shown or not. For
    * example, the very first view in the navigation stack would not have a
    * back view, so the back button would be disabled.
@@ -302,7 +302,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
   /**
    * @ngdoc method
-   * @name $ionicNavView#showBackButton
+   * @name $atajoUiNavView#showBackButton
    * @description Show/hide the nav bar active back button. If the back button
    * is not possible this will not force the back button to show. The
    * `enableBackButton()` method handles if a back button is even possible or not.
@@ -348,28 +348,28 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
 
   self.initSwipeBack = function() {
-    var swipeBackHitWidth = $ionicConfig.views.swipeBackHitWidth();
+    var swipeBackHitWidth = $atajoUiConfig.views.swipeBackHitWidth();
     var viewTransition, associatedNavBarCtrl, backView;
     var deregDragStart, deregDrag, deregRelease;
     var windowWidth, startDragX, dragPoints;
     var cancelData = {};
 
     function onDragStart(ev) {
-      if (!isPrimary || !$ionicConfig.views.swipeBackEnabled() || $ionicSideMenuDelegate.isOpenRight() ) return;
+      if (!isPrimary || !$atajoUiConfig.views.swipeBackEnabled() || $atajoUiSideMenuDelegate.isOpenRight() ) return;
 
 
       startDragX = getDragX(ev);
       if (startDragX > swipeBackHitWidth) return;
 
-      backView = $ionicHistory.backView();
+      backView = $atajoUiHistory.backView();
 
-      var currentView = $ionicHistory.currentView();
+      var currentView = $atajoUiHistory.currentView();
 
       if (!backView || backView.historyId !== currentView.historyId || currentView.canSwipeBack === false) return;
 
       if (!windowWidth) windowWidth = window.innerWidth;
 
-      self.isSwipeFreeze = $ionicScrollDelegate.freezeAllScrolls(true);
+      self.isSwipeFreeze = $atajoUiScrollDelegate.freezeAllScrolls(true);
 
       var registerData = {
         direction: 'back'
@@ -382,16 +382,16 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
         showBackButton: self.showBackButton()
       };
 
-      var switcher = $ionicViewSwitcher.create(self, registerData, backView, currentView, true, false);
+      var switcher = $atajoUiViewSwitcher.create(self, registerData, backView, currentView, true, false);
       switcher.loadViewElements(registerData);
       switcher.render(registerData);
 
-      viewTransition = switcher.transition('back', $ionicHistory.enabledBack(backView), true);
+      viewTransition = switcher.transition('back', $atajoUiHistory.enabledBack(backView), true);
 
       associatedNavBarCtrl = getAssociatedNavBarCtrl();
 
-      deregDrag = ionic.onGesture('drag', onDrag, $element[0]);
-      deregRelease = ionic.onGesture('release', onRelease, $element[0]);
+      deregDrag = atajoui.onGesture('drag', onDrag, $element[0]);
+      deregRelease = atajoui.onGesture('release', onRelease, $element[0]);
     }
 
     function onDrag(ev) {
@@ -455,35 +455,35 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
       }
 
-      ionic.offGesture(deregDrag, 'drag', onDrag);
-      ionic.offGesture(deregRelease, 'release', onRelease);
+      atajoui.offGesture(deregDrag, 'drag', onDrag);
+      atajoui.offGesture(deregRelease, 'release', onRelease);
 
       windowWidth = viewTransition = dragPoints = null;
 
-      self.isSwipeFreeze = $ionicScrollDelegate.freezeAllScrolls(false);
+      self.isSwipeFreeze = $atajoUiScrollDelegate.freezeAllScrolls(false);
     }
 
     function getDragX(ev) {
-      return ionic.tap.pointerCoord(ev.gesture.srcEvent).x;
+      return atajoui.tap.pointerCoord(ev.gesture.srcEvent).x;
     }
 
     function getSwipeCompletion(dragX) {
       return (dragX - startDragX) / windowWidth;
     }
 
-    deregDragStart = ionic.onGesture('dragstart', onDragStart, $element[0]);
+    deregDragStart = atajoui.onGesture('dragstart', onDragStart, $element[0]);
 
     $scope.$on('$destroy', function() {
-      ionic.offGesture(deregDragStart, 'dragstart', onDragStart);
-      ionic.offGesture(deregDrag, 'drag', onDrag);
-      ionic.offGesture(deregRelease, 'release', onRelease);
+      atajoui.offGesture(deregDragStart, 'dragstart', onDragStart);
+      atajoui.offGesture(deregDrag, 'drag', onDrag);
+      atajoui.offGesture(deregRelease, 'release', onRelease);
       self.element = viewTransition = associatedNavBarCtrl = null;
     });
   };
 
 
   function navSwipeAttr(val) {
-    ionic.DomUtil.cachedAttr($element, 'nav-swipe', val);
+    atajoui.DomUtil.cachedAttr($element, 'nav-swipe', val);
   }
 
 
@@ -499,13 +499,13 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
 
   function getAssociatedNavBarCtrl() {
     if (navBarDelegate) {
-      for (var x = 0; x < $ionicNavBarDelegate._instances.length; x++) {
-        if ($ionicNavBarDelegate._instances[x].$$delegateHandle == navBarDelegate) {
-          return $ionicNavBarDelegate._instances[x];
+      for (var x = 0; x < $atajoUiNavBarDelegate._instances.length; x++) {
+        if ($atajoUiNavBarDelegate._instances[x].$$delegateHandle == navBarDelegate) {
+          return $atajoUiNavBarDelegate._instances[x];
         }
       }
     }
-    return $element.inheritedData('$ionNavBarController');
+    return $element.inheritedData('$auiNavBarController');
   }
 
 }]);

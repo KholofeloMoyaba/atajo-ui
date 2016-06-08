@@ -2,11 +2,11 @@
  * @private
  * DEPRECATED, as of v1.0.0-beta14 -------
  */
-IonicModule
-.factory('$ionicViewService', ['$ionicHistory', '$log', function($ionicHistory, $log) {
+AtajoUiModule
+.factory('$atajoUiViewService', ['$atajoUiHistory', '$log', function($atajoUiHistory, $log) {
 
   function warn(oldMethod, newMethod) {
-    $log.warn('$ionicViewService' + oldMethod + ' is deprecated, please use $ionicHistory' + newMethod + ' instead: http://ionicframework.com/docs/nightly/api/service/$ionicHistory/');
+    $log.warn('$atajoUiViewService' + oldMethod + ' is deprecated, please use $atajoUiHistory' + newMethod + ' instead: http://ionicframework.com/docs/nightly/api/service/$atajoUiHistory/');
   }
 
   warn('', '');
@@ -23,7 +23,7 @@ IonicModule
   forEach(methodsMap, function(newMethod, oldMethod) {
     methodsMap[oldMethod] = function() {
       warn('.' + oldMethod, '.' + newMethod);
-      return $ionicHistory[newMethod].apply(this, arguments);
+      return $atajoUiHistory[newMethod].apply(this, arguments);
     };
   });
 

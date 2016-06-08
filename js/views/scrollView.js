@@ -246,7 +246,7 @@ var zyngaCore = { effect: {} };
  * License: MIT + Apache (V2)
  */
 
-(function(ionic) {
+(function(atajoui) {
   var NOOP = function(){};
 
   // Easing Equations (c) 2003 Robert Penner, all rights reserved.
@@ -272,13 +272,13 @@ var zyngaCore = { effect: {} };
 
 
 /**
- * ionic.views.Scroll
+ * atajoui.views.Scroll
  * A powerful scroll view with support for bouncing, pull to refresh, and paging.
  * @param   {Object}        options options for the scroll view
  * @class A scroll view system
- * @memberof ionic.views
+ * @memberof atajoui.views
  */
-ionic.views.Scroll = ionic.views.View.inherit({
+atajoui.views.Scroll = atajoui.views.View.inherit({
   initialize: function(options) {
     var self = this;
 
@@ -389,13 +389,13 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.options[key] = options[key];
     }
 
-    self.hintResize = ionic.debounce(function() {
+    self.hintResize = atajoui.debounce(function() {
       self.resize();
     }, 1000, true);
 
     self.onScroll = function() {
 
-      if (!ionic.scroll.isScrolling) {
+      if (!atajoui.scroll.isScrolling) {
         setTimeout(self.setScrollStart, 50);
       } else {
         clearTimeout(self.scrollTimer);
@@ -415,19 +415,19 @@ ionic.views.Scroll = ionic.views.View.inherit({
     self.freezeShut = self.freeze;
 
     self.setScrollStart = function() {
-      ionic.scroll.isScrolling = Math.abs(ionic.scroll.lastTop - self.__scrollTop) > 1;
+      atajoui.scroll.isScrolling = Math.abs(atajoui.scroll.lastTop - self.__scrollTop) > 1;
       clearTimeout(self.scrollTimer);
       self.scrollTimer = setTimeout(self.setScrollStop, 80);
     };
 
     self.setScrollStop = function() {
-      ionic.scroll.isScrolling = false;
-      ionic.scroll.lastTop = self.__scrollTop;
+      atajoui.scroll.isScrolling = false;
+      atajoui.scroll.lastTop = self.__scrollTop;
     };
 
-    self.triggerScrollEvent = ionic.throttle(function() {
+    self.triggerScrollEvent = atajoui.throttle(function() {
       self.onScroll();
-      ionic.trigger('scroll', {
+      atajoui.trigger('scroll', {
         scrollTop: self.__scrollTop,
         scrollLeft: self.__scrollLeft,
         target: self.__container
@@ -435,7 +435,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     }, self.options.scrollEventInterval);
 
     self.triggerScrollEndEvent = function() {
-      ionic.trigger('scrollend', {
+      atajoui.trigger('scrollend', {
         scrollTop: self.__scrollTop,
         scrollLeft: self.__scrollLeft,
         target: self.__container
@@ -601,16 +601,16 @@ ionic.views.Scroll = ionic.views.View.inherit({
   */
 
   /** Minimum left scroll position during deceleration */
-  __minDecelerationScrollLeft: null,
+  __minDeceleratauiScrollLeft: null,
 
   /** Minimum top scroll position during deceleration */
-  __minDecelerationScrollTop: null,
+  __minDeceleratauiScrollTop: null,
 
   /** Maximum left scroll position during deceleration */
-  __maxDecelerationScrollLeft: null,
+  __maxDeceleratauiScrollLeft: null,
 
   /** Maximum top scroll position during deceleration */
-  __maxDecelerationScrollTop: null,
+  __maxDeceleratauiScrollTop: null,
 
   /** Current factor to modify horizontal scroll position with on every step */
   __decelerationVelocityX: null,
@@ -677,7 +677,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         // shrink scrollview so we can actually scroll if the input is hidden
         // if it isn't shrink so we can scroll to inputs under the keyboard
         // inset modals won't shrink on Android on their own when the keyboard appears
-        if ( ionic.Platform.isIOS() || ionic.Platform.isFullScreen || isInsetModal ) {
+        if ( atajoui.Platform.isIOS() || atajoui.Platform.isFullScreen || isInsetModal ) {
           // if there are things below the scroll view account for them and
           // subtract them from the keyboard height when resizing
           // E - D                         E                         D
@@ -686,7 +686,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
           // 0 or D - B if D > B           E - B                     E - D
           var keyboardOffset = Math.max(0, e.detail.keyboardHeight - scrollBottomOffsetToBottom);
 
-          ionic.requestAnimationFrame(function(){
+          atajoui.requestAnimationFrame(function(){
             // D - A or B - A if D > B       D - A             max(0, D - B)
             scrollViewOffsetHeight = scrollViewOffsetHeight - keyboardOffset;
             container.style.height = scrollViewOffsetHeight + "px";
@@ -715,7 +715,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       // if the element is positioned under the keyboard scroll it into view
       if (e.detail.isElementUnderKeyboard) {
 
-        ionic.requestAnimationFrame(function(){
+        atajoui.requestAnimationFrame(function(){
           container.scrollTop = 0;
           // update D if we shrunk
           if (self.isShrunkForKeyboard && !alreadyShrunk) {
@@ -739,7 +739,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
           var scrollTop = inputMidpointOffsetToScrollBottom + scrollMidpointOffset;
 
           if ( scrollTop > 0) {
-            if (ionic.Platform.isIOS()) ionic.tap.cloneFocusedInput(container, self);
+            if (atajoui.Platform.isIOS()) atajoui.tap.cloneFocusedInput(container, self);
             self.scrollBy(0, scrollTop, true);
             self.onScroll();
           }
@@ -767,7 +767,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     // Listen on document because container may not have had the last
     // keyboardActiveElement, for example after closing a modal with a focused
-    // input and returning to a previously resized scroll view in an ion-content.
+    // input and returning to a previously resized scroll view in an aui-content.
     // Since we can only resize scroll views that are currently visible, just resize
     // the current scroll view when the keyboard is closed.
     document.addEventListener('resetScrollView', self.resetScrollView);
@@ -780,15 +780,15 @@ ionic.views.Scroll = ionic.views.View.inherit({
     }
 
     self.touchStart = function(e) {
-      self.startCoordinates = ionic.tap.pointerCoord(e);
+      self.startCoordinates = atajoui.tap.pointerCoord(e);
 
-      if ( ionic.tap.ignoreScrollStart(e) ) {
+      if ( atajoui.tap.ignoreScrollStart(e) ) {
         return;
       }
 
       self.__isDown = true;
 
-      if ( ionic.tap.containsOrIsTextInput(e.target) || e.target.tagName === 'SELECT' ) {
+      if ( atajoui.tap.containsOrIsTextInput(e.target) || e.target.tagName === 'SELECT' ) {
         // do not start if the target is a text input
         // if there is a touchmove on this input, then we can start the scroll
         self.__hasStarted = false;
@@ -809,7 +809,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         return;
       }
 
-      if ( !self.__hasStarted && ( ionic.tap.containsOrIsTextInput(e.target) || e.target.tagName === 'SELECT' ) ) {
+      if ( !self.__hasStarted && ( atajoui.tap.containsOrIsTextInput(e.target) || e.target.tagName === 'SELECT' ) ) {
         // the target is a text input and scroll has started
         // since the text input doesn't start on touchStart, do it here
         self.__hasStarted = true;
@@ -820,10 +820,10 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       if (self.startCoordinates) {
         // we have start coordinates, so get this touch move's current coordinates
-        var currentCoordinates = ionic.tap.pointerCoord(e);
+        var currentCoordinates = atajoui.tap.pointerCoord(e);
 
         if ( self.__isSelectable &&
-            ionic.tap.isTextInput(e.target) &&
+            atajoui.tap.isTextInput(e.target) &&
             Math.abs(self.startCoordinates.x - currentCoordinates.x) > 20 ) {
           // user slid the text input's caret on its x axis, disable any future y scrolling
           self.__enableScrollY = false;
@@ -835,7 +835,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
           // disabled being able to select text on an input
           // hide the input which has focus, and show a cloned one that doesn't have focus
           self.__isSelectable = false;
-          ionic.tap.cloneFocusedInput(container, self);
+          atajoui.tap.cloneFocusedInput(container, self);
         }
       }
 
@@ -859,12 +859,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
       self.__enableScrollY = true;
 
       if ( !self.__isDragging && !self.__isDecelerating && !self.__isAnimating ) {
-        ionic.tap.removeClonedInputs(container, self);
+        atajoui.tap.removeClonedInputs(container, self);
       }
     };
 
-    self.mouseWheel = ionic.animationFrameThrottle(function(e) {
-      var scrollParent = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'ionic-scroll');
+    self.mouseWheel = atajoui.animationFrameThrottle(function(e) {
+      var scrollParent = atajoui.DomUtil.getParentOrSelfWithClass(e.target, 'atajoui-scroll');
       if (!self.options.freeze && scrollParent === self.__container) {
 
         self.hintResize();
@@ -913,12 +913,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
       var mousedown = false;
 
       self.mouseDown = function(e) {
-        if ( ionic.tap.ignoreScrollStart(e) || e.target.tagName === 'SELECT' ) {
+        if ( atajoui.tap.ignoreScrollStart(e) || e.target.tagName === 'SELECT' ) {
           return;
         }
         self.doTouchStart(getEventTouches(e), e.timeStamp);
 
-        if ( !ionic.tap.isTextInput(e.target) ) {
+        if ( !atajoui.tap.isTextInput(e.target) ) {
           e.preventDefault();
         }
         mousedown = true;
@@ -991,7 +991,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     container.removeEventListener('scrollChildIntoView', self.scrollChildIntoView);
     document.removeEventListener('resetScrollView', self.resetScrollView);
 
-    ionic.tap.removeClonedInputs(container, self);
+    atajoui.tap.removeClonedInputs(container, self);
 
     delete self.__container;
     delete self.__content;
@@ -1067,7 +1067,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         width = 0;
       }
       if (width !== self.__indicatorX.size) {
-        ionic.requestAnimationFrame(function(){
+        atajoui.requestAnimationFrame(function(){
           self.__indicatorX.indicator.style.width = width + 'px';
         });
       }
@@ -1084,7 +1084,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         height = 0;
       }
       if (height !== self.__indicatorY.size) {
-        ionic.requestAnimationFrame(function(){
+        atajoui.requestAnimationFrame(function(){
           self.__indicatorY && (self.__indicatorY.indicator.style.height = height + 'px');
         });
       }
@@ -1098,7 +1098,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   /**
    * Move and scale the scrollbars as the page scrolls.
    */
-  __repositionScrollbars: function() {
+  __repositauiScrollbars: function() {
     var self = this,
         heightScale, widthScale,
         widthDiff, heightDiff,
@@ -1229,7 +1229,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
   __scrollingComplete: function() {
     this.options.scrollingComplete();
-    ionic.tap.removeClonedInputs(this.__container, this);
+    atajoui.tap.removeClonedInputs(this.__container, this);
     this.__fadeScrollbars('out');
   },
 
@@ -1295,7 +1295,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
           content.style[transformProperty] = translate3d;
           self.contentTransform = translate3d;
         }
-        self.__repositionScrollbars();
+        self.__repositauiScrollbars();
         if (!wasResize) {
           self.triggerScrollEvent();
         }
@@ -1305,7 +1305,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       return function(left, top, zoom, wasResize) {
         content.style[transformProperty] = 'translate(' + (-left) + 'px,' + (-top) + 'px) scale(' + zoom + ')';
-        self.__repositionScrollbars();
+        self.__repositauiScrollbars();
         if (!wasResize) {
           self.triggerScrollEvent();
         }
@@ -1317,7 +1317,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
         content.style.marginLeft = left ? (-left / zoom) + 'px' : '';
         content.style.marginTop = top ? (-top / zoom) + 'px' : '';
         content.style.zoom = zoom || '';
-        self.__repositionScrollbars();
+        self.__repositauiScrollbars();
         if (!wasResize) {
           self.triggerScrollEvent();
         }
@@ -1416,12 +1416,12 @@ ionic.views.Scroll = ionic.views.View.inherit({
     var self = this;
 
     self.__refreshHeight = height;
-    self.__refreshActivate = function() { ionic.requestAnimationFrame(refresherMethods.activate); };
-    self.__refreshDeactivate = function() { ionic.requestAnimationFrame(refresherMethods.deactivate); };
-    self.__refreshStart = function() { ionic.requestAnimationFrame(refresherMethods.start); };
-    self.__refreshShow = function() { ionic.requestAnimationFrame(refresherMethods.show); };
-    self.__refreshHide = function() { ionic.requestAnimationFrame(refresherMethods.hide); };
-    self.__refreshTail = function() { ionic.requestAnimationFrame(refresherMethods.tail); };
+    self.__refreshActivate = function() { atajoui.requestAnimationFrame(refresherMethods.activate); };
+    self.__refreshDeactivate = function() { atajoui.requestAnimationFrame(refresherMethods.deactivate); };
+    self.__refreshStart = function() { atajoui.requestAnimationFrame(refresherMethods.start); };
+    self.__refreshShow = function() { atajoui.requestAnimationFrame(refresherMethods.show); };
+    self.__refreshHide = function() { atajoui.requestAnimationFrame(refresherMethods.hide); };
+    self.__refreshTail = function() { atajoui.requestAnimationFrame(refresherMethods.tail); };
     self.__refreshTailTime = 100;
     self.__minSpinTime = 600;
   },
@@ -2081,7 +2081,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
           self.__refreshStart();
         }
         // for iOS-ey style scrolling
-        if (!ionic.Platform.isAndroid())self.__startDeceleration();
+        if (!atajoui.Platform.isAndroid())self.__startDeceleration();
       } else {
 
         if (self.__interruptedAnimation || self.__isDragging) {
@@ -2260,18 +2260,18 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
       // We limit deceleration not to the min/max values of the allowed range, but to the size of the visible client area.
       // Each page should have exactly the size of the client area.
-      self.__minDecelerationScrollLeft = Math.floor(scrollLeft / clientWidth) * clientWidth;
-      self.__minDecelerationScrollTop = Math.floor(scrollTop / clientHeight) * clientHeight;
-      self.__maxDecelerationScrollLeft = Math.ceil(scrollLeft / clientWidth) * clientWidth;
-      self.__maxDecelerationScrollTop = Math.ceil(scrollTop / clientHeight) * clientHeight;
+      self.__minDeceleratauiScrollLeft = Math.floor(scrollLeft / clientWidth) * clientWidth;
+      self.__minDeceleratauiScrollTop = Math.floor(scrollTop / clientHeight) * clientHeight;
+      self.__maxDeceleratauiScrollLeft = Math.ceil(scrollLeft / clientWidth) * clientWidth;
+      self.__maxDeceleratauiScrollTop = Math.ceil(scrollTop / clientHeight) * clientHeight;
 
     } else {
 
-      self.__minDecelerationScrollLeft = 0;
-      self.__minDecelerationScrollTop = 0;
-      self.__maxDecelerationScrollLeft = self.__maxScrollLeft;
-      self.__maxDecelerationScrollTop = self.__maxScrollTop;
-      if (self.__refreshActive) self.__minDecelerationScrollTop = self.__refreshHeight * -1;
+      self.__minDeceleratauiScrollLeft = 0;
+      self.__minDeceleratauiScrollTop = 0;
+      self.__maxDeceleratauiScrollLeft = self.__maxScrollLeft;
+      self.__maxDeceleratauiScrollTop = self.__maxScrollTop;
+      if (self.__refreshActive) self.__minDeceleratauiScrollTop = self.__refreshHeight * -1;
     }
 
     // Wrap class method
@@ -2345,13 +2345,13 @@ ionic.views.Scroll = ionic.views.View.inherit({
 
     if (!self.options.bouncing) {
 
-      var scrollLeftFixed = Math.max(Math.min(self.__maxDecelerationScrollLeft, scrollLeft), self.__minDecelerationScrollLeft);
+      var scrollLeftFixed = Math.max(Math.min(self.__maxDeceleratauiScrollLeft, scrollLeft), self.__minDeceleratauiScrollLeft);
       if (scrollLeftFixed !== scrollLeft) {
         scrollLeft = scrollLeftFixed;
         self.__decelerationVelocityX = 0;
       }
 
-      var scrollTopFixed = Math.max(Math.min(self.__maxDecelerationScrollTop, scrollTop), self.__minDecelerationScrollTop);
+      var scrollTopFixed = Math.max(Math.min(self.__maxDeceleratauiScrollTop, scrollTop), self.__minDeceleratauiScrollTop);
       if (scrollTopFixed !== scrollTop) {
         scrollTop = scrollTopFixed;
         self.__decelerationVelocityY = 0;
@@ -2408,21 +2408,21 @@ ionic.views.Scroll = ionic.views.View.inherit({
       var penetrationAcceleration = self.options.penetrationAcceleration;
 
       // Check limits
-      if (scrollLeft < self.__minDecelerationScrollLeft) {
-        scrollOutsideX = self.__minDecelerationScrollLeft - scrollLeft;
-      } else if (scrollLeft > self.__maxDecelerationScrollLeft) {
-        scrollOutsideX = self.__maxDecelerationScrollLeft - scrollLeft;
+      if (scrollLeft < self.__minDeceleratauiScrollLeft) {
+        scrollOutsideX = self.__minDeceleratauiScrollLeft - scrollLeft;
+      } else if (scrollLeft > self.__maxDeceleratauiScrollLeft) {
+        scrollOutsideX = self.__maxDeceleratauiScrollLeft - scrollLeft;
       }
 
-      if (scrollTop < self.__minDecelerationScrollTop) {
-        scrollOutsideY = self.__minDecelerationScrollTop - scrollTop;
-      } else if (scrollTop > self.__maxDecelerationScrollTop) {
-        scrollOutsideY = self.__maxDecelerationScrollTop - scrollTop;
+      if (scrollTop < self.__minDeceleratauiScrollTop) {
+        scrollOutsideY = self.__minDeceleratauiScrollTop - scrollTop;
+      } else if (scrollTop > self.__maxDeceleratauiScrollTop) {
+        scrollOutsideY = self.__maxDeceleratauiScrollTop - scrollTop;
       }
 
       // Slow down until slow enough, then flip back to snap position
       if (scrollOutsideX !== 0) {
-        var isHeadingOutwardsX = scrollOutsideX * self.__decelerationVelocityX <= self.__minDecelerationScrollLeft;
+        var isHeadingOutwardsX = scrollOutsideX * self.__decelerationVelocityX <= self.__minDeceleratauiScrollLeft;
         if (isHeadingOutwardsX) {
           self.__decelerationVelocityX += scrollOutsideX * penetrationDeceleration;
         }
@@ -2434,7 +2434,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       }
 
       if (scrollOutsideY !== 0) {
-        var isHeadingOutwardsY = scrollOutsideY * self.__decelerationVelocityY <= self.__minDecelerationScrollTop;
+        var isHeadingOutwardsY = scrollOutsideY * self.__decelerationVelocityY <= self.__minDeceleratauiScrollTop;
         if (isHeadingOutwardsY) {
           self.__decelerationVelocityY += scrollOutsideY * penetrationDeceleration;
         }
@@ -2478,9 +2478,9 @@ ionic.views.Scroll = ionic.views.View.inherit({
   }
 });
 
-ionic.scroll = {
+atajoui.scroll = {
   isScrolling: false,
   lastTop: 0
 };
 
-})(ionic);
+})(atajoui);

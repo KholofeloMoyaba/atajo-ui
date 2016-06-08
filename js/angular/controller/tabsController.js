@@ -1,9 +1,9 @@
-IonicModule
-.controller('$ionicTabs', [
+AtajoUiModule
+.controller('$atajoUiTabs', [
   '$scope',
   '$element',
-  '$ionicHistory',
-function($scope, $element, $ionicHistory) {
+  '$atajoUiHistory',
+function($scope, $element, $atajoUiHistory) {
   var self = this;
   var selectedTab = null;
   var previousSelectedTab = null;
@@ -22,7 +22,7 @@ function($scope, $element, $ionicHistory) {
   };
 
   self.add = function(tab) {
-    $ionicHistory.registerHistory(tab);
+    $atajoUiHistory.registerHistory(tab);
     self.tabs.push(tab);
   };
 
@@ -52,7 +52,7 @@ function($scope, $element, $ionicHistory) {
       selectedTab = selectedTabIndex = null;
       tab.$tabSelected = false;
       (tab.onDeselect || noop)();
-      tab.$broadcast && tab.$broadcast('$ionicHistory.deselect');
+      tab.$broadcast && tab.$broadcast('$atajoUiHistory.deselect');
     }
   };
 
@@ -72,7 +72,7 @@ function($scope, $element, $ionicHistory) {
 
     if (selectedTab && selectedTab.$historyId == tab.$historyId) {
       if (shouldEmitEvent) {
-        $ionicHistory.goToHistoryRoot(tab.$historyId);
+        $atajoUiHistory.goToHistoryRoot(tab.$historyId);
       }
 
     } else if (selectedTabIndex !== tabIndex) {
@@ -92,7 +92,7 @@ function($scope, $element, $ionicHistory) {
       (tab.onSelect || noop)();
 
       if (shouldEmitEvent) {
-        $scope.$emit('$ionicHistory.change', {
+        $scope.$emit('$atajoUiHistory.change', {
           type: 'tab',
           tabIndex: tabIndex,
           historyId: tab.$historyId,
@@ -110,7 +110,7 @@ function($scope, $element, $ionicHistory) {
 
   self.hasActiveScope = function() {
     for (var x = 0; x < self.tabs.length; x++) {
-      if ($ionicHistory.isActiveScope(self.tabs[x])) {
+      if ($atajoUiHistory.isActiveScope(self.tabs[x])) {
         return true;
       }
     }

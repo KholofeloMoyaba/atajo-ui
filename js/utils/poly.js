@@ -1,12 +1,12 @@
-(function(document, ionic) {
+(function(document, atajoui) {
   'use strict';
 
-  // Ionic CSS polyfills
-  ionic.CSS = {};
-  ionic.CSS.TRANSITION = [];
-  ionic.CSS.TRANSFORM = [];
+  // AtajoUi CSS polyfills
+  atajoui.CSS = {};
+  atajoui.CSS.TRANSITION = [];
+  atajoui.CSS.TRANSFORM = [];
 
-  ionic.EVENTS = {};
+  atajoui.EVENTS = {};
 
   (function() {
 
@@ -16,7 +16,7 @@
 
     for (i = 0; i < keys.length; i++) {
       if (document.documentElement.style[keys[i]] !== undefined) {
-        ionic.CSS.TRANSFORM = keys[i];
+        atajoui.CSS.TRANSFORM = keys[i];
         break;
       }
     }
@@ -25,22 +25,22 @@
     keys = ['webkitTransition', 'mozTransition', 'msTransition', 'transition'];
     for (i = 0; i < keys.length; i++) {
       if (document.documentElement.style[keys[i]] !== undefined) {
-        ionic.CSS.TRANSITION = keys[i];
+        atajoui.CSS.TRANSITION = keys[i];
         break;
       }
     }
 
     // Fallback in case the keys don't exist at all
-    ionic.CSS.TRANSITION = ionic.CSS.TRANSITION || 'transition';
+    atajoui.CSS.TRANSITION = atajoui.CSS.TRANSITION || 'transition';
 
     // The only prefix we care about is webkit for transitions.
-    var isWebkit = ionic.CSS.TRANSITION.indexOf('webkit') > -1;
+    var isWebkit = atajoui.CSS.TRANSITION.indexOf('webkit') > -1;
 
     // transition duration
-    ionic.CSS.TRANSITION_DURATION = (isWebkit ? '-webkit-' : '') + 'transition-duration';
+    atajoui.CSS.TRANSITION_DURATION = (isWebkit ? '-webkit-' : '') + 'transitaui-duration';
 
     // To be sure transitionend works everywhere, include *both* the webkit and non-webkit events
-    ionic.CSS.TRANSITIONEND = (isWebkit ? 'webkitTransitionEnd ' : '') + 'transitionend';
+    atajoui.CSS.TRANSITIONEND = (isWebkit ? 'webkitTransitionEnd ' : '') + 'transitionend';
   })();
 
   (function() {
@@ -61,10 +61,10 @@
         touchCancelEvent = 'MSPointerCancel';
       }
 
-      ionic.EVENTS.touchstart = touchStartEvent;
-      ionic.EVENTS.touchmove = touchMoveEvent;
-      ionic.EVENTS.touchend = touchEndEvent;
-      ionic.EVENTS.touchcancel = touchCancelEvent;
+      atajoui.EVENTS.touchstart = touchStartEvent;
+      atajoui.EVENTS.touchmove = touchMoveEvent;
+      atajoui.EVENTS.touchend = touchEndEvent;
+      atajoui.EVENTS.touchcancel = touchCancelEvent;
   })();
 
   // classList polyfill for them older Androids
@@ -111,4 +111,4 @@
     });
   }
 
-})(document, ionic);
+})(document, atajoui);

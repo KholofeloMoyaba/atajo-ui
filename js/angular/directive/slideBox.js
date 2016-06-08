@@ -1,12 +1,12 @@
 
 /**
  * @ngdoc directive
- * @name ionSlideBox
- * @module ionic
+ * @name auiSlideBox
+ * @module atajoui
  * @codepen AjgEB
- * @deprecated will be removed in the next Ionic release in favor of the new ion-slides component.
+ * @deprecated will be removed in the next AtajoUi release in favor of the new aui-slides component.
  * Don't depend on the internal behavior of this widget.
- * @delegate ionic.service:$ionicSlideBoxDelegate
+ * @delegate atajoui.service:$atajoUiSlideBoxDelegate
  * @restrict E
  * @description
  * The Slide Box is a multi-page container where each page can be swiped or dragged between:
@@ -14,21 +14,21 @@
  *
  * @usage
  * ```html
- * <ion-slide-box on-slide-changed="slideHasChanged($index)">
- *   <ion-slide>
+ * <aui-slide-box on-slide-changed="slideHasChanged($index)">
+ *   <aui-slide>
  *     <div class="box blue"><h1>BLUE</h1></div>
- *   </ion-slide>
- *   <ion-slide>
+ *   </aui-slide>
+ *   <aui-slide>
  *     <div class="box yellow"><h1>YELLOW</h1></div>
- *   </ion-slide>
- *   <ion-slide>
+ *   </aui-slide>
+ *   <aui-slide>
  *     <div class="box pink"><h1>PINK</h1></div>
- *   </ion-slide>
- * </ion-slide-box>
+ *   </aui-slide>
+ * </aui-slide-box>
  * ```
  *
  * @param {string=} delegate-handle The handle used to identify this slideBox
- * with {@link ionic.service:$ionicSlideBoxDelegate}.
+ * with {@link atajoui.service:$atajoUiSlideBoxDelegate}.
  * @param {boolean=} does-continue Whether the slide box should loop.
  * @param {boolean=} auto-play Whether the slide box should automatically slide. Default true if does-continue is true.
  * @param {number=} slide-interval How many milliseconds to wait to change slides (if does-continue is true). Defaults to 4000.
@@ -37,15 +37,15 @@
  * @param {expression=} on-slide-changed Expression called whenever the slide is changed.  Is passed an '$index' variable.
  * @param {expression=} active-slide Model to bind the current slide index to.
  */
-IonicModule
-.directive('ionSlideBox', [
+AtajoUiModule
+.directive('auiSlideBox', [
   '$animate',
   '$timeout',
   '$compile',
-  '$ionicSlideBoxDelegate',
-  '$ionicHistory',
-  '$ionicScrollDelegate',
-function($animate, $timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $ionicScrollDelegate) {
+  '$atajoUiSlideBoxDelegate',
+  '$atajoUiHistory',
+  '$atajoUiScrollDelegate',
+function($animate, $timeout, $compile, $atajoUiSlideBoxDelegate, $atajoUiHistory, $atajoUiScrollDelegate) {
   return {
     restrict: 'E',
     replace: true,
@@ -69,7 +69,7 @@ function($animate, $timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $i
       var shouldAutoPlay = isDefined($attrs.autoPlay) ? !!$scope.autoPlay : false;
       var slideInterval = shouldAutoPlay ? $scope.$eval($scope.slideInterval) || 4000 : 0;
 
-      var slider = new ionic.views.Slider({
+      var slider = new atajoui.views.Slider({
         el: $element[0],
         auto: slideInterval,
         continuous: continuous,
@@ -99,10 +99,10 @@ function($animate, $timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $i
 
       function freezeAllScrolls(shouldFreeze) {
         if (shouldFreeze && !_this.isScrollFreeze) {
-          $ionicScrollDelegate.freezeAllScrolls(shouldFreeze);
+          $atajoUiScrollDelegate.freezeAllScrolls(shouldFreeze);
 
         } else if (!shouldFreeze && _this.isScrollFreeze) {
-          $ionicScrollDelegate.freezeAllScrolls(false);
+          $atajoUiScrollDelegate.freezeAllScrolls(false);
         }
         _this.isScrollFreeze = shouldFreeze;
       }
@@ -130,9 +130,9 @@ function($animate, $timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $i
       //Exposed for testing
       this.__slider = slider;
 
-      var deregisterInstance = $ionicSlideBoxDelegate._registerInstance(
+      var deregisterInstance = $atajoUiSlideBoxDelegate._registerInstance(
         slider, $attrs.delegateHandle, function() {
-          return $ionicHistory.isActiveScope($scope);
+          return $atajoUiHistory.isActiveScope($scope);
         }
       );
       $scope.$on('$destroy', function() {
@@ -177,7 +177,7 @@ function($animate, $timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $i
       function getPager() {
         if (!pager) {
           var childScope = $scope.$new();
-          pager = jqLite('<ion-pager></ion-pager>');
+          pager = jqLite('<aui-pager></aui-pager>');
           $element.append(pager);
           pager = $compile(pager)(childScope);
         }
@@ -186,22 +186,22 @@ function($animate, $timeout, $compile, $ionicSlideBoxDelegate, $ionicHistory, $i
     }
   };
 }])
-.directive('ionSlide', function() {
+.directive('auiSlide', function() {
   return {
     restrict: 'E',
-    require: '?^ionSlideBox',
+    require: '?^auiSlideBox',
     compile: function(element) {
       element.addClass('slider-slide');
     }
   };
 })
 
-.directive('ionPager', function() {
+.directive('auiPager', function() {
   return {
     restrict: 'E',
     replace: true,
-    require: '^ionSlideBox',
-    template: '<div class="slider-pager"><span class="slider-pager-page" ng-repeat="slide in numSlides() track by $index" ng-class="{active: $index == currentSlide}" ng-click="pagerClick($index)"><i class="icon ion-record"></i></span></div>',
+    require: '^auiSlideBox',
+    template: '<div class="slider-pager"><span class="slider-pager-page" ng-repeat="slide in numSlides() track by $index" ng-class="{active: $index == currentSlide}" ng-click="pagerClick($index)"><i class="icon aui-record"></i></span></div>',
     link: function($scope, $element, $attr, slideBox) {
       var selectPage = function(index) {
         var children = $element[0].children;

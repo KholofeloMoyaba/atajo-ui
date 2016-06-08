@@ -1,42 +1,42 @@
 
 /**
  * @ngdoc directive
- * @name ionNavBar
- * @module ionic
- * @delegate ionic.service:$ionicNavBarDelegate
+ * @name auiNavBar
+ * @module atajoui
+ * @delegate atajoui.service:$atajoUiNavBarDelegate
  * @restrict E
  *
  * @description
- * If we have an {@link ionic.directive:ionNavView} directive, we can also create an
- * `<ion-nav-bar>`, which will create a topbar that updates as the application state changes.
+ * If we have an {@link atajoui.directive:auiNavView} directive, we can also create an
+ * `<aui-nav-bar>`, which will create a topbar that updates as the application state changes.
  *
- * We can add a back button by putting an {@link ionic.directive:ionNavBackButton} inside.
+ * We can add a back button by putting an {@link atajoui.directive:auiNavBackButton} inside.
  *
  * We can add buttons depending on the currently visible view using
- * {@link ionic.directive:ionNavButtons}.
+ * {@link atajoui.directive:auiNavButtons}.
  *
- * Note that the ion-nav-bar element will only work correctly if your content has an
- * ionView around it.
+ * Note that the aui-nav-bar element will only work correctly if your content has an
+ * auiView around it.
  *
  * @usage
  *
  * ```html
  * <body ng-app="starter">
  *   <!-- The nav bar that will be updated as we navigate -->
- *   <ion-nav-bar class="bar-positive">
- *   </ion-nav-bar>
+ *   <aui-nav-bar class="bar-positive">
+ *   </aui-nav-bar>
  *
  *   <!-- where the initial view template will be rendered -->
- *   <ion-nav-view>
- *     <ion-view>
- *       <ion-content>Hello!</ion-content>
- *     </ion-view>
- *   </ion-nav-view>
+ *   <aui-nav-view>
+ *     <aui-view>
+ *       <aui-content>Hello!</aui-content>
+ *     </aui-view>
+ *   </aui-nav-view>
  * </body>
  * ```
  *
  * @param {string=} delegate-handle The handle used to identify this navBar
- * with {@link ionic.service:$ionicNavBarDelegate}.
+ * with {@link atajoui.service:$atajoUiNavBarDelegate}.
  * @param align-title {string=} Where to align the title of the navbar.
  * Available: 'left', 'right', 'center'. Defaults to 'center'.
  * @param {boolean=} no-tap-scroll By default, the navbar will scroll the content
@@ -44,11 +44,11 @@
  *
  * </table><br/>
  */
-IonicModule
-.directive('ionNavBar', function() {
+AtajoUiModule
+.directive('auiNavBar', function() {
   return {
     restrict: 'E',
-    controller: '$ionicNavBar',
+    controller: '$atajoUiNavBar',
     scope: true,
     link: function($scope, $element, $attr, ctrl) {
       ctrl.init();

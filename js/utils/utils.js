@@ -1,13 +1,13 @@
-(function(ionic) {
+(function(atajoui) {
   /* for nextUid function below */
   var nextId = 0;
 
   /**
-   * Various utilities used throughout Ionic
+   * Various utilities used throughout AtajoUi
    *
    * Some of these are adopted from underscore.js and backbone.js, both also MIT licensed.
    */
-  ionic.Utils = {
+  atajoui.Utils = {
 
     arrayMove: function(arr, oldIndex, newIndex) {
       if (newIndex >= arr.length) {
@@ -110,7 +110,7 @@
       }
 
       // Add static properties to the constructor function, if supplied.
-      ionic.extend(child, parent, staticProps);
+      atajoui.extend(child, parent, staticProps);
 
       // Set the prototype chain to inherit from `parent`, without calling
       // `parent`'s constructor function.
@@ -120,7 +120,7 @@
 
       // Add prototype properties (instance properties) to the subclass,
       // if supplied.
-      if (protoProps) ionic.extend(child.prototype, protoProps);
+      if (protoProps) atajoui.extend(child.prototype, protoProps);
 
       // Set a convenience property in case the parent's prototype is needed
       // later.
@@ -144,7 +144,7 @@
     },
 
     nextUid: function() {
-      return 'ion' + (nextId++);
+      return 'aui' + (nextId++);
     },
 
     disconnectScope: function disconnectScope(scope) {
@@ -155,7 +155,7 @@
       }
       var parent = scope.$parent;
       scope.$$disconnected = true;
-      scope.$broadcast('$ionic.disconnectScope', scope);
+      scope.$broadcast('$atajoui.disconnectScope', scope);
 
       // See Scope.$destroy
       if (parent.$$childHead === scope) {
@@ -184,7 +184,7 @@
       }
       var parent = scope.$parent;
       scope.$$disconnected = false;
-      scope.$broadcast('$ionic.reconnectScope', scope);
+      scope.$broadcast('$atajoui.reconnectScope', scope);
       // See Scope.$new for this logic...
       scope.$$prevSibling = parent.$$childTail;
       if (parent.$$childHead) {
@@ -205,11 +205,11 @@
     }
   };
 
-  // Bind a few of the most useful functions to the ionic scope
-  ionic.inherit = ionic.Utils.inherit;
-  ionic.extend = ionic.Utils.extend;
-  ionic.throttle = ionic.Utils.throttle;
-  ionic.proxy = ionic.Utils.proxy;
-  ionic.debounce = ionic.Utils.debounce;
+  // Bind a few of the most useful functions to the atajoui scope
+  atajoui.inherit = atajoui.Utils.inherit;
+  atajoui.extend = atajoui.Utils.extend;
+  atajoui.throttle = atajoui.Utils.throttle;
+  atajoui.proxy = atajoui.Utils.proxy;
+  atajoui.debounce = atajoui.Utils.debounce;
 
-})(window.ionic);
+})(window.atajoui);

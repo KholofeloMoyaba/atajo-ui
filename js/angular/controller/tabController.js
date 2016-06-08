@@ -1,11 +1,11 @@
-IonicModule
-.controller('$ionicTab', [
+AtajoUiModule
+.controller('$atajoUiTab', [
   '$scope',
-  '$ionicHistory',
+  '$atajoUiHistory',
   '$attrs',
   '$location',
   '$state',
-function($scope, $ionicHistory, $attrs, $location, $state) {
+function($scope, $atajoUiHistory, $attrs, $location, $state) {
   this.$scope = $scope;
 
   //All of these exposed for testing
@@ -18,7 +18,7 @@ function($scope, $ionicHistory, $attrs, $location, $state) {
     return $attrs.uiSref && $state.includes($attrs.uiSref.split('(')[0]);
   };
   this.navNameMatchesState = function() {
-    return this.navViewName && $ionicHistory.isCurrentStateNavView(this.navViewName);
+    return this.navViewName && $atajoUiHistory.isCurrentStateNavView(this.navViewName);
   };
 
   this.tabMatchesState = function() {

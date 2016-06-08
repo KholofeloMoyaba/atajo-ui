@@ -1,10 +1,10 @@
 /**
  * @ngdoc service
- * @name $ionicHistory
- * @module ionic
+ * @name $atajoUiHistory
+ * @module atajoui
  * @description
- * $ionicHistory keeps track of views as the user navigates through an app. Similar to the way a
- * browser behaves, an Ionic app is able to keep track of the previous view, the current view, and
+ * $atajoUiHistory keeps track of views as the user navigates through an app. Similar to the way a
+ * browser behaves, an AtajoUi app is able to keep track of the previous view, the current view, and
  * the forward view (if there is one).  However, a typical web browser only keeps track of one
  * history stack in a linear fashion.
  *
@@ -13,19 +13,19 @@
  * tab and back, the back button relates not to the previous tab, but to the previous pages
  * visited within _that_ tab.
  *
- * `$ionicHistory` facilitates this parallel history architecture.
+ * `$atajoUiHistory` facilitates this parallel history architecture.
  */
 
-IonicModule
-.factory('$ionicHistory', [
+AtajoUiModule
+.factory('$atajoUiHistory', [
   '$rootScope',
   '$state',
   '$location',
   '$window',
   '$timeout',
-  '$ionicViewSwitcher',
-  '$ionicNavViewDelegate',
-function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $ionicNavViewDelegate) {
+  '$atajoUiViewSwitcher',
+  '$atajoUiNavViewDelegate',
+function($rootScope, $state, $location, $window, $timeout, $atajoUiViewSwitcher, $atajoUiNavViewDelegate) {
 
   // history actions while navigating views
   var ACTION_INITIAL_VIEW = 'initialView';
@@ -153,7 +153,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
       return id;
     }
     // if something goes wrong make sure its got a unique stateId
-    return ionic.Utils.nextUid();
+    return atajoui.Utils.nextUid();
   }
 
   function getCurrentStateParams() {
@@ -293,7 +293,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
       } else {
 
         // create an element from the viewLocals template
-        ele = $ionicViewSwitcher.createViewEle(viewLocals);
+        ele = $atajoUiViewSwitcher.createViewEle(viewLocals);
         if (this.isAbstractEle(ele, viewLocals)) {
           return {
             action: 'abstractView',
@@ -303,7 +303,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
         }
 
         // set a new unique viewId
-        viewId = ionic.Utils.nextUid();
+        viewId = atajoui.Utils.nextUid();
 
         if (currentView) {
           // set the forward view if there is a current view (ie: if its not the first view)
@@ -430,7 +430,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     },
 
     registerHistory: function(scope) {
-      scope.$historyId = ionic.Utils.nextUid();
+      scope.$historyId = atajoui.Utils.nextUid();
     },
 
     createView: function(data) {
@@ -442,7 +442,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     /**
      * @ngdoc method
-     * @name $ionicHistory#viewHistory
+     * @name $atajoUiHistory#viewHistory
      * @description The app's view history data, such as all the views and histories, along
      * with how they are ordered and linked together within the navigation stack.
      * @returns {object} Returns an object containing the apps view history data.
@@ -453,7 +453,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     /**
      * @ngdoc method
-     * @name $ionicHistory#currentView
+     * @name $atajoUiHistory#currentView
      * @description The app's current view.
      * @returns {object} Returns the current view.
      */
@@ -466,7 +466,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     /**
      * @ngdoc method
-     * @name $ionicHistory#currentHistoryId
+     * @name $atajoUiHistory#currentHistoryId
      * @description The ID of the history stack which is the parent container of the current view.
      * @returns {string} Returns the current history ID.
      */
@@ -476,7 +476,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     /**
      * @ngdoc method
-     * @name $ionicHistory#currentTitle
+     * @name $atajoUiHistory#currentTitle
      * @description Gets and sets the current view's title.
      * @param {string=} val The title to update the current view with.
      * @returns {string} Returns the current view's title.
@@ -492,7 +492,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     /**
      * @ngdoc method
-     * @name $ionicHistory#backView
+     * @name $atajoUiHistory#backView
      * @description Returns the view that was before the current view in the history stack.
      * If the user navigated from View A to View B, then View A would be the back view, and
      * View B would be the current view.
@@ -507,7 +507,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     /**
      * @ngdoc method
-     * @name $ionicHistory#backTitle
+     * @name $atajoUiHistory#backTitle
      * @description Gets the back view's title.
      * @returns {string} Returns the back view's title.
      */
@@ -518,7 +518,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     /**
      * @ngdoc method
-     * @name $ionicHistory#forwardView
+     * @name $atajoUiHistory#forwardView
      * @description Returns the view that was in front of the current view in the history stack.
      * A forward view would exist if the user navigated from View A to View B, then
      * navigated back to View A. At this point then View B would be the forward view, and View
@@ -534,7 +534,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     /**
      * @ngdoc method
-     * @name $ionicHistory#currentStateName
+     * @name $atajoUiHistory#currentStateName
      * @description Returns the current state name.
      * @returns {string}
      */
@@ -565,7 +565,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     /**
      * @ngdoc method
-     * @name $ionicHistory#goBack
+     * @name $atajoUiHistory#goBack
      * @param {number=} backCount Optional negative integer setting how many views to go
      * back. By default it'll go back one view by using the value `-1`. To go back two
      * views you would use `-2`. If the number goes farther back than the number of views
@@ -610,7 +610,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     /**
      * @ngdoc method
-     * @name $ionicHistory#removeBackView
+     * @name $atajoUiHistory#removeBackView
      * @description Remove the previous view from the history completely, including the
      * cached element and scope (if they exist).
      */
@@ -647,7 +647,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     /**
      * @ngdoc method
-     * @name $ionicHistory#clearHistory
+     * @name $atajoUiHistory#clearHistory
      * @description Clears out the app's entire history, except for the current view.
      */
     clearHistory: function() {
@@ -686,14 +686,14 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     /**
      * @ngdoc method
-     * @name $ionicHistory#clearCache
+     * @name $atajoUiHistory#clearCache
 	 * @return promise
-     * @description Removes all cached views within every {@link ionic.directive:ionNavView}.
+     * @description Removes all cached views within every {@link atajoui.directive:auiNavView}.
      * This both removes the view element from the DOM, and destroy it's scope.
      */
     clearCache: function(stateIds) {
       return $timeout(function() {
-        $ionicNavViewDelegate._instances.forEach(function(instance) {
+        $atajoUiNavViewDelegate._instances.forEach(function(instance) {
           instance.clearCache(stateIds);
         });
       });
@@ -701,10 +701,10 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 
     /**
      * @ngdoc method
-     * @name $ionicHistory#nextViewOptions
+     * @name $atajoUiHistory#nextViewOptions
      * @description Sets options for the next view. This method can be useful to override
      * certain view/transition defaults right before a view transition happens. For example,
-     * the {@link ionic.directive:menuClose} directive uses this method internally to ensure
+     * the {@link atajoui.directive:menuClose} directive uses this method internally to ensure
      * an animated view transition does not happen when a side menu is open, and also sets
      * the next view as the root of its history stack. After the transition these options
      * are set back to null.
@@ -716,7 +716,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
      * * `historyRoot`: The next view should become the root view in its history stack.
      *
      * ```js
-     * $ionicHistory.nextViewOptions({
+     * $atajoUiHistory.nextViewOptions({
      *   disableAnimate: true,
      *   disableBack: true
      * });
@@ -795,7 +795,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
   };
 
   function isAbstractTag(ele) {
-    return ele && ele.length && /ion-side-menus|ion-tabs/i.test(ele[0].tagName);
+    return ele && ele.length && /aui-side-menus|aui-tabs/i.test(ele[0].tagName);
   }
 
   function canSwipeBack(ele, viewLocals) {
@@ -805,7 +805,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     if (ele && ele.attr('can-swipe-back') === 'false') {
       return false;
     }
-    var eleChild = ele.find('ion-view');
+    var eleChild = ele.find('aui-view');
     if (eleChild && eleChild.attr('can-swipe-back') === 'false') {
       return false;
     }
@@ -819,20 +819,20 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
   '$state',
   '$location',
   '$document',
-  '$ionicPlatform',
-  '$ionicHistory',
-  'IONIC_BACK_PRIORITY',
-function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory, IONIC_BACK_PRIORITY) {
+  '$atajoUiPlatform',
+  '$atajoUiHistory',
+  'ATAJOUI_BACK_PRIORITY',
+function($rootScope, $state, $location, $document, $atajoUiPlatform, $atajoUiHistory, ATAJOUI_BACK_PRIORITY) {
 
   // always reset the keyboard state when change stage
-  $rootScope.$on('$ionicView.beforeEnter', function() {
-    ionic.keyboard && ionic.keyboard.hide && ionic.keyboard.hide();
+  $rootScope.$on('$atajoUiView.beforeEnter', function() {
+    atajoui.keyboard && atajoui.keyboard.hide && atajoui.keyboard.hide();
   });
 
-  $rootScope.$on('$ionicHistory.change', function(e, data) {
+  $rootScope.$on('$atajoUiHistory.change', function(e, data) {
     if (!data) return null;
 
-    var viewHistory = $ionicHistory.viewHistory();
+    var viewHistory = $atajoUiHistory.viewHistory();
 
     var hist = (data.historyId ? viewHistory.histories[ data.historyId ] : null);
     if (hist && hist.cursor > -1 && hist.cursor < hist.stack.length) {
@@ -860,12 +860,12 @@ function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory
     }
   });
 
-  $rootScope.$ionicGoBack = function(backCount) {
-    $ionicHistory.goBack(backCount);
+  $rootScope.$atajoUiGoBack = function(backCount) {
+    $atajoUiHistory.goBack(backCount);
   };
 
   // Set the document title when a new view is shown
-  $rootScope.$on('$ionicView.afterEnter', function(ev, data) {
+  $rootScope.$on('$atajoUiView.afterEnter', function(ev, data) {
     if (data && data.title) {
       $document[0].title = data.title;
     }
@@ -874,20 +874,20 @@ function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory
   // Triggered when devices with a hardware back button (Android) is clicked by the user
   // This is a Cordova/Phonegap platform specifc method
   function onHardwareBackButton(e) {
-    var backView = $ionicHistory.backView();
+    var backView = $atajoUiHistory.backView();
     if (backView) {
       // there is a back view, go to it
       backView.go();
     } else {
       // there is no back view, so close the app instead
-      ionic.Platform.exitApp();
+      atajoui.Platform.exitApp();
     }
     e.preventDefault();
     return false;
   }
-  $ionicPlatform.registerBackButtonAction(
+  $atajoUiPlatform.registerBackButtonAction(
     onHardwareBackButton,
-    IONIC_BACK_PRIORITY.view
+    ATAJOUI_BACK_PRIORITY.view
   );
 
 }]);

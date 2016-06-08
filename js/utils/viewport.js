@@ -2,7 +2,7 @@
 var viewportTag;
 var viewportProperties = {};
 
-ionic.viewport = {
+atajoui.viewport = {
   orientation: function() {
     // 0 = Portrait
     // 90 = Landscape
@@ -39,11 +39,11 @@ function viewportUpdate() {
 
   var initWidth = viewportProperties.width;
   var initHeight = viewportProperties.height;
-  var p = ionic.Platform;
+  var p = atajoui.Platform;
   var version = p.version();
   var DEVICE_WIDTH = 'device-width';
   var DEVICE_HEIGHT = 'device-height';
-  var orientation = ionic.viewport.orientation();
+  var orientation = atajoui.viewport.orientation();
 
   // Most times we're removing the height and adding the width
   // So this is the default to start with, then modify per platform/version/oreintation
@@ -129,7 +129,7 @@ function viewportTagUpdate() {
   viewportTag.content = props.join(', ');
 }
 
-ionic.Platform.ready(function() {
+atajoui.Platform.ready(function() {
   viewportLoadTag();
 
   window.addEventListener("orientationchange", function() {

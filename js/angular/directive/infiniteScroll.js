@@ -1,12 +1,12 @@
 /**
  * @ngdoc directive
- * @name ionInfiniteScroll
- * @module ionic
- * @parent ionic.directive:ionContent, ionic.directive:ionScroll
+ * @name auiInfiniteScroll
+ * @module atajoui
+ * @parent atajoui.directive:auiContent, atajoui.directive:auiScroll
  * @restrict E
  *
  * @description
- * The ionInfiniteScroll directive allows you to call a function whenever
+ * The auiInfiniteScroll directive allows you to call a function whenever
  * the user gets to the bottom of the page or near the bottom of the page.
  *
  * The expression you pass in for `on-infinite` is called when the user scrolls
@@ -18,25 +18,25 @@
  * bottom.
  * @param {string=} distance The distance from the bottom that the scroll must
  * reach to trigger the on-infinite expression. Default: 1%.
- * @param {string=} spinner The {@link ionic.directive:ionSpinner} to show while loading. The SVG
- * {@link ionic.directive:ionSpinner} is now the default, replacing rotating font icons.
- * @param {string=} icon The icon to show while loading. Default: 'ion-load-d'.  This is depreicated
- * in favor of the SVG {@link ionic.directive:ionSpinner}.
+ * @param {string=} spinner The {@link atajoui.directive:auiSpinner} to show while loading. The SVG
+ * {@link atajoui.directive:auiSpinner} is now the default, replacing rotating font icons.
+ * @param {string=} icon The icon to show while loading. Default: 'aui-load-d'.  This is depreicated
+ * in favor of the SVG {@link atajoui.directive:auiSpinner}.
  * @param {boolean=} immediate-check Whether to check the infinite scroll bounds immediately on load.
  *
  * @usage
  * ```html
- * <ion-content ng-controller="MyController">
- *   <ion-list>
+ * <aui-content ng-controller="MyController">
+ *   <aui-list>
  *   ....
  *   ....
- *   </ion-list>
+ *   </aui-list>
  *
- *   <ion-infinite-scroll
+ *   <aui-infinite-scroll
  *     on-infinite="loadMore()"
  *     distance="1%">
- *   </ion-infinite-scroll>
- * </ion-content>
+ *   </aui-infinite-scroll>
+ * </aui-content>
  * ```
  * ```js
  * function MyController($scope, $http) {
@@ -58,24 +58,24 @@
  * is to use angular's `ng-if` directive:
  *
  * ```html
- * <ion-infinite-scroll
+ * <aui-infinite-scroll
  *   ng-if="moreDataCanBeLoaded()"
- *   icon="ion-loading-c"
+ *   icon="aui-loading-c"
  *   on-infinite="loadMoreData()">
- * </ion-infinite-scroll>
+ * </aui-infinite-scroll>
  * ```
  */
-IonicModule
-.directive('ionInfiniteScroll', ['$timeout', function($timeout) {
+AtajoUiModule
+.directive('auiInfiniteScroll', ['$timeout', function($timeout) {
   return {
     restrict: 'E',
-    require: ['?^$ionicScroll', 'ionInfiniteScroll'],
+    require: ['?^$atajoUiScroll', 'auiInfiniteScroll'],
     template: function($element, $attrs) {
       if ($attrs.icon) return '<i class="icon {{icon()}} icon-refreshing {{scrollingType}}"></i>';
-      return '<ion-spinner icon="{{spinner()}}"></ion-spinner>';
+      return '<aui-spinner icon="{{spinner()}}"></aui-spinner>';
     },
     scope: true,
-    controller: '$ionInfiniteScroll',
+    controller: '$auiInfiniteScroll',
     link: function($scope, $element, $attrs, ctrls) {
       var infiniteScrollCtrl = ctrls[1];
       var scrollCtrl = infiniteScrollCtrl.scrollCtrl = ctrls[0];
@@ -89,7 +89,7 @@ IonicModule
         scrollCtrl.$element.on('scroll', infiniteScrollCtrl.checkBounds);
       } else {
         // grabbing the scrollable element, to determine dimensions, and current scroll pos
-        var scrollEl = ionic.DomUtil.getParentOrSelfWithClass($element[0].parentNode, 'overflow-scroll');
+        var scrollEl = atajoui.DomUtil.getParentOrSelfWithClass($element[0].parentNode, 'overflow-scroll');
         infiniteScrollCtrl.scrollEl = scrollEl;
         // if there's no scroll controller, and no overflow scroll div, infinite scroll wont work
         if (!scrollEl) {

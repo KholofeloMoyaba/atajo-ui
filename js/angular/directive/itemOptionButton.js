@@ -3,38 +3,38 @@ var ITEM_TPL_OPTION_BUTTONS =
   '</div>';
 /**
 * @ngdoc directive
-* @name ionOptionButton
-* @parent ionic.directive:ionItem
-* @module ionic
+* @name auiOptionButton
+* @parent atajoui.directive:auiItem
+* @module atajoui
 * @restrict E
 * @description
 * Creates an option button inside a list item, that is visible when the item is swiped
 * to the left by the user.  Swiped open option buttons can be hidden with
-* {@link ionic.service:$ionicListDelegate#closeOptionButtons $ionicListDelegate.closeOptionButtons}.
+* {@link atajoui.service:$atajoUiListDelegate#closeOptionButtons $atajoUiListDelegate.closeOptionButtons}.
 *
 * Can be assigned any button class.
 *
-* See {@link ionic.directive:ionList} for a complete example & explanation.
+* See {@link atajoui.directive:auiList} for a complete example & explanation.
 *
 * @usage
 *
 * ```html
-* <ion-list>
-*   <ion-item>
+* <aui-list>
+*   <aui-item>
 *     I love kittens!
-*     <ion-option-button class="button-positive">Share</ion-option-button>
-*     <ion-option-button class="button-assertive">Edit</ion-option-button>
-*   </ion-item>
-* </ion-list>
+*     <aui-optaui-button class="button-positive">Share</aui-optaui-button>
+*     <aui-optaui-button class="button-assertive">Edit</aui-optaui-button>
+*   </aui-item>
+* </aui-list>
 * ```
 */
-IonicModule.directive('ionOptionButton', [function() {
+AtajoUiModule.directive('auiOptionButton', [function() {
   function stopPropagation(e) {
     e.stopPropagation();
   }
   return {
     restrict: 'E',
-    require: '^ionItem',
+    require: '^auiItem',
     priority: Number.MAX_VALUE,
     compile: function($element, $attr) {
       $attr.$set('class', ($attr['class'] || '') + ' button', true);

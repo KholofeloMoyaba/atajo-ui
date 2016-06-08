@@ -1,9 +1,9 @@
-(function(ionic) {
+(function(atajoui) {
 'use strict';
 
-  ionic.views.Modal = ionic.views.View.inherit({
+  atajoui.views.Modal = atajoui.views.View.inherit({
     initialize: function(opts) {
-      opts = ionic.extend({
+      opts = atajoui.extend({
         focusFirstInput: false,
         unfocusOnHide: true,
         focusFirstDelay: 600,
@@ -11,7 +11,7 @@
         hardwareBackButtonClose: true,
       }, opts);
 
-      ionic.extend(this, opts);
+      atajoui.extend(this, opts);
 
       this.el = opts.el;
     },
@@ -40,4 +40,4 @@
     }
   });
 
-})(ionic);
+})(atajoui);

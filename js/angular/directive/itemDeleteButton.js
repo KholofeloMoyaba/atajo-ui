@@ -3,34 +3,34 @@ var ITEM_TPL_DELETE_BUTTON =
   '</div>';
 /**
 * @ngdoc directive
-* @name ionDeleteButton
-* @parent ionic.directive:ionItem
-* @module ionic
+* @name auiDeleteButton
+* @parent atajoui.directive:auiItem
+* @module atajoui
 * @restrict E
 * Creates a delete button inside a list item, that is visible when the
-* {@link ionic.directive:ionList ionList parent's} `show-delete` evaluates to true or
-* `$ionicListDelegate.showDelete(true)` is called.
+* {@link atajoui.directive:auiList auiList parent's} `show-delete` evaluates to true or
+* `$atajoUiListDelegate.showDelete(true)` is called.
 *
 * Takes any ionicon as a class.
 *
-* See {@link ionic.directive:ionList} for a complete example & explanation.
+* See {@link atajoui.directive:auiList} for a complete example & explanation.
 *
 * @usage
 *
 * ```html
-* <ion-list show-delete="shouldShowDelete">
-*   <ion-item>
-*     <ion-delete-button class="ion-minus-circled"></ion-delete-button>
+* <aui-list show-delete="shouldShowDelete">
+*   <aui-item>
+*     <aui-delete-button class="aui-minus-circled"></aui-delete-button>
 *     Hello, list item!
-*   </ion-item>
-* </ion-list>
-* <ion-toggle ng-model="shouldShowDelete">
+*   </aui-item>
+* </aui-list>
+* <aui-toggle ng-model="shouldShowDelete">
 *   Show Delete?
-* </ion-toggle>
+* </aui-toggle>
 * ```
 */
-IonicModule
-.directive('ionDeleteButton', function() {
+AtajoUiModule
+.directive('auiDeleteButton', function() {
 
   function stopPropagation(ev) {
     ev.stopPropagation();
@@ -38,7 +38,7 @@ IonicModule
 
   return {
     restrict: 'E',
-    require: ['^^ionItem', '^?ionList'],
+    require: ['^^auiItem', '^?auiList'],
     //Run before anything else, so we can move it before other directives process
     //its location (eg ngIf relies on the location of the directive in the dom)
     priority: Number.MAX_VALUE,
@@ -57,9 +57,9 @@ IonicModule
         $element.on('click', stopPropagation);
 
         init();
-        $scope.$on('$ionic.reconnectScope', init);
+        $scope.$on('$atajoui.reconnectScope', init);
         function init() {
-          listCtrl = listCtrl || $element.controller('ionList');
+          listCtrl = listCtrl || $element.controller('auiList');
           if (listCtrl && listCtrl.showDelete()) {
             container.addClass('visible active');
           }

@@ -1,11 +1,11 @@
-IonicModule
-.controller('$ionicRefresher', [
+AtajoUiModule
+.controller('$atajoUiRefresher', [
   '$scope',
   '$attrs',
   '$element',
-  '$ionicBind',
+  '$atajoUiBind',
   '$timeout',
-  function($scope, $attrs, $element, $ionicBind, $timeout) {
+  function($scope, $attrs, $element, $atajoUiBind, $timeout) {
     var self = this,
         isDragging = false,
         isOverscrolling = false,
@@ -21,14 +21,14 @@ IonicModule
         scrollChild;
 
     if (!isDefined($attrs.pullingIcon)) {
-      $attrs.$set('pullingIcon', 'ion-android-arrow-down');
+      $attrs.$set('pullingIcon', 'aui-android-arrow-down');
     }
 
     $scope.showSpinner = !isDefined($attrs.refreshingIcon) && $attrs.spinner != 'none';
 
     $scope.showIcon = isDefined($attrs.refreshingIcon);
 
-    $ionicBind($scope, $attrs, {
+    $atajoUiBind($scope, $attrs, {
       pullingIcon: '@',
       pullingText: '@',
       refreshingIcon: '@',
@@ -111,7 +111,7 @@ IonicModule
       // how far have we dragged so far?
       // kitkat fix for touchcancel events http://updates.html5rocks.com/2014/05/A-More-Compatible-Smoother-Touch
       // Only do this if we're not on crosswalk
-      if (ionic.Platform.isAndroid() && ionic.Platform.version() === 4.4 && !ionic.Platform.isCrosswalk() && scrollParent.scrollTop === 0 && deltaY > 0) {
+      if (atajoui.Platform.isAndroid() && atajoui.Platform.version() === 4.4 && !atajoui.Platform.isCrosswalk() && scrollParent.scrollTop === 0 && deltaY > 0) {
         isDragging = true;
         e.preventDefault();
       }
@@ -156,11 +156,11 @@ IonicModule
       // update the icon accordingly
       if (!activated && lastOverscroll > ptrThreshold) {
         activated = true;
-        ionic.requestAnimationFrame(activate);
+        atajoui.requestAnimationFrame(activate);
 
       } else if (activated && lastOverscroll < ptrThreshold) {
         activated = false;
-        ionic.requestAnimationFrame(deactivate);
+        atajoui.requestAnimationFrame(deactivate);
       }
     }
 
@@ -170,7 +170,7 @@ IonicModule
     }
 
     function overscroll(val) {
-      scrollChild.style[ionic.CSS.TRANSFORM] = 'translate3d(0px, ' + val + 'px, 0px)';
+      scrollChild.style[atajoui.CSS.TRANSFORM] = 'translate3d(0px, ' + val + 'px, 0px)';
       lastOverscroll = val;
     }
 
@@ -187,13 +187,13 @@ IonicModule
       // set the scrollbar to be position:fixed in preparation to overscroll
       // or remove it so the app can be natively scrolled
       if (enabled) {
-        ionic.requestAnimationFrame(function() {
+        atajoui.requestAnimationFrame(function() {
           scrollChild.classList.add('overscroll');
           show();
         });
 
       } else {
-        ionic.requestAnimationFrame(function() {
+        atajoui.requestAnimationFrame(function() {
           scrollChild.classList.remove('overscroll');
           hide();
           deactivate();
@@ -205,7 +205,7 @@ IonicModule
       // prevent the complete from firing before the scroll has started
       $timeout(function() {
 
-        ionic.requestAnimationFrame(tail);
+        atajoui.requestAnimationFrame(tail);
 
         // scroll back to home during tail animation
         scrollTo(0, scrollTime, deactivate);
@@ -250,7 +250,7 @@ IonicModule
         overscroll(Math.floor((easedT * (Y - from)) + from));
 
         if (time < 1) {
-          ionic.requestAnimationFrame(scroll);
+          atajoui.requestAnimationFrame(scroll);
 
         } else {
 
@@ -264,7 +264,7 @@ IonicModule
       }
 
       // start scroll loop
-      ionic.requestAnimationFrame(scroll);
+      atajoui.requestAnimationFrame(scroll);
     }
 
 
@@ -287,19 +287,19 @@ IonicModule
       scrollParent = $element.parent().parent()[0];
       scrollChild = $element.parent()[0];
 
-      if (!scrollParent || !scrollParent.classList.contains('ionic-scroll') ||
+      if (!scrollParent || !scrollParent.classList.contains('atajoui-scroll') ||
         !scrollChild || !scrollChild.classList.contains('scroll')) {
-        throw new Error('Refresher must be immediate child of ion-content or ion-scroll');
+        throw new Error('Refresher must be immediate child of aui-content or aui-scroll');
       }
 
 
-      ionic.on(touchStartEvent, handleTouchstart, scrollChild);
-      ionic.on(touchMoveEvent, handleTouchmove, scrollChild);
-      ionic.on(touchEndEvent, handleTouchend, scrollChild);
-      ionic.on('mousedown', handleMousedown, scrollChild);
-      ionic.on('mousemove', handleTouchmove, scrollChild);
-      ionic.on('mouseup', handleTouchend, scrollChild);
-      ionic.on('scroll', handleScroll, scrollParent);
+      atajoui.on(touchStartEvent, handleTouchstart, scrollChild);
+      atajoui.on(touchMoveEvent, handleTouchmove, scrollChild);
+      atajoui.on(touchEndEvent, handleTouchend, scrollChild);
+      atajoui.on('mousedown', handleMousedown, scrollChild);
+      atajoui.on('mousemove', handleTouchmove, scrollChild);
+      atajoui.on('mouseup', handleTouchend, scrollChild);
+      atajoui.on('scroll', handleScroll, scrollParent);
 
       // cleanup when done
       $scope.$on('$destroy', destroy);
@@ -307,15 +307,15 @@ IonicModule
 
     function destroy() {
       if ( scrollChild ) {
-        ionic.off(touchStartEvent, handleTouchstart, scrollChild);
-        ionic.off(touchMoveEvent, handleTouchmove, scrollChild);
-        ionic.off(touchEndEvent, handleTouchend, scrollChild);
-        ionic.off('mousedown', handleMousedown, scrollChild);
-        ionic.off('mousemove', handleTouchmove, scrollChild);
-        ionic.off('mouseup', handleTouchend, scrollChild);
+        atajoui.off(touchStartEvent, handleTouchstart, scrollChild);
+        atajoui.off(touchMoveEvent, handleTouchmove, scrollChild);
+        atajoui.off(touchEndEvent, handleTouchend, scrollChild);
+        atajoui.off('mousedown', handleMousedown, scrollChild);
+        atajoui.off('mousemove', handleTouchmove, scrollChild);
+        atajoui.off('mouseup', handleTouchend, scrollChild);
       }
       if ( scrollParent ) {
-        ionic.off('scroll', handleScroll, scrollParent);
+        atajoui.off('scroll', handleScroll, scrollParent);
       }
       scrollParent = null;
       scrollChild = null;

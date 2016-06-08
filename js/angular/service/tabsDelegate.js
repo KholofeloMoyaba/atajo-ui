@@ -1,43 +1,43 @@
 /**
  * @ngdoc service
- * @name $ionicTabsDelegate
- * @module ionic
+ * @name $atajoUiTabsDelegate
+ * @module atajoui
  *
  * @description
- * Delegate for controlling the {@link ionic.directive:ionTabs} directive.
+ * Delegate for controlling the {@link atajoui.directive:auiTabs} directive.
  *
- * Methods called directly on the $ionicTabsDelegate service will control all ionTabs
- * directives. Use the {@link ionic.service:$ionicTabsDelegate#$getByHandle $getByHandle}
- * method to control specific ionTabs instances.
+ * Methods called directly on the $atajoUiTabsDelegate service will control all auiTabs
+ * directives. Use the {@link atajoui.service:$atajoUiTabsDelegate#$getByHandle $getByHandle}
+ * method to control specific auiTabs instances.
  *
  * @usage
  *
  * ```html
  * <body ng-controller="MyCtrl">
- *   <ion-tabs>
+ *   <aui-tabs>
  *
- *     <ion-tab title="Tab 1">
+ *     <aui-tab title="Tab 1">
  *       Hello tab 1!
  *       <button ng-click="selectTabWithIndex(1)">Select tab 2!</button>
- *     </ion-tab>
- *     <ion-tab title="Tab 2">Hello tab 2!</ion-tab>
+ *     </aui-tab>
+ *     <aui-tab title="Tab 2">Hello tab 2!</aui-tab>
  *
- *   </ion-tabs>
+ *   </aui-tabs>
  * </body>
  * ```
  * ```js
- * function MyCtrl($scope, $ionicTabsDelegate) {
+ * function MyCtrl($scope, $atajoUiTabsDelegate) {
  *   $scope.selectTabWithIndex = function(index) {
- *     $ionicTabsDelegate.select(index);
+ *     $atajoUiTabsDelegate.select(index);
  *   }
  * }
  * ```
  */
-IonicModule
-.service('$ionicTabsDelegate', ionic.DelegateService([
+AtajoUiModule
+.service('$atajoUiTabsDelegate', atajoui.DelegateService([
   /**
    * @ngdoc method
-   * @name $ionicTabsDelegate#select
+   * @name $atajoUiTabsDelegate#select
    * @description Select the tab matching the given index.
    *
    * @param {number} index Index of the tab to select.
@@ -45,27 +45,27 @@ IonicModule
   'select',
   /**
    * @ngdoc method
-   * @name $ionicTabsDelegate#selectedIndex
+   * @name $atajoUiTabsDelegate#selectedIndex
    * @returns `number` The index of the selected tab, or -1.
    */
   'selectedIndex',
   /**
    * @ngdoc method
-   * @name $ionicTabsDelegate#showBar
+   * @name $atajoUiTabsDelegate#showBar
    * @description
-   * Set/get whether the {@link ionic.directive:ionTabs} is shown
+   * Set/get whether the {@link atajoui.directive:auiTabs} is shown
    * @param {boolean} show Whether to show the bar.
    * @returns {boolean} Whether the bar is shown.
    */
   'showBar'
   /**
    * @ngdoc method
-   * @name $ionicTabsDelegate#$getByHandle
+   * @name $atajoUiTabsDelegate#$getByHandle
    * @param {string} handle
    * @returns `delegateInstance` A delegate instance that controls only the
-   * {@link ionic.directive:ionTabs} directives with `delegate-handle` matching
+   * {@link atajoui.directive:auiTabs} directives with `delegate-handle` matching
    * the given handle.
    *
-   * Example: `$ionicTabsDelegate.$getByHandle('my-handle').select(0);`
+   * Example: `$atajoUiTabsDelegate.$getByHandle('my-handle').select(0);`
    */
 ]));

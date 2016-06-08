@@ -1,7 +1,7 @@
 /**
  * @ngdoc directive
- * @name ionToggle
- * @module ionic
+ * @name auiToggle
+ * @module atajoui
  * @codepen tfAzj
  * @restrict E
  *
@@ -19,14 +19,14 @@
  * and has the `toggle-calm` CSS class assigned to the inner element.
  *
  * ```html
- * <ion-toggle ng-model="airplaneMode" toggle-class="toggle-calm">Airplane Mode</ion-toggle>
+ * <aui-toggle ng-model="airplaneMode" toggle-class="toggle-calm">Airplane Mode</aui-toggle>
  * ```
  */
-IonicModule
-.directive('ionToggle', [
+AtajoUiModule
+.directive('auiToggle', [
   '$timeout',
-  '$ionicConfig',
-function($timeout, $ionicConfig) {
+  '$atajoUiConfig',
+function($timeout, $atajoUiConfig) {
 
   return {
     restrict: 'E',
@@ -67,7 +67,7 @@ function($timeout, $ionicConfig) {
         element[0].getElementsByTagName('label')[0].classList.add(attr.toggleClass);
       }
 
-      element.addClass('toggle-' + $ionicConfig.form.toggle());
+      element.addClass('toggle-' + $atajoUiConfig.form.toggle());
 
       return function($scope, $element) {
         var el = $element[0].getElementsByTagName('label')[0];
@@ -77,7 +77,7 @@ function($timeout, $ionicConfig) {
 
         var ngModelController = jqLite(checkbox).controller('ngModel');
 
-        $scope.toggle = new ionic.views.Toggle({
+        $scope.toggle = new atajoui.views.Toggle({
           el: el,
           track: track,
           checkbox: checkbox,

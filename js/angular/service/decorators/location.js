@@ -1,7 +1,7 @@
 /**
  * @private
  */
-IonicModule.config([
+AtajoUiModule.config([
   '$provide',
 function($provide) {
   function $LocationDecorator($location, $timeout) {

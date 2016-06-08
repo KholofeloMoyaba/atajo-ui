@@ -1,9 +1,9 @@
-(function(ionic) {
+(function(atajoui) {
   var NOOP = function() {};
   var deprecated = function(name) {
     console.error('Method not available in native scrolling: ' + name);
   };
-  ionic.views.ScrollNative = ionic.views.View.inherit({
+  atajoui.views.ScrollNative = atajoui.views.View.inherit({
 
     initialize: function(options) {
       var self = this;
@@ -21,7 +21,7 @@
       self.__maxScrollLeft = Math.max((self.__contentWidth) - self.__clientWidth, 0);
 
       if(options.startY >= 0 || options.startX >= 0) {
-        ionic.requestAnimationFrame(function() {
+        atajoui.requestAnimationFrame(function() {
           self.el.scrollTop = options.startY || 0;
           self.el.scrollLeft = options.startX || 0;
 
@@ -52,13 +52,13 @@
        * Sets isScrolling to true, and automatically deactivates if not called again in 80ms.
        */
       self.onScroll = function() {
-        if (!ionic.scroll.isScrolling) {
-          ionic.scroll.isScrolling = true;
+        if (!atajoui.scroll.isScrolling) {
+          atajoui.scroll.isScrolling = true;
         }
 
         clearTimeout(self.scrollTimer);
         self.scrollTimer = setTimeout(function() {
-          ionic.scroll.isScrolling = false;
+          atajoui.scroll.isScrolling = false;
         }, 80);
       };
 
@@ -268,11 +268,11 @@
           }
 
           if (time < 1) {
-            ionic.requestAnimationFrame(animateScrollStep);
+            atajoui.requestAnimationFrame(animateScrollStep);
 
           } else {
             // done
-            ionic.tap.removeClonedInputs(self.__container, self);
+            atajoui.tap.removeClonedInputs(self.__container, self);
             self.el.style.overflowX = oldOverflowX;
             self.el.style.overflowY = oldOverflowY;
             self.resize();
@@ -280,7 +280,7 @@
         }
 
         // start scroll loop
-        ionic.requestAnimationFrame(animateScrollStep);
+        atajoui.requestAnimationFrame(animateScrollStep);
       }
     },
 
@@ -378,7 +378,7 @@
           // shrink scrollview so we can actually scroll if the input is hidden
           // if it isn't shrink so we can scroll to inputs under the keyboard
           // inset modals won't shrink on Android on their own when the keyboard appears
-          if ( !isPopover && (ionic.Platform.isIOS() || ionic.Platform.isFullScreen || isInsetModal) ) {
+          if ( !isPopover && (atajoui.Platform.isIOS() || atajoui.Platform.isFullScreen || isInsetModal) ) {
             // if there are things below the scroll view account for them and
             // subtract them from the keyboard height when resizing
             // E - D                         E                         D
@@ -387,7 +387,7 @@
             // 0 or D - B if D > B           E - B                     E - D
             //var keyboardOffset = e.detail.keyboardHeight - scrollBottomOffsetToBottom;
 
-            ionic.requestAnimationFrame(function(){
+            atajoui.requestAnimationFrame(function(){
               // D - A or B - A if D > B       D - A             max(0, D - B)
               scrollViewOffsetHeight = Math.max(0, Math.min(self.__originalContainerHeight, self.__originalContainerHeight - (e.detail.keyboardHeight - 43)));//keyboardOffset >= 0 ? scrollViewOffsetHeight - keyboardOffset : scrollViewOffsetHeight + keyboardOffset;
 
@@ -396,7 +396,7 @@
               container.style.height = scrollViewOffsetHeight + "px";
 
               /*
-              if (ionic.Platform.isIOS()) {
+              if (atajoui.Platform.isIOS()) {
                 // Force redraw to avoid disappearing content
                 var disp = container.style.display;
                 container.style.display = 'none';
@@ -430,11 +430,11 @@
         // if the element is positioned under the keyboard scroll it into view
         if (e.detail.isElementUnderKeyboard) {
 
-          ionic.requestAnimationFrame(function(){
-            var pos = ionic.DomUtil.getOffsetTop(e.detail.target);
+          atajoui.requestAnimationFrame(function(){
+            var pos = atajoui.DomUtil.getOffsetTop(e.detail.target);
             setTimeout(function() {
-              if (ionic.Platform.isIOS()) {
-                ionic.tap.cloneFocusedInput(container, self);
+              if (atajoui.Platform.isIOS()) {
+                atajoui.tap.cloneFocusedInput(container, self);
               }
               // Scroll the input into view, with a 100px buffer
               self.scrollTo(0, pos - (rect.top + 100), true);
@@ -469,10 +469,10 @@
             console.log('Scroll top', scrollTop);
 
             if ( scrollTop > 0) {
-              if (ionic.Platform.isIOS()) {
+              if (atajoui.Platform.isIOS()) {
                 //just shrank scroll view, give it some breathing room before scrolling
                 setTimeout(function(){
-                  ionic.tap.cloneFocusedInput(container, self);
+                  atajoui.tap.cloneFocusedInput(container, self);
                   self.scrollBy(0, scrollTop, true);
                   self.onScroll();
                 }, 32);
@@ -497,7 +497,7 @@
           container.style.height = "";
 
           /*
-          if (ionic.Platform.isIOS()) {
+          if (atajoui.Platform.isIOS()) {
             // Force redraw to avoid disappearing content
             var disp = container.style.display;
             container.style.display = 'none';
@@ -508,8 +508,8 @@
 
           self.__originalContainerHeight = container.getBoundingClientRect().height;
 
-          if (ionic.Platform.isIOS()) {
-            ionic.requestAnimationFrame(function() {
+          if (atajoui.Platform.isIOS()) {
+            atajoui.requestAnimationFrame(function() {
               container.classList.remove('keyboard-up');
             });
           }
@@ -539,12 +539,12 @@
       //See js/utils/keyboard.js
       container.addEventListener('scrollChildIntoView', self.scrollChildIntoView);
 
-      container.addEventListener(ionic.EVENTS.touchstart, self.handleTouchMove);
-      container.addEventListener(ionic.EVENTS.touchmove, self.handleTouchMove);
+      container.addEventListener(atajoui.EVENTS.touchstart, self.handleTouchMove);
+      container.addEventListener(atajoui.EVENTS.touchmove, self.handleTouchMove);
 
       // Listen on document because container may not have had the last
       // keyboardActiveElement, for example after closing a modal with a focused
-      // input and returning to a previously resized scroll view in an ion-content.
+      // input and returning to a previously resized scroll view in an aui-content.
       // Since we can only resize scroll views that are currently visible, just resize
       // the current scroll view when the keyboard is closed.
       document.addEventListener('resetScrollView', self.resetScrollView);
@@ -560,10 +560,10 @@
       container.removeEventListener('scrollChildIntoView', self.scrollChildIntoView);
       container.removeEventListener('resetScrollView', self.resetScrollView);
 
-      container.removeEventListener(ionic.EVENTS.touchstart, self.handleTouchMove);
-      container.removeEventListener(ionic.EVENTS.touchmove, self.handleTouchMove);
+      container.removeEventListener(atajoui.EVENTS.touchstart, self.handleTouchMove);
+      container.removeEventListener(atajoui.EVENTS.touchmove, self.handleTouchMove);
 
-      ionic.tap.removeClonedInputs(container, self);
+      atajoui.tap.removeClonedInputs(container, self);
 
       delete self.__container;
       delete self.__content;
@@ -577,4 +577,4 @@
     }
   });
 
-})(ionic);
+})(atajoui);

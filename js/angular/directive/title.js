@@ -1,23 +1,23 @@
 /**
 * @ngdoc directive
-* @name ionTitle
-* @module ionic
+* @name auiTitle
+* @module atajoui
 * @restrict E
 *
 * Used for titles in header and nav bars. New in 1.2
 *
-* Identical to <div class="title"> but with future compatibility for Ionic 2
+* Identical to <div class="title"> but with future compatibility for AtajoUi 2
 *
 * @usage
 *
 * ```html
-* <ion-nav-bar>
-*   <ion-title>Hello</ion-title>
-* <ion-nav-bar>
+* <aui-nav-bar>
+*   <aui-title>Hello</aui-title>
+* <aui-nav-bar>
 * ```
 */
-IonicModule
-.directive('ionTitle', [function() {
+AtajoUiModule
+.directive('auiTitle', [function() {
   return {
     restrict: 'E',
     compile: function(element) {

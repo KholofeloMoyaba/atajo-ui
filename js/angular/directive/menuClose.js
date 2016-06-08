@@ -1,7 +1,7 @@
 /**
  * @ngdoc directive
  * @name menuClose
- * @module ionic
+ * @module atajoui
  * @restrict AC
  *
  * @description
@@ -12,7 +12,7 @@
  * to replicate the user experience seen in most side menu implementations, which is
  * to not show the back button at the root of the stack and show only the
  * menu button. We recommend that you also use the `enable-menu-with-back-views="false"`
- * {@link ionic.directive:ionSideMenus} attribute when using the menuClose directive.
+ * {@link atajoui.directive:auiSideMenus} attribute when using the menuClose directive.
  *
  * @usage
  * Below is an example of a link within a side menu. Tapping this link would
@@ -27,22 +27,22 @@
  * `nextViewOptions` manually as your resolve completes.
  *
  * ```js
- * $ionicHistory.nextViewOptions({
+ * $atajoUiHistory.nextViewOptions({
  *  historyRoot: true,
  *  disableAnimate: true,
  *  expire: 300
  * });
  * ```
  */
-IonicModule
-.directive('menuClose', ['$ionicHistory', '$timeout', function($ionicHistory, $timeout) {
+AtajoUiModule
+.directive('menuClose', ['$atajoUiHistory', '$timeout', function($atajoUiHistory, $timeout) {
   return {
     restrict: 'AC',
     link: function($scope, $element) {
       $element.bind('click', function() {
-        var sideMenuCtrl = $element.inheritedData('$ionSideMenusController');
+        var sideMenuCtrl = $element.inheritedData('$auiSideMenusController');
         if (sideMenuCtrl) {
-          $ionicHistory.nextViewOptions({
+          $atajoUiHistory.nextViewOptions({
             historyRoot: true,
             disableAnimate: true,
             expire: 300
@@ -51,7 +51,7 @@ IonicModule
           // the expire should take care of it, but will be cancelled in some
           // cases. This directive is an exception to the rules of history.js
           $timeout( function() {
-            $ionicHistory.nextViewOptions({
+            $atajoUiHistory.nextViewOptions({
               historyRoot: false,
               disableAnimate: false
             });

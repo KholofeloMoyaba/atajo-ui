@@ -1,7 +1,7 @@
 /**
  * @ngdoc directive
- * @name ionRadio
- * @module ionic
+ * @name auiRadio
+ * @module atajoui
  * @restrict E
  * @codepen saoBG
  * @description
@@ -11,9 +11,9 @@
  *
  * @usage
  * ```html
- * <ion-radio ng-model="choice" ng-value="'A'">Choose A</ion-radio>
- * <ion-radio ng-model="choice" ng-value="'B'">Choose B</ion-radio>
- * <ion-radio ng-model="choice" ng-value="'C'">Choose C</ion-radio>
+ * <aui-radio ng-model="choice" ng-value="'A'">Choose A</aui-radio>
+ * <aui-radio ng-model="choice" ng-value="'B'">Choose B</aui-radio>
+ * <aui-radio ng-model="choice" ng-value="'C'">Choose C</aui-radio>
  * ```
  *
  * @param {string=} name The name of the radio input.
@@ -25,8 +25,8 @@
  * @param {boolean=} ng-disabled Angular equivalent of the disabled attribute.
  * @param {expression=} ng-change Triggers given expression when radio input's model changes
  */
-IonicModule
-.directive('ionRadio', function() {
+AtajoUiModule
+.directive('auiRadio', function() {
   return {
     restrict: 'E',
     replace: true,
@@ -37,14 +37,14 @@ IonicModule
         '<input type="radio" name="radio-group">' +
         '<div class="radio-content">' +
           '<div class="item-content disable-pointer-events" ng-transclude></div>' +
-          '<i class="radio-icon disable-pointer-events icon ion-checkmark"></i>' +
+          '<i class="radio-icon disable-pointer-events icon aui-checkmark"></i>' +
         '</div>' +
       '</label>',
 
     compile: function(element, attr) {
       if (attr.icon) {
         var iconElm = element.find('i');
-        iconElm.removeClass('ion-checkmark').addClass(attr.icon);
+        iconElm.removeClass('aui-checkmark').addClass(attr.icon);
       }
 
       var input = element.find('input');

@@ -1,7 +1,7 @@
-(function(ionic) {
+(function(atajoui) {
 'use strict';
 
-  ionic.views.Toggle = ionic.views.View.inherit({
+  atajoui.views.Toggle = atajoui.views.View.inherit({
     initialize: function(opts) {
       var self = this;
 
@@ -27,17 +27,17 @@
         self.release(e);
       };
 
-      this.dragStartGesture = ionic.onGesture('dragstart', this.dragStartHandler, this.el);
-      this.dragGesture = ionic.onGesture('drag', this.dragHandler, this.el);
-      this.dragHoldGesture = ionic.onGesture('hold', this.holdHandler, this.el);
-      this.dragReleaseGesture = ionic.onGesture('release', this.releaseHandler, this.el);
+      this.dragStartGesture = atajoui.onGesture('dragstart', this.dragStartHandler, this.el);
+      this.dragGesture = atajoui.onGesture('drag', this.dragHandler, this.el);
+      this.dragHoldGesture = atajoui.onGesture('hold', this.holdHandler, this.el);
+      this.dragReleaseGesture = atajoui.onGesture('release', this.releaseHandler, this.el);
     },
 
     destroy: function() {
-      ionic.offGesture(this.dragStartGesture, 'dragstart', this.dragStartGesture);
-      ionic.offGesture(this.dragGesture, 'drag', this.dragGesture);
-      ionic.offGesture(this.dragHoldGesture, 'hold', this.holdHandler);
-      ionic.offGesture(this.dragReleaseGesture, 'release', this.releaseHandler);
+      atajoui.offGesture(this.dragStartGesture, 'dragstart', this.dragStartGesture);
+      atajoui.offGesture(this.dragGesture, 'drag', this.dragGesture);
+      atajoui.offGesture(this.dragHoldGesture, 'hold', this.holdHandler);
+      atajoui.offGesture(this.dragReleaseGesture, 'release', this.releaseHandler);
     },
 
     tap: function() {
@@ -71,7 +71,7 @@
       // Stop any parent dragging
       e.gesture.srcEvent.preventDefault();
 
-      ionic.requestAnimationFrame(function () {
+      atajoui.requestAnimationFrame(function () {
         if (!self._dragInfo) { return; }
 
         var px = e.gesture.touches[0].pageX - self._dragInfo.left;
@@ -120,15 +120,15 @@
         } else {
           var openPixel = Math.round( (openPercent / 100) * this.track.offsetWidth - (this.handle.offsetWidth) );
           openPixel = (openPixel < 1 ? 0 : openPixel);
-          this.handle.style[ionic.CSS.TRANSFORM] = 'translate3d(' + openPixel + 'px,0,0)';
+          this.handle.style[atajoui.CSS.TRANSFORM] = 'translate3d(' + openPixel + 'px,0,0)';
         }
       }
     },
 
     val: function(value) {
       if(value === true || value === false) {
-        if(this.handle.style[ionic.CSS.TRANSFORM] !== "") {
-          this.handle.style[ionic.CSS.TRANSFORM] = "";
+        if(this.handle.style[atajoui.CSS.TRANSFORM] !== "") {
+          this.handle.style[atajoui.CSS.TRANSFORM] = "";
         }
         this.checkbox.checked = value;
         this.openPercent = (value ? 100 : 0);
@@ -139,4 +139,4 @@
 
   });
 
-})(ionic);
+})(atajoui);

@@ -1,9 +1,9 @@
 /**
  * @ngdoc directive
  * @name exposeAsideWhen
- * @module ionic
+ * @module atajoui
  * @restrict A
- * @parent ionic.directive:ionSideMenus
+ * @parent atajoui.directive:auiSideMenus
  *
  * @description
  * It is common for a tablet application to hide a menu when in portrait mode, but to show the
@@ -12,7 +12,7 @@
  *
  * By default, side menus are hidden underneath its side menu content, and can be opened by either
  * swiping the content left or right, or toggling a button to show the side menu. However, by adding the
- * `exposeAsideWhen` attribute directive to an {@link ionic.directive:ionSideMenu} element directive,
+ * `exposeAsideWhen` attribute directive to an {@link atajoui.directive:auiSideMenu} element directive,
  * a side menu can be given instructions on "when" the menu should be exposed (always viewable). For
  * example, the `expose-aside-when="large"` attribute will keep the side menu hidden when the viewport's
  * width is less than `768px`, but when the viewport's width is `768px` or greater, the menu will then
@@ -25,30 +25,30 @@
  * `(min-width:750px) and (max-width:1200px)`.
  * @usage
  * ```html
- * <ion-side-menus>
+ * <aui-side-menus>
  *   <!-- Center content -->
- *   <ion-side-menu-content>
- *   </ion-side-menu-content>
+ *   <aui-side-menu-content>
+ *   </aui-side-menu-content>
  *
  *   <!-- Left menu -->
- *   <ion-side-menu expose-aside-when="large">
- *   </ion-side-menu>
- * </ion-side-menus>
+ *   <aui-side-menu expose-aside-when="large">
+ *   </aui-side-menu>
+ * </aui-side-menus>
  * ```
  * For a complete side menu example, see the
- * {@link ionic.directive:ionSideMenus} documentation.
+ * {@link atajoui.directive:auiSideMenus} documentation.
  */
 
-IonicModule.directive('exposeAsideWhen', ['$window', function($window) {
+AtajoUiModule.directive('exposeAsideWhen', ['$window', function($window) {
   return {
     restrict: 'A',
-    require: '^ionSideMenus',
+    require: '^auiSideMenus',
     link: function($scope, $element, $attr, sideMenuCtrl) {
 
       var prevInnerWidth = $window.innerWidth;
       var prevInnerHeight = $window.innerHeight;
 
-      ionic.on('resize', function() {
+      atajoui.on('resize', function() {
         if (prevInnerWidth === $window.innerWidth && prevInnerHeight === $window.innerHeight) {
           return;
         }
@@ -68,7 +68,7 @@ IonicModule.directive('exposeAsideWhen', ['$window', function($window) {
         debouncedCheck();
       }
 
-      var debouncedCheck = ionic.debounce(function() {
+      var debouncedCheck = atajoui.debounce(function() {
         $scope.$apply(checkAsideExpose);
       }, 300, false);
 

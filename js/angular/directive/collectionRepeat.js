@@ -3,10 +3,10 @@
  * @ngdoc directive
  * @restrict A
  * @name collectionRepeat
- * @module ionic
+ * @module atajoui
  * @codepen 7ec1ec58f2489ab8f359fa1a0fe89c15
  * @description
- * `collection-repeat` allows an app to show huge lists of items much more performantly than
+ * `collectaui-repeat` allows an app to show huge lists of items much more performantly than
  * `ng-repeat`.
  *
  * It renders into the DOM only as many items as are currently visible.
@@ -16,10 +16,10 @@
  *
  * **The Basics**:
  *
- * - The data given to collection-repeat must be an array.
+ * - The data given to collectaui-repeat must be an array.
  * - If the `item-height` and `item-width` attributes are not supplied, it will be assumed that
  *   every item in the list has the same dimensions as the first item.
- * - Don't use angular one-time binding (`::`) with collection-repeat. The scope of each item is
+ * - Don't use angular one-time binding (`::`) with collectaui-repeat. The scope of each item is
  *   assigned new data and re-digested as you scroll. Bindings need to update, and one-time bindings
  *   won't.
  *
@@ -32,46 +32,46 @@
  * @usage
  * #### Basic Item List ([codepen](http://codepen.io/ionic/pen/0c2c35a34a8b18ad4d793fef0b081693))
  * ```html
- * <ion-content>
- *   <ion-item collection-repeat="item in items">
+ * <aui-content>
+ *   <aui-item collectaui-repeat="item in items">
  *     {% raw %}{{item}}{% endraw %}
- *   </ion-item>
- * </ion-content>
+ *   </aui-item>
+ * </aui-content>
  * ```
  *
  * #### Grid of Images ([codepen](http://codepen.io/ionic/pen/5515d4efd9d66f780e96787387f41664))
  * ```html
- * <ion-content>
- *   <img collection-repeat="photo in photos"
+ * <aui-content>
+ *   <img collectaui-repeat="photo in photos"
  *     item-width="33%"
  *     item-height="200px"
  *     ng-src="{% raw %}{{photo.url}}{% endraw %}">
- * </ion-content>
+ * </aui-content>
  * ```
  *
  * #### Horizontal Scroller, Dynamic Item Width ([codepen](http://codepen.io/ionic/pen/67cc56b349124a349acb57a0740e030e))
  * ```html
- * <ion-content>
+ * <aui-content>
  *   <h2>Available Kittens:</h2>
- *   <ion-scroll direction="x" class="available-scroller">
- *     <div class="photo" collection-repeat="photo in main.photos"
+ *   <aui-scroll direction="x" class="available-scroller">
+ *     <div class="photo" collectaui-repeat="photo in main.photos"
  *        item-height="250" item-width="photo.width + 30">
  *        <img ng-src="{% raw %}{{photo.src}}{% endraw %}">
  *     </div>
- *   </ion-scroll>
- * </ion-content>
+ *   </aui-scroll>
+ * </aui-content>
  * ```
  *
- * @param {expression} collection-repeat The expression indicating how to enumerate a collection,
+ * @param {expression} collectaui-repeat The expression indicating how to enumerate a collection,
  *   of the format  `variable in expression` – where variable is the user defined loop variable
  *   and `expression` is a scope expression giving the collection to enumerate.
  *   For example: `album in artist.albums` or `album in artist.albums | orderBy:'name'`.
  * @param {expression=} item-width The width of the repeated element. The expression must return
  *   a number (pixels) or a percentage. Defaults to the width of the first item in the list.
- *   (previously named collection-item-width)
+ *   (previously named collectaui-item-width)
  * @param {expression=} item-height The height of the repeated element. The expression must return
  *   a number (pixels) or a percentage. Defaults to the height of the first item in the list.
- *   (previously named collection-item-height)
+ *   (previously named collectaui-item-height)
  * @param {number=} item-render-buffer The number of items to load before and after the visible
  *   items in the list. Default 3. Tip: set this higher if you have lots of images to preload, but
  *   don't set it too high or you'll see performance loss.
@@ -80,40 +80,40 @@
  *   while the new src loads. Setting this to true comes with a small performance loss.
  */
 
-IonicModule
+AtajoUiModule
 .directive('collectionRepeat', CollectionRepeatDirective)
-.factory('$ionicCollectionManager', RepeatManagerFactory);
+.factory('$atajoUiCollectionManager', RepeatManagerFactory);
 
 var ONE_PX_TRANSPARENT_IMG_SRC = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 var WIDTH_HEIGHT_REGEX = /height:.*?px;\s*width:.*?px/;
 var DEFAULT_RENDER_BUFFER = 3;
 
-CollectionRepeatDirective.$inject = ['$ionicCollectionManager', '$parse', '$window', '$$rAF', '$rootScope', '$timeout'];
-function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$rAF, $rootScope, $timeout) {
+CollectionRepeatDirective.$inject = ['$atajoUiCollectionManager', '$parse', '$window', '$$rAF', '$rootScope', '$timeout'];
+function CollectionRepeatDirective($atajoUiCollectionManager, $parse, $window, $$rAF, $rootScope, $timeout) {
   return {
     restrict: 'A',
     priority: 1000,
     transclude: 'element',
     $$tlb: true,
-    require: '^^$ionicScroll',
+    require: '^^$atajoUiScroll',
     link: postLink
   };
 
   function postLink(scope, element, attr, scrollCtrl, transclude) {
     var scrollView = scrollCtrl.scrollView;
     var node = element[0];
-    var containerNode = angular.element('<div class="collection-repeat-container">')[0];
+    var containerNode = angular.element('<div class="collectaui-repeat-container">')[0];
     node.parentNode.replaceChild(containerNode, node);
 
     if (scrollView.options.scrollingX && scrollView.options.scrollingY) {
-      throw new Error("collection-repeat expected a parent x or y scrollView, not " +
+      throw new Error("collectaui-repeat expected a parent x or y scrollView, not " +
                       "an xy scrollView.");
     }
 
     var repeatExpr = attr.collectionRepeat;
     var match = repeatExpr.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
     if (!match) {
-      throw new Error("collection-repeat expected expression in form of '_item_ in " +
+      throw new Error("collectaui-repeat expected expression in form of '_item_ in " +
                       "_collection_[ track by _id_]' but got '" + attr.collectionRepeat + "'.");
     }
     var keyExpr = match[1];
@@ -131,10 +131,10 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       parseInt(renderBufferExpr) :
       DEFAULT_RENDER_BUFFER;
 
-    // attr.collectionItemHeight is deprecated
-    var heightExpr = attr.itemHeight || attr.collectionItemHeight;
-    // attr.collectionItemWidth is deprecated
-    var widthExpr = attr.itemWidth || attr.collectionItemWidth;
+    // attr.collectauiItemHeight is deprecated
+    var heightExpr = attr.itemHeight || attr.collectauiItemHeight;
+    // attr.collectauiItemWidth is deprecated
+    var widthExpr = attr.itemWidth || attr.collectauiItemWidth;
 
     var afterItemsContainer = initAfterItemsContainer();
 
@@ -145,7 +145,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
     scrollCtrl.$element.on('scroll-resize', refreshDimensions);
 
     angular.element($window).on('resize', onResize);
-    var unlistenToExposeAside = $rootScope.$on('$ionicExposeAside', ionic.animationFrameThrottle(function() {
+    var unlistenToExposeAside = $rootScope.$on('$atajoUiExposeAside', atajoui.animationFrameThrottle(function() {
       scrollCtrl.scrollView.resize();
       onResize();
     }));
@@ -160,7 +160,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
     scope.$watchCollection(listGetter, function(newValue) {
       data = newValue || (newValue = []);
       if (!angular.isArray(newValue)) {
-        throw new Error("collection-repeat expected an array for '" + listExpr + "', " +
+        throw new Error("collectaui-repeat expected an array for '" + listExpr + "', " +
           "but got a " + typeof value);
       }
       // Wait for this digest to end before refreshing everything.
@@ -214,7 +214,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
     }
 
     function getRepeatManager() {
-      return repeatManager || (repeatManager = new $ionicCollectionManager({
+      return repeatManager || (repeatManager = new $atajoUiCollectionManager({
         afterItemsNode: afterItemsContainer[0],
         containerNode: containerNode,
         heightData: heightData,
@@ -230,19 +230,19 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
 
     function initAfterItemsContainer() {
       var container = angular.element(
-        scrollView.__content.querySelector('.collection-repeat-after-container')
+        scrollView.__content.querySelector('.collectaui-repeat-after-container')
       );
       // Put everything in the view after the repeater into a container.
       if (!container.length) {
         var elementIsAfterRepeater = false;
         var afterNodes = [].filter.call(scrollView.__content.childNodes, function(node) {
-          if (ionic.DomUtil.contains(node, containerNode)) {
+          if (atajoui.DomUtil.contains(node, containerNode)) {
             elementIsAfterRepeater = true;
             return false;
           }
           return elementIsAfterRepeater;
         });
-        container = angular.element('<span class="collection-repeat-after-container">');
+        container = angular.element('<span class="collectaui-repeat-after-container">');
         if (scrollView.options.scrollingX) {
           container.addClass('horizontal');
         }
@@ -290,7 +290,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       if (hasData && heightData.computed) {
         heightData.value = computedStyleDimensions.height;
         if (!heightData.value) {
-          throw new Error('collection-repeat tried to compute the height of repeated elements "' +
+          throw new Error('collectaui-repeat tried to compute the height of repeated elements "' +
             repeatExpr + '", but was unable to. Please provide the "item-height" attribute. ' +
             'http://ionicframework.com/docs/api/directive/collectionRepeat/');
         }
@@ -302,7 +302,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       if (hasData && widthData.computed) {
         widthData.value = computedStyleDimensions.width;
         if (!widthData.value) {
-          throw new Error('collection-repeat tried to compute the width of repeated elements "' +
+          throw new Error('collectaui-repeat tried to compute the width of repeated elements "' +
             repeatExpr + '", but was unable to. Please provide the "item-width" attribute. ' +
             'http://ionicframework.com/docs/api/directive/collectionRepeat/');
         }
@@ -374,7 +374,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
     function computeStyleDimensions() {
       if (!computedStyleNode) {
         transclude(computedStyleScope = scope.$new(), function(clone) {
-          clone[0].removeAttribute('collection-repeat'); // remove absolute position styling
+          clone[0].removeAttribute('collectaui-repeat'); // remove absolute position styling
           computedStyleNode = clone[0];
         });
       }
@@ -518,7 +518,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       var current = containerNode;
       do {
         repeaterBeforeSize += current[isVertical ? 'offsetTop' : 'offsetLeft'];
-      } while ( ionic.DomUtil.contains(scrollView.__content, current = current.offsetParent) );
+      } while ( atajoui.DomUtil.contains(scrollView.__content, current = current.offsetParent) );
 
       var containerPrevNode = containerNode.previousElementSibling;
       var beforeStyle = containerPrevNode ? $window.getComputedStyle(containerPrevNode) : {};
@@ -527,7 +527,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       // Because we position the collection container with position: relative, it doesn't take
       // into account where to position itself relative to the previous element's marginBottom.
       // To compensate, we translate the container up by the previous element's margin.
-      containerNode.style[ionic.CSS.TRANSFORM] = TRANSLATE_TEMPLATE_STR
+      containerNode.style[atajoui.CSS.TRANSFORM] = TRANSLATE_TEMPLATE_STR
         .replace(PRIMARY, -beforeMargin)
         .replace(SECONDARY, 0);
       repeaterBeforeSize -= beforeMargin;
@@ -638,11 +638,11 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
         scope.$middle = !(scope.$first || scope.$last);
         scope.$odd = !(scope.$even = (i & 1) === 0);
 
-        if (scope.$$disconnected) ionic.Utils.reconnectScope(item.scope);
+        if (scope.$$disconnected) atajoui.Utils.reconnectScope(item.scope);
 
         dim = view.getDimensions(i);
         if (item.secondaryPos !== dim.secondaryPos || item.primaryPos !== dim.primaryPos) {
-          item.node.style[ionic.CSS.TRANSFORM] = TRANSLATE_TEMPLATE_STR
+          item.node.style[atajoui.CSS.TRANSFORM] = TRANSLATE_TEMPLATE_STR
             .replace(PRIMARY, (item.primaryPos = dim.primaryPos))
             .replace(SECONDARY, (item.secondaryPos = dim.secondaryPos));
         }
@@ -658,10 +658,10 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       }
 
       // If we reach the end of the list, render the afterItemsNode - this contains all the
-      // elements the developer placed after the collection-repeat
+      // elements the developer placed after the collectaui-repeat
       if (renderEndIndex === data.length - 1) {
         dim = view.getDimensions(data.length - 1) || EMPTY_DIMENSION;
-        afterItemsNode.style[ionic.CSS.TRANSFORM] = TRANSLATE_TEMPLATE_STR
+        afterItemsNode.style[atajoui.CSS.TRANSFORM] = TRANSLATE_TEMPLATE_STR
           .replace(PRIMARY, dim.primaryPos + dim.primarySize)
           .replace(SECONDARY, 0);
       }
@@ -669,9 +669,9 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       while (itemsLeaving.length) {
         item = itemsLeaving.pop();
         item.scope.$broadcast('$collectionRepeatLeave');
-        ionic.Utils.disconnectScope(item.scope);
+        atajoui.Utils.disconnectScope(item.scope);
         itemsPool.push(item);
-        item.node.style[ionic.CSS.TRANSFORM] = 'translate3d(-9999px,-9999px,0)';
+        item.node.style[atajoui.CSS.TRANSFORM] = 'translate3d(-9999px,-9999px,0)';
         item.primaryPos = item.secondaryPos = null;
       }
 
@@ -723,9 +723,9 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
         // TODO destroy
         self.node = clone[0];
         // Batch style setting to lower repaints
-        self.node.style[ionic.CSS.TRANSFORM] = 'translate3d(-9999px,-9999px,0)';
+        self.node.style[atajoui.CSS.TRANSFORM] = 'translate3d(-9999px,-9999px,0)';
         self.node.style.cssText += ' height: 0px; width: 0px;';
-        ionic.Utils.disconnectScope(self.scope);
+        atajoui.Utils.disconnectScope(self.scope);
         containerNode.appendChild(self.node);
         self.images = clone[0].getElementsByTagName('img');
       });
@@ -829,7 +829,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
 
     function DynamicViewType() {
       var self = this;
-      var debouncedScrollViewSetDimensions = ionic.debounce(scrollViewSetDimensions, 25, true);
+      var debouncedScrollViewSetDimensions = atajoui.debounce(scrollViewSetDimensions, 25, true);
       var calculateDimensions = isGridView ? calculateDimensionsGrid : calculateDimensionsList;
       var dimensionsIndex;
       var dimensions = [];

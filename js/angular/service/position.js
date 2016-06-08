@@ -1,7 +1,7 @@
 /**
  * @ngdoc service
- * @name $ionicPosition
- * @module ionic
+ * @name $atajoUiPosition
+ * @module atajoui
  * @description
  * A set of utility methods that can be use to retrieve position of DOM elements.
  * It is meant to be used where we need to absolute-position DOM elements in
@@ -10,8 +10,8 @@
  * Adapted from [AngularUI Bootstrap](https://github.com/angular-ui/bootstrap/blob/master/src/position/position.js),
  * ([license](https://github.com/angular-ui/bootstrap/blob/master/LICENSE))
  */
-IonicModule
-.factory('$ionicPosition', ['$document', '$window', function($document, $window) {
+AtajoUiModule
+.factory('$atajoUiPosition', ['$document', '$window', function($document, $window) {
 
   function getStyle(el, cssprop) {
     if (el.currentStyle) { //IE
@@ -47,7 +47,7 @@ IonicModule
   return {
     /**
      * @ngdoc method
-     * @name $ionicPosition#position
+     * @name $atajoUiPosition#position
      * @description Get the current coordinates of the element, relative to the offset parent.
      * Read-only equivalent of [jQuery's position function](http://api.jquery.com/position/).
      * @param {element} element The element to get the position of.
@@ -74,7 +74,7 @@ IonicModule
 
     /**
      * @ngdoc method
-     * @name $ionicPosition#offset
+     * @name $atajoUiPosition#offset
      * @description Get the current coordinates of the element, relative to the document.
      * Read-only equivalent of [jQuery's offset function](http://api.jquery.com/offset/).
      * @param {element} element The element to get the offset of.

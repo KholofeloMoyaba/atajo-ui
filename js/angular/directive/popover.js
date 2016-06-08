@@ -1,9 +1,9 @@
 /*
- * We don't document the ionPopover directive, we instead document
- * the $ionicPopover service
+ * We don't document the auiPopover directive, we instead document
+ * the $atajoUiPopover service
  */
-IonicModule
-.directive('ionPopover', [function() {
+AtajoUiModule
+.directive('auiPopover', [function() {
   return {
     restrict: 'E',
     transclude: true,

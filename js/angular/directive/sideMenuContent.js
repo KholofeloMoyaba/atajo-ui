@@ -1,23 +1,23 @@
 /**
  * @ngdoc directive
- * @name ionSideMenuContent
- * @module ionic
+ * @name auiSideMenuContent
+ * @module atajoui
  * @restrict E
- * @parent ionic.directive:ionSideMenus
+ * @parent atajoui.directive:auiSideMenus
  *
  * @description
  * A container for the main visible content, sibling to one or more
- * {@link ionic.directive:ionSideMenu} directives.
+ * {@link atajoui.directive:auiSideMenu} directives.
  *
  * @usage
  * ```html
- * <ion-side-menu-content
+ * <aui-side-menu-content
  *   edge-drag-threshold="true"
  *   drag-content="true">
- * </ion-side-menu-content>
+ * </aui-side-menu-content>
  * ```
  * For a complete side menu example, see the
- * {@link ionic.directive:ionSideMenus} documentation.
+ * {@link atajoui.directive:auiSideMenus} documentation.
  *
  * @param {boolean=} drag-content Whether the content can be dragged. Default true.
  * @param {boolean|number=} edge-drag-threshold Whether the content drag can only start if it is below a certain threshold distance from the edge of the screen.  Default false. Accepts three types of values:
@@ -26,16 +26,16 @@
    *  - If false or 0 is given, the edge drag threshold is disabled, and dragging from anywhere on the content is allowed.
  *
  */
-IonicModule
-.directive('ionSideMenuContent', [
+AtajoUiModule
+.directive('auiSideMenuContent', [
   '$timeout',
-  '$ionicGesture',
+  '$atajoUiGesture',
   '$window',
-function($timeout, $ionicGesture, $window) {
+function($timeout, $atajoUiGesture, $window) {
 
   return {
     restrict: 'EA', //DEPRECATED 'A'
-    require: '^ionSideMenus',
+    require: '^auiSideMenus',
     scope: true,
     compile: function(element, attr) {
       element.addClass('menu-content pane');
@@ -67,7 +67,7 @@ function($timeout, $ionicGesture, $window) {
             startCoord = null;
             primaryScrollAxis = null;
           } else if (!startCoord) {
-            startCoord = ionic.tap.pointerCoord(gestureEvt.gesture.srcEvent);
+            startCoord = atajoui.tap.pointerCoord(gestureEvt.gesture.srcEvent);
           }
         }
 
@@ -106,11 +106,11 @@ function($timeout, $ionicGesture, $window) {
 
             if (!startCoord) {
               // get the starting point
-              startCoord = ionic.tap.pointerCoord(gestureEvt.gesture.srcEvent);
+              startCoord = atajoui.tap.pointerCoord(gestureEvt.gesture.srcEvent);
 
             } else {
               // we already have a starting point, figure out which direction they're going
-              var endCoord = ionic.tap.pointerCoord(gestureEvt.gesture.srcEvent);
+              var endCoord = atajoui.tap.pointerCoord(gestureEvt.gesture.srcEvent);
 
               var xDistance = Math.abs(endCoord.x - startCoord.x);
               var yDistance = Math.abs(endCoord.y - startCoord.y);
@@ -152,26 +152,26 @@ function($timeout, $ionicGesture, $window) {
           getTranslateX: function() {
             return $scope.sideMenuContentTranslateX || 0;
           },
-          setTranslateX: ionic.animationFrameThrottle(function(amount) {
+          setTranslateX: atajoui.animationFrameThrottle(function(amount) {
             var xTransform = content.offsetX + amount;
-            $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + xTransform + 'px,0,0)';
+            $element[0].style[atajoui.CSS.TRANSFORM] = 'translate3d(' + xTransform + 'px,0,0)';
             $timeout(function() {
               $scope.sideMenuContentTranslateX = amount;
             });
           }),
-          setMarginLeft: ionic.animationFrameThrottle(function(amount) {
+          setMarginLeft: atajoui.animationFrameThrottle(function(amount) {
             if (amount) {
               amount = parseInt(amount, 10);
-              $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + amount + 'px,0,0)';
+              $element[0].style[atajoui.CSS.TRANSFORM] = 'translate3d(' + amount + 'px,0,0)';
               $element[0].style.width = ($window.innerWidth - amount) + 'px';
               content.offsetX = amount;
             } else {
-              $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(0,0,0)';
+              $element[0].style[atajoui.CSS.TRANSFORM] = 'translate3d(0,0,0)';
               $element[0].style.width = '';
               content.offsetX = 0;
             }
           }),
-          setMarginRight: ionic.animationFrameThrottle(function(amount) {
+          setMarginRight: atajoui.animationFrameThrottle(function(amount) {
             if (amount) {
               amount = parseInt(amount, 10);
               $element[0].style.width = ($window.innerWidth - amount) + 'px';
@@ -181,25 +181,25 @@ function($timeout, $ionicGesture, $window) {
               content.offsetX = 0;
             }
             // reset incase left gets grabby
-            $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(0,0,0)';
+            $element[0].style[atajoui.CSS.TRANSFORM] = 'translate3d(0,0,0)';
           }),
-          setMarginLeftAndRight: ionic.animationFrameThrottle(function(amountLeft, amountRight) {
+          setMarginLeftAndRight: atajoui.animationFrameThrottle(function(amountLeft, amountRight) {
             amountLeft = amountLeft && parseInt(amountLeft, 10) || 0;
             amountRight = amountRight && parseInt(amountRight, 10) || 0;
 
             var amount = amountLeft + amountRight;
 
             if (amount > 0) {
-              $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(' + amountLeft + 'px,0,0)';
+              $element[0].style[atajoui.CSS.TRANSFORM] = 'translate3d(' + amountLeft + 'px,0,0)';
               $element[0].style.width = ($window.innerWidth - amount) + 'px';
               content.offsetX = amountLeft;
             } else {
-              $element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(0,0,0)';
+              $element[0].style[atajoui.CSS.TRANSFORM] = 'translate3d(0,0,0)';
               $element[0].style.width = '';
               content.offsetX = 0;
             }
             // reset incase left gets grabby
-            //$element[0].style[ionic.CSS.TRANSFORM] = 'translate3d(0,0,0)';
+            //$element[0].style[atajoui.CSS.TRANSFORM] = 'translate3d(0,0,0)';
           }),
           enableAnimation: function() {
             $scope.animationEnabled = true;
@@ -217,12 +217,12 @@ function($timeout, $ionicGesture, $window) {
         // add gesture handlers
         var gestureOpts = { stop_browser_behavior: false };
         gestureOpts.prevent_default_directions = ['left', 'right'];
-        var contentTapGesture = $ionicGesture.on('tap', onContentTap, $element, gestureOpts);
-        var dragRightGesture = $ionicGesture.on('dragright', onDragX, $element, gestureOpts);
-        var dragLeftGesture = $ionicGesture.on('dragleft', onDragX, $element, gestureOpts);
-        var dragUpGesture = $ionicGesture.on('dragup', onDragY, $element, gestureOpts);
-        var dragDownGesture = $ionicGesture.on('dragdown', onDragY, $element, gestureOpts);
-        var releaseGesture = $ionicGesture.on('release', onDragRelease, $element, gestureOpts);
+        var contentTapGesture = $atajoUiGesture.on('tap', onContentTap, $element, gestureOpts);
+        var dragRightGesture = $atajoUiGesture.on('dragright', onDragX, $element, gestureOpts);
+        var dragLeftGesture = $atajoUiGesture.on('dragleft', onDragX, $element, gestureOpts);
+        var dragUpGesture = $atajoUiGesture.on('dragup', onDragY, $element, gestureOpts);
+        var dragDownGesture = $atajoUiGesture.on('dragdown', onDragY, $element, gestureOpts);
+        var releaseGesture = $atajoUiGesture.on('release', onDragRelease, $element, gestureOpts);
 
         // Cleanup
         $scope.$on('$destroy', function() {
@@ -230,12 +230,12 @@ function($timeout, $ionicGesture, $window) {
             content.element = null;
             content = null;
           }
-          $ionicGesture.off(dragLeftGesture, 'dragleft', onDragX);
-          $ionicGesture.off(dragRightGesture, 'dragright', onDragX);
-          $ionicGesture.off(dragUpGesture, 'dragup', onDragY);
-          $ionicGesture.off(dragDownGesture, 'dragdown', onDragY);
-          $ionicGesture.off(releaseGesture, 'release', onDragRelease);
-          $ionicGesture.off(contentTapGesture, 'tap', onContentTap);
+          $atajoUiGesture.off(dragLeftGesture, 'dragleft', onDragX);
+          $atajoUiGesture.off(dragRightGesture, 'dragright', onDragX);
+          $atajoUiGesture.off(dragUpGesture, 'dragup', onDragY);
+          $atajoUiGesture.off(dragDownGesture, 'dragdown', onDragY);
+          $atajoUiGesture.off(releaseGesture, 'release', onDragRelease);
+          $atajoUiGesture.off(contentTapGesture, 'tap', onContentTap);
         });
       }
     }

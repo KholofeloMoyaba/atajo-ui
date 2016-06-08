@@ -3,14 +3,14 @@
  * TODO document
  */
 
-IonicModule.factory('$ionicViewSwitcher', [
+AtajoUiModule.factory('$atajoUiViewSwitcher', [
   '$timeout',
   '$document',
   '$q',
-  '$ionicClickBlock',
-  '$ionicConfig',
-  '$ionicNavBarDelegate',
-function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDelegate) {
+  '$atajoUiClickBlock',
+  '$atajoUiConfig',
+  '$atajoUiNavBarDelegate',
+function($timeout, $document, $q, $atajoUiClickBlock, $atajoUiConfig, $atajoUiNavBarDelegate) {
 
   var TRANSITIONEND_EVENT = 'webkitTransitionEnd transitionend';
   var DATA_NO_CACHE = '$noCache';
@@ -26,14 +26,14 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 
   var transitionCounter = 0;
   var nextTransition, nextDirection;
-  ionic.transition = ionic.transition || {};
-  ionic.transition.isActive = false;
+  atajoui.transition = atajoui.transition || {};
+  atajoui.transition.isActive = false;
   var isActiveTimer;
-  var cachedAttr = ionic.DomUtil.cachedAttr;
+  var cachedAttr = atajoui.DomUtil.cachedAttr;
   var transitionPromises = [];
   var defaultTimeout = 1100;
 
-  var ionicViewSwitcher = {
+  var atajoUiViewSwitcher = {
 
     create: function(navViewCtrl, viewLocals, enteringView, leavingView, renderStart, renderEnd) {
       // get a reference to an entering/leaving element if they exist
@@ -45,7 +45,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
       var switcher = {
 
         init: function(registerData, callback) {
-          ionicViewSwitcher.isTransitioning(true);
+          atajoUiViewSwitcher.isTransitioning(true);
 
           switcher.loadViewElements(registerData);
 
@@ -67,7 +67,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
               // we found an existing element in the DOM that should be entering the view
               if (viewEle.data(DATA_NO_CACHE)) {
                 // the existing element should not be cached, don't use it
-                viewEle.data(DATA_ELE_IDENTIFIER, enteringEleIdentifier + ionic.Utils.nextUid());
+                viewEle.data(DATA_ELE_IDENTIFIER, enteringEleIdentifier + atajoui.Utils.nextUid());
                 viewEle.data(DATA_DESTROY_ELE, true);
 
               } else {
@@ -86,7 +86,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
           if (!alreadyInDom) {
             // still no existing element to use
             // create it using existing template/scope/locals
-            enteringEle = registerData.ele || ionicViewSwitcher.createViewEle(viewLocals);
+            enteringEle = registerData.ele || atajoUiViewSwitcher.createViewEle(viewLocals);
 
             // existing elements in the DOM are looked up by their state name and state id
             enteringEle.data(DATA_ELE_IDENTIFIER, enteringEleIdentifier);
@@ -102,7 +102,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
         render: function(registerData, callback) {
           if (alreadyInDom) {
             // it was already found in the DOM, just reconnect the scope
-            ionic.Utils.reconnectScope(enteringEle.scope());
+            atajoui.Utils.reconnectScope(enteringEle.scope());
 
           } else {
             // the entering element is not already in the DOM
@@ -111,7 +111,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             navViewAttr(enteringEle, VIEW_STATUS_STAGED);
 
             var enteringData = getTransitionData(viewLocals, enteringEle, registerData.direction, enteringView);
-            var transitionFn = $ionicConfig.transitions.views[enteringData.transition] || $ionicConfig.transitions.views.none;
+            var transitionFn = $atajoUiConfig.transitions.views[enteringData.transition] || $atajoUiConfig.transitions.views.none;
             transitionFn(enteringEle, null, enteringData.direction, true).run(0);
 
             enteringEle.data(DATA_VIEW, {
@@ -124,7 +124,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             // if the current state has cache:false
             // or the element has cache-view="false" attribute
             if (viewState(viewLocals).cache === false || viewState(viewLocals).cache === 'false' ||
-                enteringEle.attr('cache-view') == 'false' || $ionicConfig.views.maxCache() === 0) {
+                enteringEle.attr('cache-view') == 'false' || $atajoUiConfig.views.maxCache() === 0) {
               enteringEle.data(DATA_NO_CACHE, true);
             }
 
@@ -133,7 +133,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 
             delete enteringData.direction;
             delete enteringData.transition;
-            viewScope.$emit('$ionicView.loaded', enteringData);
+            viewScope.$emit('$atajoUiView.loaded', enteringData);
           }
 
           // update that this view was just accessed
@@ -159,7 +159,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
           $timeout.cancel(enteringEle.data(DATA_FALLBACK_TIMER));
 
           // get the transition ready and see if it'll animate
-          var transitionFn = $ionicConfig.transitions.views[enteringData.transition] || $ionicConfig.transitions.views.none;
+          var transitionFn = $atajoUiConfig.transitions.views[enteringData.transition] || $atajoUiConfig.transitions.views.none;
           var viewTransition = transitionFn(enteringEle, leavingEle, enteringData.direction,
                                             enteringData.shouldAnimate && allowAnimate && renderEnd);
 
@@ -167,7 +167,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             // attach transitionend events (and fallback timer)
             enteringEle.on(TRANSITIONEND_EVENT, completeOnTransitionEnd);
             enteringEle.data(DATA_FALLBACK_TIMER, $timeout(transitionComplete, defaultTimeout));
-            $ionicClickBlock.show(defaultTimeout);
+            $atajoUiClickBlock.show(defaultTimeout);
           }
 
           if (renderStart) {
@@ -192,7 +192,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             // CSS "auto" transitioned, not manually transitioned
             // wait a frame so the styles apply before auto transitioning
             $timeout(function() {
-              ionic.requestAnimationFrame(onReflow);
+              atajoui.requestAnimationFrame(onReflow);
             });
           } else if (!renderEnd) {
             // just the start of a manual transition
@@ -207,7 +207,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
                 if (shouldAnimate) {
                   enteringEle.on(TRANSITIONEND_EVENT, cancelOnTransitionEnd);
                   enteringEle.data(DATA_FALLBACK_TIMER, $timeout(cancelTransition, defaultTimeout));
-                  $ionicClickBlock.show(defaultTimeout);
+                  $atajoUiClickBlock.show(defaultTimeout);
                 } else {
                   cancelTransition();
                 }
@@ -234,7 +234,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             viewTransition.run(1);
 
             // trigger auto transitions on the associated nav bars
-            $ionicNavBarDelegate._instances.forEach(function(instance) {
+            $atajoUiNavBarDelegate._instances.forEach(function(instance) {
               instance.triggerTransitionStart(transitionId);
             });
 
@@ -264,7 +264,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             // the most recent transition added has completed and all the active
             // transition promises should be added to the services array of promises
             if (transitionId === transitionCounter) {
-              $q.all(transitionPromises).then(ionicViewSwitcher.transitionEnd);
+              $q.all(transitionPromises).then(atajoUiViewSwitcher.transitionEnd);
 
               // emit that the views have finished transitioning
               // each parent nav-view will update which views are active and cached
@@ -273,7 +273,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             }
 
             // tell the nav bars that the transition has ended
-            $ionicNavBarDelegate._instances.forEach(function(instance) {
+            $atajoUiNavBarDelegate._instances.forEach(function(instance) {
               instance.triggerTransitionEnd();
             });
 
@@ -293,7 +293,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             navViewAttr(leavingEle, VIEW_STATUS_ACTIVE);
             enteringEle.off(TRANSITIONEND_EVENT, cancelOnTransitionEnd);
             $timeout.cancel(enteringEle.data(DATA_FALLBACK_TIMER));
-            ionicViewSwitcher.transitionEnd([navViewCtrl]);
+            atajoUiViewSwitcher.transitionEnd([navViewCtrl]);
           }
 
         },
@@ -310,25 +310,25 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
             // we only get access to the leaving scope once in the transition,
             // so dispatch all events right away if it exists
             if ( leavingScope ) {
-              leavingScope.$emit('$ionicView.beforeLeave', leavingData);
-              leavingScope.$emit('$ionicView.leave', leavingData);
-              leavingScope.$emit('$ionicView.afterLeave', leavingData);
-              leavingScope.$broadcast('$ionicParentView.beforeLeave', leavingData);
-              leavingScope.$broadcast('$ionicParentView.leave', leavingData);
-              leavingScope.$broadcast('$ionicParentView.afterLeave', leavingData);
+              leavingScope.$emit('$atajoUiView.beforeLeave', leavingData);
+              leavingScope.$emit('$atajoUiView.leave', leavingData);
+              leavingScope.$emit('$atajoUiView.afterLeave', leavingData);
+              leavingScope.$broadcast('$atajoUiParentView.beforeLeave', leavingData);
+              leavingScope.$broadcast('$atajoUiParentView.leave', leavingData);
+              leavingScope.$broadcast('$atajoUiParentView.afterLeave', leavingData);
             }
           }
           else {
             // it's a regular view, so do the normal process
             if (step == 'after') {
               if (enteringScope) {
-                enteringScope.$emit('$ionicView.enter', enteringData);
-                enteringScope.$broadcast('$ionicParentView.enter', enteringData);
+                enteringScope.$emit('$atajoUiView.enter', enteringData);
+                enteringScope.$broadcast('$atajoUiParentView.enter', enteringData);
               }
 
               if (leavingScope) {
-                leavingScope.$emit('$ionicView.leave', leavingData);
-                leavingScope.$broadcast('$ionicParentView.leave', leavingData);
+                leavingScope.$emit('$atajoUiView.leave', leavingData);
+                leavingScope.$broadcast('$atajoUiParentView.leave', leavingData);
               }
               else if (enteringScope && leavingData && leavingData.viewId && enteringData.stateName !== leavingData.stateName) {
                 // we only want to dispatch this when we are doing a single-tier
@@ -336,19 +336,19 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
                 // for the same state-prefix but different suffix
                 prefixesAreEqual = compareStatePrefixes(enteringData.stateName, leavingData.stateName);
                 if ( prefixesAreEqual ) {
-                  enteringScope.$emit('$ionicNavView.leave', leavingData);
+                  enteringScope.$emit('$atajoUiNavView.leave', leavingData);
                 }
               }
             }
 
             if (enteringScope) {
-              enteringScope.$emit('$ionicView.' + step + 'Enter', enteringData);
-              enteringScope.$broadcast('$ionicParentView.' + step + 'Enter', enteringData);
+              enteringScope.$emit('$atajoUiView.' + step + 'Enter', enteringData);
+              enteringScope.$broadcast('$atajoUiParentView.' + step + 'Enter', enteringData);
             }
 
             if (leavingScope) {
-              leavingScope.$emit('$ionicView.' + step + 'Leave', leavingData);
-              leavingScope.$broadcast('$ionicParentView.' + step + 'Leave', leavingData);
+              leavingScope.$emit('$atajoUiView.' + step + 'Leave', leavingData);
+              leavingScope.$broadcast('$atajoUiParentView.' + step + 'Leave', leavingData);
 
             } else if (enteringScope && leavingData && leavingData.viewId && enteringData.stateName !== leavingData.stateName) {
               // we only want to dispatch this when we are doing a single-tier
@@ -356,7 +356,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
               // for the same state-prefix but different suffix
               prefixesAreEqual = compareStatePrefixes(enteringData.stateName, leavingData.stateName);
               if ( prefixesAreEqual ) {
-                enteringScope.$emit('$ionicNavView.' + step + 'Leave', leavingData);
+                enteringScope.$emit('$atajoUiNavView.' + step + 'Leave', leavingData);
               }
             }
           }
@@ -364,7 +364,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 
         cleanup: function(transData) {
           // check if any views should be removed
-          if (leavingEle && transData.direction == 'back' && !$ionicConfig.views.forwardCache()) {
+          if (leavingEle && transData.direction == 'back' && !$atajoUiConfig.views.forwardCache()) {
             // if they just navigated back we can destroy the forward view
             // do not remove forward views if cacheForwardViews config is true
             destroyViewEle(leavingEle);
@@ -373,7 +373,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
           var viewElements = navViewCtrl.getViewElements();
           var viewElementsLength = viewElements.length;
           var x, viewElement;
-          var removeOldestAccess = (viewElementsLength - 1) > $ionicConfig.views.maxCache();
+          var removeOldestAccess = (viewElementsLength - 1) > $atajoUiConfig.views.maxCache();
           var removableEle;
           var oldestAccess = Date.now();
 
@@ -410,8 +410,8 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
         navViewCtrl.transitionEnd();
       });
 
-      ionicViewSwitcher.isTransitioning(false);
-      $ionicClickBlock.hide();
+      atajoUiViewSwitcher.isTransitioning(false);
+      $atajoUiClickBlock.hide();
       transitionPromises = [];
     },
 
@@ -425,15 +425,15 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 
     isTransitioning: function(val) {
       if (arguments.length) {
-        ionic.transition.isActive = !!val;
+        atajoui.transition.isActive = !!val;
         $timeout.cancel(isActiveTimer);
         if (val) {
           isActiveTimer = $timeout(function() {
-            ionicViewSwitcher.isTransitioning(false);
+            atajoUiViewSwitcher.isTransitioning(false);
           }, 999);
         }
       }
-      return ionic.transition.isActive;
+      return atajoui.transition.isActive;
     },
 
     createViewEle: function(viewLocals) {
@@ -468,13 +468,13 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 
   };
 
-  return ionicViewSwitcher;
+  return atajoUiViewSwitcher;
 
 
   function getViewElementIdentifier(locals, view) {
     if (viewState(locals)['abstract']) return viewState(locals).name;
     if (view) return view.stateId || view.viewId;
-    return ionic.Utils.nextUid();
+    return atajoui.Utils.nextUid();
   }
 
   function viewState(locals) {
@@ -491,8 +491,8 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
     // 6) fallback value
 
     var state = viewState(viewLocals);
-    var viewTransition = nextTransition || cachedAttr(enteringEle, 'view-transition') || state.viewTransition || $ionicConfig.views.transition() || 'ios';
-    var navBarTransition = $ionicConfig.navBar.transition();
+    var viewTransition = nextTransition || cachedAttr(enteringEle, 'view-transition') || state.viewTransition || $atajoUiConfig.views.transition() || 'ios';
+    var navBarTransition = $atajoUiConfig.navBar.transition();
     direction = nextDirection || cachedAttr(enteringEle, 'view-direction') || state.viewDirection || direction || 'none';
 
     return extend(getViewData(view), {
@@ -528,7 +528,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
     if (ele && ele.length) {
       var viewScope = ele.scope();
       if (viewScope) {
-        viewScope.$emit('$ionicView.unloaded', ele.data(DATA_VIEW));
+        viewScope.$emit('$atajoUiView.unloaded', ele.data(DATA_VIEW));
         viewScope.$destroy();
       }
       ele.remove();
@@ -586,7 +586,7 @@ function($timeout, $document, $q, $ionicClickBlock, $ionicConfig, $ionicNavBarDe
 
   function aggregateNavViewChildren(element) {
     var aggregate = [];
-    var navViews = angular.element(element).find("ion-nav-view");
+    var navViews = angular.element(element).find("aui-nav-view");
     for ( var i = 0; i < navViews.length; i++ ) {
       var children = angular.element(navViews[i]).children();
       var childrenAggregated = [];

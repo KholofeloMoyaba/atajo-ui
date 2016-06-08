@@ -4,25 +4,25 @@
 
 /**
  * @ngdoc service
- * @name $ionicTemplateCache
- * @module ionic
+ * @name $atajoUiTemplateCache
+ * @module atajoui
  * @description A service that preemptively caches template files to eliminate transition flicker and boost performance.
  * @usage
  * State templates are cached automatically, but you can optionally cache other templates.
  *
  * ```js
- * $ionicTemplateCache('myNgIncludeTemplate.html');
+ * $atajoUiTemplateCache('myNgIncludeTemplate.html');
  * ```
  *
- * Optionally disable all preemptive caching with the `$ionicConfigProvider` or individual states by setting `prefetchTemplate`
+ * Optionally disable all preemptive caching with the `$atajoUiConfigProvider` or individual states by setting `prefetchTemplate`
  * in the `$state` definition
  *
  * ```js
- *   angular.module('myApp', ['ionic'])
- *   .config(function($stateProvider, $ionicConfigProvider) {
+ *   angular.module('myApp', ['atajoui'])
+ *   .config(function($stateProvider, $atajoUiConfigProvider) {
  *
  *     // disable preemptive template caching globally
- *     $ionicConfigProvider.templates.prefetch(false);
+ *     $atajoUiConfigProvider.templates.prefetch(false);
  *
  *     // disable individual states
  *     $stateProvider
@@ -45,8 +45,8 @@
  *   });
  * ```
  */
-IonicModule
-.factory('$ionicTemplateCache', [
+AtajoUiModule
+.factory('$atajoUiTemplateCache', [
 '$http',
 '$templateCache',
 '$timeout',
@@ -54,7 +54,7 @@ function($http, $templateCache, $timeout) {
   var toCache = templatesToCache,
       hasRun;
 
-  function $ionicTemplateCache(templates) {
+  function $atajoUiTemplateCache(templates) {
     if (typeof templates === 'undefined') {
       return run();
     }
@@ -72,7 +72,7 @@ function($http, $templateCache, $timeout) {
   // run through methods - internal method
   function run() {
     var template;
-    $ionicTemplateCache._runCount++;
+    $atajoUiTemplateCache._runCount++;
 
     hasRun = true;
     // ignore if race condition already zeroed out array
@@ -91,25 +91,25 @@ function($http, $templateCache, $timeout) {
   }
 
   // exposing for testing
-  $ionicTemplateCache._runCount = 0;
+  $atajoUiTemplateCache._runCount = 0;
   // default method
-  return $ionicTemplateCache;
+  return $atajoUiTemplateCache;
 }])
 
 // Intercepts the $stateprovider.state() command to look for templateUrls that can be cached
 .config([
 '$stateProvider',
-'$ionicConfigProvider',
-function($stateProvider, $ionicConfigProvider) {
+'$atajoUiConfigProvider',
+function($stateProvider, $atajoUiConfigProvider) {
   var stateProviderState = $stateProvider.state;
   $stateProvider.state = function(stateName, definition) {
     // don't even bother if it's disabled. note, another config may run after this, so it's not a catch-all
     if (typeof definition === 'object') {
-      var enabled = definition.prefetchTemplate !== false && templatesToCache.length < $ionicConfigProvider.templates.maxPrefetch();
+      var enabled = definition.prefetchTemplate !== false && templatesToCache.length < $atajoUiConfigProvider.templates.maxPrefetch();
       if (enabled && isString(definition.templateUrl)) templatesToCache.push(definition.templateUrl);
       if (angular.isObject(definition.views)) {
         for (var key in definition.views) {
-          enabled = definition.views[key].prefetchTemplate !== false && templatesToCache.length < $ionicConfigProvider.templates.maxPrefetch();
+          enabled = definition.views[key].prefetchTemplate !== false && templatesToCache.length < $atajoUiConfigProvider.templates.maxPrefetch();
           if (enabled && isString(definition.views[key].templateUrl)) templatesToCache.push(definition.views[key].templateUrl);
         }
       }
@@ -119,8 +119,8 @@ function($stateProvider, $ionicConfigProvider) {
 }])
 
 // process the templateUrls collected by the $stateProvider, adding them to the cache
-.run(['$ionicTemplateCache', function($ionicTemplateCache) {
-  $ionicTemplateCache();
+.run(['$atajoUiTemplateCache', function($atajoUiTemplateCache) {
+  $atajoUiTemplateCache();
 }]);
 
 })();

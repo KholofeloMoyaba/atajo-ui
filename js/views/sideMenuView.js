@@ -1,4 +1,4 @@
-(function(ionic) {
+(function(atajoui) {
 'use strict';
 
   /**
@@ -6,7 +6,7 @@
    * configuration.
    * It takes a DOM reference to that side menu element.
    */
-  ionic.views.SideMenu = ionic.views.View.inherit({
+  atajoui.views.SideMenu = atajoui.views.View.inherit({
     initialize: function(opts) {
       this.el = opts.el;
       this.isEnabled = (typeof opts.isEnabled === 'undefined') ? true : opts.isEnabled;
@@ -34,16 +34,16 @@
     }
   });
 
-  ionic.views.SideMenuContent = ionic.views.View.inherit({
+  atajoui.views.SideMenuContent = atajoui.views.View.inherit({
     initialize: function(opts) {
-      ionic.extend(this, {
+      atajoui.extend(this, {
         animationClass: 'menu-animated',
         onDrag: function() {},
         onEndDrag: function() {}
       }, opts);
 
-      ionic.onGesture('drag', ionic.proxy(this._onDrag, this), this.el);
-      ionic.onGesture('release', ionic.proxy(this._onEndDrag, this), this.el);
+      atajoui.onGesture('drag', atajoui.proxy(this._onDrag, this), this.el);
+      atajoui.onGesture('release', atajoui.proxy(this._onEndDrag, this), this.el);
     },
     _onDrag: function(e) {
       this.onDrag && this.onDrag(e);
@@ -58,11 +58,11 @@
       this.el.classList.add(this.animationClass);
     },
     getTranslateX: function() {
-      return parseFloat(this.el.style[ionic.CSS.TRANSFORM].replace('translate3d(', '').split(',')[0]);
+      return parseFloat(this.el.style[atajoui.CSS.TRANSFORM].replace('translate3d(', '').split(',')[0]);
     },
-    setTranslateX: ionic.animationFrameThrottle(function(x) {
-      this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(' + x + 'px, 0, 0)';
+    setTranslateX: atajoui.animationFrameThrottle(function(x) {
+      this.el.style[atajoui.CSS.TRANSFORM] = 'translate3d(' + x + 'px, 0, 0)';
     })
   });
 
-})(ionic);
+})(atajoui);

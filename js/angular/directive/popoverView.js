@@ -1,5 +1,5 @@
-IonicModule
-.directive('ionPopoverView', function() {
+AtajoUiModule
+.directive('auiPopoverView', function() {
   return {
     restrict: 'E',
     compile: function(element) {

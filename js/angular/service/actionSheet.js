@@ -1,7 +1,7 @@
 /**
  * @ngdoc service
- * @name $ionicActionSheet
- * @module ionic
+ * @name $atajoUiActionSheet
+ * @module atajoui
  * @description
  * The Action Sheet is a slide-up pane that lets the user choose from a set of options.
  * Dangerous options are highlighted in red and made obvious.
@@ -12,17 +12,17 @@
  * ![Action Sheet](http://ionicframework.com.s3.amazonaws.com/docs/controllers/actionSheet.gif)
  *
  * @usage
- * To trigger an Action Sheet in your code, use the $ionicActionSheet service in your angular controllers:
+ * To trigger an Action Sheet in your code, use the $atajoUiActionSheet service in your angular controllers:
  *
  * ```js
- * angular.module('mySuperApp', ['ionic'])
- * .controller(function($scope, $ionicActionSheet, $timeout) {
+ * angular.module('mySuperApp', ['atajoui'])
+ * .controller(function($scope, $atajoUiActionSheet, $timeout) {
  *
  *  // Triggered on a button click, or some other target
  *  $scope.show = function() {
  *
  *    // Show the action sheet
- *    var hideSheet = $ionicActionSheet.show({
+ *    var hideSheet = $atajoUiActionSheet.show({
  *      buttons: [
  *        { text: '<b>Share</b> This' },
  *        { text: 'Move' }
@@ -48,17 +48,17 @@
  * ```
  *
  */
-IonicModule
-.factory('$ionicActionSheet', [
+AtajoUiModule
+.factory('$atajoUiActionSheet', [
   '$rootScope',
   '$compile',
   '$animate',
   '$timeout',
-  '$ionicTemplateLoader',
-  '$ionicPlatform',
-  '$ionicBody',
-  'IONIC_BACK_PRIORITY',
-function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicPlatform, $ionicBody, IONIC_BACK_PRIORITY) {
+  '$atajoUiTemplateLoader',
+  '$atajoUiPlatform',
+  '$atajoUiBody',
+  'ATAJOUI_BACK_PRIORITY',
+function($rootScope, $compile, $animate, $timeout, $atajoUiTemplateLoader, $atajoUiPlatform, $atajoUiBody, ATAJOUI_BACK_PRIORITY) {
 
   return {
     show: actionSheet
@@ -66,7 +66,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
 
   /**
    * @ngdoc method
-   * @name $ionicActionSheet#show
+   * @name $atajoUiActionSheet#show
    * @description
    * Load and return a new action sheet.
    *
@@ -117,10 +117,10 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
     textForIcon(scope.destructiveText);
 
     // Compile the template
-    var element = scope.element = $compile('<ion-action-sheet ng-class="cssClass" buttons="buttons"></ion-action-sheet>')(scope);
+    var element = scope.element = $compile('<aui-actaui-sheet ng-class="cssClass" buttons="buttons"></aui-actaui-sheet>')(scope);
 
     // Grab the sheet element for animation
-    var sheetEl = jqLite(element[0].querySelector('.action-sheet-wrapper'));
+    var sheetEl = jqLite(element[0].querySelector('.actaui-sheet-wrapper'));
 
     var stateChangeListenDone = scope.cancelOnStateChange ?
       $rootScope.$on('$stateChangeSuccess', function() { scope.cancel(); }) :
@@ -131,11 +131,11 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
       if (scope.removed) return;
 
       scope.removed = true;
-      sheetEl.removeClass('action-sheet-up');
+      sheetEl.removeClass('actaui-sheet-up');
       $timeout(function() {
         // wait to remove this due to a 300ms delay native
         // click which would trigging whatever was underneath this
-        $ionicBody.removeClass('action-sheet-open');
+        $atajoUiBody.removeClass('actaui-sheet-open');
       }, 400);
       scope.$deregisterBackButton();
       stateChangeListenDone();
@@ -152,8 +152,8 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
     scope.showSheet = function(done) {
       if (scope.removed) return;
 
-      $ionicBody.append(element)
-                .addClass('action-sheet-open');
+      $atajoUiBody.append(element)
+                .addClass('actaui-sheet-open');
 
       $animate.addClass(element, 'active').then(function() {
         if (scope.removed) return;
@@ -161,16 +161,16 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
       });
       $timeout(function() {
         if (scope.removed) return;
-        sheetEl.addClass('action-sheet-up');
+        sheetEl.addClass('actaui-sheet-up');
       }, 20, false);
     };
 
     // registerBackButtonAction returns a callback to deregister the action
-    scope.$deregisterBackButton = $ionicPlatform.registerBackButtonAction(
+    scope.$deregisterBackButton = $atajoUiPlatform.registerBackButtonAction(
       function() {
         $timeout(scope.cancel);
       },
-      IONIC_BACK_PRIORITY.actionSheet
+      ATAJOUI_BACK_PRIORITY.actionSheet
     );
 
     // called when the user presses the cancel button
@@ -197,7 +197,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
 
     scope.showSheet();
 
-    // Expose the scope on $ionicActionSheet's return value for the sake
+    // Expose the scope on $atajoUiActionSheet's return value for the sake
     // of testing it.
     scope.cancel.$scope = scope;
 

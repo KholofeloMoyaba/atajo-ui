@@ -158,10 +158,10 @@
             slideNextClass: 'swiper-slide-next',
             slidePrevClass: 'swiper-slide-prev',
             wrapperClass: 'swiper-wrapper',
-            bulletClass: 'swiper-pagination-bullet',
-            bulletActiveClass: 'swiper-pagination-bullet-active',
+            bulletClass: 'swiper-paginataui-bullet',
+            bulletActiveClass: 'swiper-paginataui-bullet-active',
             buttonDisabledClass: 'swiper-button-disabled',
-            paginationHiddenClass: 'swiper-pagination-hidden',
+            paginationHiddenClass: 'swiper-paginataui-hidden',
             // Observer
             observer: false,
             observeParents: false,
@@ -377,7 +377,7 @@
         if (s.params.pagination) {
             s.paginationContainer = $(s.params.pagination);
             if (s.params.paginationClickable) {
-                s.paginationContainer.addClass('swiper-pagination-clickable');
+                s.paginationContainer.addClass('swiper-paginataui-clickable');
             }
         }
 
@@ -1811,7 +1811,7 @@
                 s.emit('onTransitionStart', s);
                 if (s.activeIndex !== s.previousIndex) {
                     s.emit('onSlideChangeStart', s);
-                    _scope.$emit("$ionicSlides.slideChangeStart", {
+                    _scope.$emit("$atajoUiSlides.slideChangeStart", {
                       slider: s,
                       activeIndex: s.getSlideDataIndex(s.activeIndex),
                       previousIndex: s.getSlideDataIndex(s.previousIndex)
@@ -1835,7 +1835,7 @@
                 s.emit('onTransitionEnd', s);
                 if (s.activeIndex !== s.previousIndex) {
                     s.emit('onSlideChangeEnd', s);
-                    _scope.$emit("$ionicSlides.slideChangeEnd", {
+                    _scope.$emit("$atajoUiSlides.slideChangeEnd", {
                       slider: s,
                       activeIndex: s.getSlideDataIndex(s.activeIndex),
                       previousIndex: s.getSlideDataIndex(s.previousIndex)
@@ -2075,7 +2075,7 @@
         }
 
         s.getSlideDataIndex = function(slideIndex){
-          // this is an Ionic custom function
+          // this is an AtajoUi custom function
           // Swiper loops utilize duplicate DOM elements for slides when in a loop
           // which means that we cannot rely on the actual slide index for our events
           // because index 0 does not necessarily point to index 0
@@ -4269,5 +4269,5 @@
         }
     }
 
-    ionic.views.Swiper = Swiper;
+    atajoui.views.Swiper = Swiper;
 })();

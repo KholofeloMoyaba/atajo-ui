@@ -1,56 +1,56 @@
 /**
  * @ngdoc service
- * @name $ionicListDelegate
- * @module ionic
+ * @name $atajoUiListDelegate
+ * @module atajoui
  *
  * @description
- * Delegate for controlling the {@link ionic.directive:ionList} directive.
+ * Delegate for controlling the {@link atajoui.directive:auiList} directive.
  *
- * Methods called directly on the $ionicListDelegate service will control all lists.
- * Use the {@link ionic.service:$ionicListDelegate#$getByHandle $getByHandle}
- * method to control specific ionList instances.
+ * Methods called directly on the $atajoUiListDelegate service will control all lists.
+ * Use the {@link atajoui.service:$atajoUiListDelegate#$getByHandle $getByHandle}
+ * method to control specific auiList instances.
  *
  * @usage
  * ```html
  * {% raw %}
- * <ion-content ng-controller="MyCtrl">
+ * <aui-content ng-controller="MyCtrl">
  *   <button class="button" ng-click="showDeleteButtons()"></button>
- *   <ion-list>
- *     <ion-item ng-repeat="i in items">
+ *   <aui-list>
+ *     <aui-item ng-repeat="i in items">
  *       Hello, {{i}}!
- *       <ion-delete-button class="ion-minus-circled"></ion-delete-button>
- *     </ion-item>
- *   </ion-list>
- * </ion-content>
+ *       <aui-delete-button class="aui-minus-circled"></aui-delete-button>
+ *     </aui-item>
+ *   </aui-list>
+ * </aui-content>
  * {% endraw %}
  * ```
 
  * ```js
- * function MyCtrl($scope, $ionicListDelegate) {
+ * function MyCtrl($scope, $atajoUiListDelegate) {
  *   $scope.showDeleteButtons = function() {
- *     $ionicListDelegate.showDelete(true);
+ *     $atajoUiListDelegate.showDelete(true);
  *   };
  * }
  * ```
  */
-IonicModule.service('$ionicListDelegate', ionic.DelegateService([
+AtajoUiModule.service('$atajoUiListDelegate', atajoui.DelegateService([
   /**
    * @ngdoc method
-   * @name $ionicListDelegate#showReorder
+   * @name $atajoUiListDelegate#showReorder
    * @param {boolean=} showReorder Set whether or not this list is showing its reorder buttons.
    * @returns {boolean} Whether the reorder buttons are shown.
    */
   'showReorder',
   /**
    * @ngdoc method
-   * @name $ionicListDelegate#showDelete
+   * @name $atajoUiListDelegate#showDelete
    * @param {boolean=} showDelete Set whether or not this list is showing its delete buttons.
    * @returns {boolean} Whether the delete buttons are shown.
    */
   'showDelete',
   /**
    * @ngdoc method
-   * @name $ionicListDelegate#canSwipeItems
+   * @name $atajoUiListDelegate#canSwipeItems
    * @param {boolean=} canSwipeItems Set whether or not this list is able to swipe to show
    * option buttons.
    * @returns {boolean} Whether the list is able to swipe to show option buttons.
@@ -58,36 +58,36 @@ IonicModule.service('$ionicListDelegate', ionic.DelegateService([
   'canSwipeItems',
   /**
    * @ngdoc method
-   * @name $ionicListDelegate#closeOptionButtons
+   * @name $atajoUiListDelegate#closeOptionButtons
    * @description Closes any option buttons on the list that are swiped open.
    */
   'closeOptionButtons'
   /**
    * @ngdoc method
-   * @name $ionicListDelegate#$getByHandle
+   * @name $atajoUiListDelegate#$getByHandle
    * @param {string} handle
    * @returns `delegateInstance` A delegate instance that controls only the
-   * {@link ionic.directive:ionList} directives with `delegate-handle` matching
+   * {@link atajoui.directive:auiList} directives with `delegate-handle` matching
    * the given handle.
    *
-   * Example: `$ionicListDelegate.$getByHandle('my-handle').showReorder(true);`
+   * Example: `$atajoUiListDelegate.$getByHandle('my-handle').showReorder(true);`
    */
 ]))
 
-.controller('$ionicList', [
+.controller('$atajoUiList', [
   '$scope',
   '$attrs',
-  '$ionicListDelegate',
-  '$ionicHistory',
-function($scope, $attrs, $ionicListDelegate, $ionicHistory) {
+  '$atajoUiListDelegate',
+  '$atajoUiHistory',
+function($scope, $attrs, $atajoUiListDelegate, $atajoUiHistory) {
   var self = this;
   var isSwipeable = true;
   var isReorderShown = false;
   var isDeleteShown = false;
 
-  var deregisterInstance = $ionicListDelegate._registerInstance(
+  var deregisterInstance = $atajoUiListDelegate._registerInstance(
     self, $attrs.delegateHandle, function() {
-      return $ionicHistory.isActiveScope($scope);
+      return $atajoUiHistory.isActiveScope($scope);
     }
   );
   $scope.$on('$destroy', deregisterInstance);

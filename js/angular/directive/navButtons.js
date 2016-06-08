@@ -1,13 +1,13 @@
 /**
  * @ngdoc directive
- * @name ionNavButtons
- * @module ionic
+ * @name auiNavButtons
+ * @module atajoui
  * @restrict E
- * @parent ionNavView
+ * @parent auiNavView
  *
  * @description
- * Use nav buttons to set the buttons on your {@link ionic.directive:ionNavBar}
- * from within an {@link ionic.directive:ionView}. This gives each
+ * Use nav buttons to set the buttons on your {@link atajoui.directive:auiNavBar}
+ * from within an {@link atajoui.directive:auiView}. This gives each
  * view template the ability to specify which buttons should show in the nav bar,
  * overriding any default buttons already placed in the nav bar.
  *
@@ -25,34 +25,34 @@
  * example, a toggle button for a left side menu should be on the left side; in this case,
  * we'd recommend using `side="left"`, so it's always on the left, no matter the platform.
  *
- * ***Note*** that `ion-nav-buttons` must be immediate descendants of the `ion-view` or
- * `ion-nav-bar` element (basically, don't wrap it in another div).
+ * ***Note*** that `aui-nav-buttons` must be immediate descendants of the `aui-view` or
+ * `aui-nav-bar` element (basically, don't wrap it in another div).
  *
  * @usage
  * ```html
- * <ion-nav-bar>
- * </ion-nav-bar>
- * <ion-nav-view>
- *   <ion-view>
- *     <ion-nav-buttons side="primary">
+ * <aui-nav-bar>
+ * </aui-nav-bar>
+ * <aui-nav-view>
+ *   <aui-view>
+ *     <aui-nav-buttons side="primary">
  *       <button class="button" ng-click="doSomething()">
  *         I'm a button on the primary of the navbar!
  *       </button>
- *     </ion-nav-buttons>
- *     <ion-content>
+ *     </aui-nav-buttons>
+ *     <aui-content>
  *       Some super content here!
- *     </ion-content>
- *   </ion-view>
- * </ion-nav-view>
+ *     </aui-content>
+ *   </aui-view>
+ * </aui-nav-view>
  * ```
  *
  * @param {string} side The side to place the buttons in the
- * {@link ionic.directive:ionNavBar}. Available sides: `primary`, `secondary`, `left`, and `right`.
+ * {@link atajoui.directive:auiNavBar}. Available sides: `primary`, `secondary`, `left`, and `right`.
  */
-IonicModule
-.directive('ionNavButtons', ['$document', function($document) {
+AtajoUiModule
+.directive('auiNavButtons', ['$document', function($document) {
   return {
-    require: '^ionNavBar',
+    require: '^auiNavBar',
     restrict: 'E',
     compile: function(tElement, tAttrs) {
       var side = 'left';
@@ -74,13 +74,13 @@ IonicModule
         pre: function($scope, $element, $attrs, navBarCtrl) {
           // only register the plain HTML, the navBarCtrl takes care of scope/compile/link
 
-          var parentViewCtrl = $element.parent().data('$ionViewController');
+          var parentViewCtrl = $element.parent().data('$auiViewController');
           if (parentViewCtrl) {
-            // if the parent is an ion-view, then these are ion-nav-buttons for JUST this ion-view
+            // if the parent is an aui-view, then these are aui-nav-buttons for JUST this aui-view
             parentViewCtrl.navElement(navElementType, spanEle.outerHTML);
 
           } else {
-            // these are buttons for all views that do not have their own ion-nav-buttons
+            // these are buttons for all views that do not have their own aui-nav-buttons
             navBarCtrl.navElement(navElementType, spanEle.outerHTML);
           }
 

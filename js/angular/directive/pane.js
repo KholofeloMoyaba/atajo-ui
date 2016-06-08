@@ -1,14 +1,14 @@
 
 /**
  * @ngdoc directive
- * @name ionPane
- * @module ionic
+ * @name auiPane
+ * @module atajoui
  * @restrict E
  *
  * @description A simple container that fits content, with no side effects.  Adds the 'pane' class to the element.
  */
-IonicModule
-.directive('ionPane', function() {
+AtajoUiModule
+.directive('auiPane', function() {
   return {
     restrict: 'E',
     link: function(scope, element) {

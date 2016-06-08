@@ -1,5 +1,5 @@
 /**
- * ion-events.js
+ * aui-events.js
  *
  * Author: Max Lynch <max@drifty.com>
  *
@@ -10,10 +10,10 @@
  * Portions lovingly adapted from github.com/maker/ratchet and github.com/alexgibson/tap.js - thanks guys!
  */
 
-(function(ionic) {
+(function(atajoui) {
 
   // Custom event polyfill
-  ionic.CustomEvent = (function() {
+  atajoui.CustomEvent = (function() {
     if( typeof window.CustomEvent === 'function' ) return CustomEvent;
 
     var customEvent = function(event, params) {
@@ -43,16 +43,16 @@
 
   /**
    * @ngdoc utility
-   * @name ionic.EventController
-   * @module ionic
+   * @name atajoui.EventController
+   * @module atajoui
    */
-  ionic.EventController = {
+  atajoui.EventController = {
     VIRTUALIZED_EVENTS: ['tap', 'swipe', 'swiperight', 'swipeleft', 'drag', 'hold', 'release'],
 
     /**
      * @ngdoc method
-     * @name ionic.EventController#trigger
-     * @alias ionic.trigger
+     * @name atajoui.EventController#trigger
+     * @alias atajoui.trigger
      * @param {string} eventType The event to trigger.
      * @param {object} data The data for the event. Hint: pass in
      * `{target: targetElement}`
@@ -61,7 +61,7 @@
      */
     // Trigger a new event
     trigger: function(eventType, data, bubbles, cancelable) {
-      var event = new ionic.CustomEvent(eventType, {
+      var event = new atajoui.CustomEvent(eventType, {
         detail: data,
         bubbles: !!bubbles,
         cancelable: !!cancelable
@@ -74,8 +74,8 @@
 
     /**
      * @ngdoc method
-     * @name ionic.EventController#on
-     * @alias ionic.on
+     * @name atajoui.EventController#on
+     * @alias atajoui.on
      * @description Listen to an event on an element.
      * @param {string} type The event to listen for.
      * @param {function} callback The listener to be called.
@@ -87,7 +87,7 @@
       // Bind a gesture if it's a virtual event
       for(var i = 0, j = this.VIRTUALIZED_EVENTS.length; i < j; i++) {
         if(type == this.VIRTUALIZED_EVENTS[i]) {
-          var gesture = new ionic.Gesture(element);
+          var gesture = new atajoui.Gesture(element);
           gesture.on(type, callback);
           return gesture;
         }
@@ -99,8 +99,8 @@
 
     /**
      * @ngdoc method
-     * @name ionic.EventController#off
-     * @alias ionic.off
+     * @name atajoui.EventController#off
+     * @alias atajoui.off
      * @description Remove an event listener.
      * @param {string} type
      * @param {function} callback
@@ -112,8 +112,8 @@
 
     /**
      * @ngdoc method
-     * @name ionic.EventController#onGesture
-     * @alias ionic.onGesture
+     * @name atajoui.EventController#onGesture
+     * @alias atajoui.onGesture
      * @description Add an event listener for a gesture on an element.
      *
      * Available eventTypes (from [hammer.js](http://eightmedia.github.io/hammer.js/)):
@@ -128,20 +128,20 @@
      * happens.
      * @param {DOMElement} element The angular element to listen for the event on.
      * @param {object} options object.
-     * @returns {ionic.Gesture} The gesture object (use this to remove the gesture later on).
+     * @returns {atajoui.Gesture} The gesture object (use this to remove the gesture later on).
      */
     onGesture: function(type, callback, element, options) {
-      var gesture = new ionic.Gesture(element, options);
+      var gesture = new atajoui.Gesture(element, options);
       gesture.on(type, callback);
       return gesture;
     },
 
     /**
      * @ngdoc method
-     * @name ionic.EventController#offGesture
-     * @alias ionic.offGesture
+     * @name atajoui.EventController#offGesture
+     * @alias atajoui.offGesture
      * @description Remove an event listener for a gesture created on an element.
-     * @param {ionic.Gesture} gesture The gesture that should be removed.
+     * @param {atajoui.Gesture} gesture The gesture that should be removed.
      * @param {string} eventType The gesture event to remove the listener for.
      * @param {function(e)} callback The listener to remove.
 
@@ -155,10 +155,10 @@
 
 
   // Map some convenient top-level functions for event handling
-  ionic.on = function() { ionic.EventController.on.apply(ionic.EventController, arguments); };
-  ionic.off = function() { ionic.EventController.off.apply(ionic.EventController, arguments); };
-  ionic.trigger = ionic.EventController.trigger;//function() { ionic.EventController.trigger.apply(ionic.EventController.trigger, arguments); };
-  ionic.onGesture = function() { return ionic.EventController.onGesture.apply(ionic.EventController.onGesture, arguments); };
-  ionic.offGesture = function() { return ionic.EventController.offGesture.apply(ionic.EventController.offGesture, arguments); };
+  atajoui.on = function() { atajoui.EventController.on.apply(atajoui.EventController, arguments); };
+  atajoui.off = function() { atajoui.EventController.off.apply(atajoui.EventController, arguments); };
+  atajoui.trigger = atajoui.EventController.trigger;//function() { atajoui.EventController.trigger.apply(atajoui.EventController.trigger, arguments); };
+  atajoui.onGesture = function() { return atajoui.EventController.onGesture.apply(atajoui.EventController.onGesture, arguments); };
+  atajoui.offGesture = function() { return atajoui.EventController.offGesture.apply(atajoui.EventController.offGesture, arguments); };
 
-})(window.ionic);
+})(window.atajoui);

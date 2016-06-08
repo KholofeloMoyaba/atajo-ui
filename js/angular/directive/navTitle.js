@@ -1,42 +1,42 @@
 /**
  * @ngdoc directive
- * @name ionNavTitle
- * @module ionic
+ * @name auiNavTitle
+ * @module atajoui
  * @restrict E
- * @parent ionNavView
+ * @parent auiNavView
  *
  * @description
  *
- * The nav title directive replaces an {@link ionic.directive:ionNavBar} title text with
- * custom HTML from within an {@link ionic.directive:ionView} template. This gives each
+ * The nav title directive replaces an {@link atajoui.directive:auiNavBar} title text with
+ * custom HTML from within an {@link atajoui.directive:auiView} template. This gives each
  * view the ability to specify its own custom title element, such as an image or any HTML,
  * rather than being text-only. Alternatively, text-only titles can be updated using the
- * `view-title` {@link ionic.directive:ionView} attribute.
+ * `view-title` {@link atajoui.directive:auiView} attribute.
  *
- * Note that `ion-nav-title` must be an immediate descendant of the `ion-view` or
- * `ion-nav-bar` element (basically don't wrap it in another div).
+ * Note that `aui-nav-title` must be an immediate descendant of the `aui-view` or
+ * `aui-nav-bar` element (basically don't wrap it in another div).
  *
  * @usage
  * ```html
- * <ion-nav-bar>
- * </ion-nav-bar>
- * <ion-nav-view>
- *   <ion-view>
- *     <ion-nav-title>
+ * <aui-nav-bar>
+ * </aui-nav-bar>
+ * <aui-nav-view>
+ *   <aui-view>
+ *     <aui-nav-title>
  *       <img src="logo.svg">
- *     </ion-nav-title>
- *     <ion-content>
+ *     </aui-nav-title>
+ *     <aui-content>
  *       Some super content here!
- *     </ion-content>
- *   </ion-view>
- * </ion-nav-view>
+ *     </aui-content>
+ *   </aui-view>
+ * </aui-nav-view>
  * ```
  *
  */
-IonicModule
-.directive('ionNavTitle', ['$document', function($document) {
+AtajoUiModule
+.directive('auiNavTitle', ['$document', function($document) {
   return {
-    require: '^ionNavBar',
+    require: '^auiNavBar',
     restrict: 'E',
     compile: function(tElement, tAttrs) {
       var navElementType = 'title';
@@ -54,13 +54,13 @@ IonicModule
         pre: function($scope, $element, $attrs, navBarCtrl) {
           // only register the plain HTML, the navBarCtrl takes care of scope/compile/link
 
-          var parentViewCtrl = $element.parent().data('$ionViewController');
+          var parentViewCtrl = $element.parent().data('$auiViewController');
           if (parentViewCtrl) {
-            // if the parent is an ion-view, then these are ion-nav-buttons for JUST this ion-view
+            // if the parent is an aui-view, then these are aui-nav-buttons for JUST this aui-view
             parentViewCtrl.navElement(navElementType, spanEle.outerHTML);
 
           } else {
-            // these are buttons for all views that do not have their own ion-nav-buttons
+            // these are buttons for all views that do not have their own aui-nav-buttons
             navBarCtrl.navElement(navElementType, spanEle.outerHTML);
           }
 

@@ -1,6 +1,6 @@
-(function (ionic) {
+(function (atajoui) {
 
-  ionic.DelegateService = function(methodNames) {
+  atajoui.DelegateService = function(methodNames) {
 
     if (methodNames.indexOf('$getByHandle') > -1) {
       throw new Error("Method '$getByHandle' is implicitly added to each delegate service. Do not list it as a method.");
@@ -18,7 +18,7 @@
        * itself is that the controller instance might not exist yet.
        *
        * We want people to be able to do
-       * `var instance = $ionicScrollDelegate.$getByHandle('foo')` on controller
+       * `var instance = $atajoUiScrollDelegate.$getByHandle('foo')` on controller
        * instantiation, but on controller instantiation a child directive
        * may not have been compiled yet!
        *
@@ -36,7 +36,7 @@
 
 
       /**
-       * The delegate service (eg $ionicNavBarDelegate) is just an instance
+       * The delegate service (eg $atajoUiNavBarDelegate) is just an instance
        * with a non-defined handle, a couple extra methods for registering
        * and narrowing down to a specific handle.
        */
@@ -99,4 +99,4 @@
     }];
   };
 
-})(window.ionic);
+})(window.atajoui);

@@ -291,7 +291,7 @@
 
 }
 
-ion-tabs {
+aui-tabs {
   @include tabs-standard-color('tabs-color-active-light', $light, $dark);
   @include tabs-standard-color('tabs-color-active-stable', $stable, $dark);
   @include tabs-standard-color('tabs-color-active-positive', $positive, $dark);

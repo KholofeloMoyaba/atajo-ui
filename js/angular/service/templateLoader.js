@@ -1,5 +1,5 @@
-IonicModule
-.factory('$ionicTemplateLoader', [
+AtajoUiModule
+.factory('$atajoUiTemplateLoader', [
   '$compile',
   '$controller',
   '$http',

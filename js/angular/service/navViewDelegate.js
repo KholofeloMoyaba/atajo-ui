@@ -1,6 +1,6 @@
 
-IonicModule
-.service('$ionicNavViewDelegate', ionic.DelegateService([
+AtajoUiModule
+.service('$atajoUiNavViewDelegate', atajoui.DelegateService([
   'clearCache'
 ]));
 

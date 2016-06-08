@@ -4,33 +4,33 @@ var ITEM_TPL_REORDER_BUTTON =
 
 /**
 * @ngdoc directive
-* @name ionReorderButton
-* @parent ionic.directive:ionItem
-* @module ionic
+* @name auiReorderButton
+* @parent atajoui.directive:auiItem
+* @module atajoui
 * @restrict E
 * Creates a reorder button inside a list item, that is visible when the
-* {@link ionic.directive:ionList ionList parent's} `show-reorder` evaluates to true or
-* `$ionicListDelegate.showReorder(true)` is called.
+* {@link atajoui.directive:auiList auiList parent's} `show-reorder` evaluates to true or
+* `$atajoUiListDelegate.showReorder(true)` is called.
 *
 * Can be dragged to reorder items in the list. Takes any ionicon class.
 *
-* Note: Reordering works best when used with `ng-repeat`.  Be sure that all `ion-item` children of an `ion-list` are part of the same `ng-repeat` expression.
+* Note: Reordering works best when used with `ng-repeat`.  Be sure that all `aui-item` children of an `aui-list` are part of the same `ng-repeat` expression.
 *
 * When an item reorder is complete, the expression given in the `on-reorder` attribute is called. The `on-reorder` expression is given two locals that can be used: `$fromIndex` and `$toIndex`.  See below for an example.
 *
-* Look at {@link ionic.directive:ionList} for more examples.
+* Look at {@link atajoui.directive:auiList} for more examples.
 *
 * @usage
 *
 * ```html
-* <ion-list ng-controller="MyCtrl" show-reorder="true">
-*   <ion-item ng-repeat="item in items">
+* <aui-list ng-controller="MyCtrl" show-reorder="true">
+*   <aui-item ng-repeat="item in items">
 *     Item {{item}}
-*     <ion-reorder-button class="ion-navicon"
+*     <aui-reorder-button class="aui-navicon"
 *                         on-reorder="moveItem(item, $fromIndex, $toIndex)">
-*     </ion-reorder-button>
-*   </ion-item>
-* </ion-list>
+*     </aui-reorder-button>
+*   </aui-item>
+* </aui-list>
 * ```
 * ```js
 * function MyCtrl($scope) {
@@ -46,11 +46,11 @@ var ITEM_TPL_REORDER_BUTTON =
 * @param {expression=} on-reorder Expression to call when an item is reordered.
 * Parameters given: $fromIndex, $toIndex.
 */
-IonicModule
-.directive('ionReorderButton', ['$parse', function($parse) {
+AtajoUiModule
+.directive('auiReorderButton', ['$parse', function($parse) {
   return {
     restrict: 'E',
-    require: ['^ionItem', '^?ionList'],
+    require: ['^auiItem', '^?auiList'],
     priority: Number.MAX_VALUE,
     compile: function($element, $attr) {
       $attr.$set('class', ($attr['class'] || '') + ' button icon button-icon', true);

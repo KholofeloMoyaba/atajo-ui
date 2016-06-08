@@ -1,4 +1,4 @@
-(function(window, document, ionic) {
+(function(window, document, atajoui) {
 
   function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -12,41 +12,41 @@
   var WINDOWS_PHONE = 'windowsphone';
   var EDGE = 'edge';
   var CROSSWALK = 'crosswalk';
-  var requestAnimationFrame = ionic.requestAnimationFrame;
+  var requestAnimationFrame = atajoui.requestAnimationFrame;
 
   /**
    * @ngdoc utility
-   * @name ionic.Platform
-   * @module ionic
+   * @name atajoui.Platform
+   * @module atajoui
    * @description
    * A set of utility methods that can be used to retrieve the device ready state and
    * various other information such as what kind of platform the app is currently installed on.
    *
    * @usage
    * ```js
-   * angular.module('PlatformApp', ['ionic'])
+   * angular.module('PlatformApp', ['atajoui'])
    * .controller('PlatformCtrl', function($scope) {
    *
-   *   ionic.Platform.ready(function(){
+   *   atajoui.Platform.ready(function(){
    *     // will execute when device is ready, or immediately if the device is already ready.
    *   });
    *
-   *   var deviceInformation = ionic.Platform.device();
+   *   var deviceInformation = atajoui.Platform.device();
    *
-   *   var isWebView = ionic.Platform.isWebView();
-   *   var isIPad = ionic.Platform.isIPad();
-   *   var isIOS = ionic.Platform.isIOS();
-   *   var isAndroid = ionic.Platform.isAndroid();
-   *   var isWindowsPhone = ionic.Platform.isWindowsPhone();
+   *   var isWebView = atajoui.Platform.isWebView();
+   *   var isIPad = atajoui.Platform.isIPad();
+   *   var isIOS = atajoui.Platform.isIOS();
+   *   var isAndroid = atajoui.Platform.isAndroid();
+   *   var isWindowsPhone = atajoui.Platform.isWindowsPhone();
    *
-   *   var currentPlatform = ionic.Platform.platform();
-   *   var currentPlatformVersion = ionic.Platform.version();
+   *   var currentPlatform = atajoui.Platform.platform();
+   *   var currentPlatformVersion = atajoui.Platform.version();
    *
-   *   ionic.Platform.exitApp(); // stops the app
+   *   atajoui.Platform.exitApp(); // stops the app
    * });
    * ```
    */
-  var self = ionic.Platform = {
+  var self = atajoui.Platform = {
 
     // Put navigator on platform so it can be mocked and set
     // the browser does not allow window.navigator to be set
@@ -54,38 +54,38 @@
 
     /**
      * @ngdoc property
-     * @name ionic.Platform#isReady
+     * @name atajoui.Platform#isReady
      * @returns {boolean} Whether the device is ready.
      */
     isReady: false,
     /**
      * @ngdoc property
-     * @name ionic.Platform#isFullScreen
+     * @name atajoui.Platform#isFullScreen
      * @returns {boolean} Whether the device is fullscreen.
      */
     isFullScreen: false,
     /**
      * @ngdoc property
-     * @name ionic.Platform#platforms
+     * @name atajoui.Platform#platforms
      * @returns {Array(string)} An array of all platforms found.
      */
     platforms: null,
     /**
      * @ngdoc property
-     * @name ionic.Platform#grade
+     * @name atajoui.Platform#grade
      * @returns {string} What grade the current platform is.
      */
     grade: null,
     /**
      * @ngdoc property
-     * @name ionic.Platform#ua
+     * @name atajoui.Platform#ua
      * @returns {string} What User Agent is.
      */
     ua: navigator.userAgent,
 
     /**
      * @ngdoc method
-     * @name ionic.Platform#ready
+     * @name atajoui.Platform#ready
      * @description
      * Trigger a callback once the device is ready, or immediately
      * if the device is already ready. This method can be run from
@@ -124,7 +124,7 @@
 
     /**
      * @ngdoc method
-     * @name ionic.Platform#setGrade
+     * @name atajoui.Platform#setGrade
      * @description Set the grade of the device: 'a', 'b', or 'c'. 'a' is the best
      * (most css features enabled), 'c' is the worst.  By default, sets the grade
      * depending on the current device.
@@ -143,7 +143,7 @@
 
     /**
      * @ngdoc method
-     * @name ionic.Platform#device
+     * @name atajoui.Platform#device
      * @description Return the current device (given by cordova).
      * @returns {object} The device object.
      */
@@ -195,7 +195,7 @@
 
     /**
      * @ngdoc method
-     * @name ionic.Platform#isWebView
+     * @name atajoui.Platform#isWebView
      * @returns {boolean} Check if we are running within a WebView (such as Cordova).
      */
     isWebView: function() {
@@ -203,7 +203,7 @@
     },
     /**
      * @ngdoc method
-     * @name ionic.Platform#isIPad
+     * @name atajoui.Platform#isIPad
      * @returns {boolean} Whether we are running on iPad.
      */
     isIPad: function() {
@@ -214,7 +214,7 @@
     },
     /**
      * @ngdoc method
-     * @name ionic.Platform#isIOS
+     * @name atajoui.Platform#isIOS
      * @returns {boolean} Whether we are running on iOS.
      */
     isIOS: function() {
@@ -222,7 +222,7 @@
     },
     /**
      * @ngdoc method
-     * @name ionic.Platform#isAndroid
+     * @name atajoui.Platform#isAndroid
      * @returns {boolean} Whether we are running on Android.
      */
     isAndroid: function() {
@@ -230,7 +230,7 @@
     },
     /**
      * @ngdoc method
-     * @name ionic.Platform#isWindowsPhone
+     * @name atajoui.Platform#isWindowsPhone
      * @returns {boolean} Whether we are running on Windows Phone.
      */
     isWindowsPhone: function() {
@@ -238,7 +238,7 @@
     },
     /**
      * @ngdoc method
-     * @name ionic.Platform#isEdge
+     * @name atajoui.Platform#isEdge
      * @returns {boolean} Whether we are running on MS Edge/Windows 10 (inc. Phone)
      */
     isEdge: function() {
@@ -251,7 +251,7 @@
 
     /**
      * @ngdoc method
-     * @name ionic.Platform#platform
+     * @name atajoui.Platform#platform
      * @returns {string} The name of the current platform.
      */
     platform: function() {
@@ -266,8 +266,8 @@
     setPlatform: function(n) {
       if (typeof n != 'undefined' && n !== null && n.length) {
         platformName = n.toLowerCase();
-      } else if (getParameterByName('ionicplatform')) {
-        platformName = getParameterByName('ionicplatform');
+      } else if (getParameterByName('atajouiplatform')) {
+        platformName = getParameterByName('atajouiplatform');
       } else if (self.ua.indexOf('Edge') > -1) {
         platformName = EDGE;
       } else if (self.ua.indexOf('Windows Phone') > -1) {
@@ -283,7 +283,7 @@
 
     /**
      * @ngdoc method
-     * @name ionic.Platform#version
+     * @name atajoui.Platform#version
      * @returns {number} The version of the current device platform.
      */
     version: function() {
@@ -324,7 +324,7 @@
 
     /**
      * @ngdoc method
-     * @name ionic.Platform#is
+     * @name atajoui.Platform#is
      * @param {string} Platform name.
      * @returns {boolean} Whether the platform name provided is detected.
      */
@@ -348,7 +348,7 @@
 
     /**
      * @ngdoc method
-     * @name ionic.Platform#exitApp
+     * @name atajoui.Platform#exitApp
      * @description Exit the app.
      */
     exitApp: function() {
@@ -359,8 +359,8 @@
 
     /**
      * @ngdoc method
-     * @name ionic.Platform#showStatusBar
-     * @description Shows or hides the device status bar (in Cordova). Requires `ionic plugin add cordova-plugin-statusbar`
+     * @name atajoui.Platform#showStatusBar
+     * @description Shows or hides the device status bar (in Cordova). Requires `cordova plugin add cordova-plugin-statusbar`
      * @param {boolean} shouldShow Whether or not to show the status bar.
      */
     showStatusBar: function(val) {
@@ -384,10 +384,10 @@
 
     /**
      * @ngdoc method
-     * @name ionic.Platform#fullScreen
+     * @name atajoui.Platform#fullScreen
      * @description
      * Sets whether the app is fullscreen or not (in Cordova).
-     * @param {boolean=} showFullScreen Whether or not to set the app to fullscreen. Defaults to true. Requires `ionic plugin add cordova-plugin-statusbar`
+     * @param {boolean=} showFullScreen Whether or not to set the app to fullscreen. Defaults to true. Requires `cordova plugin add cordova-plugin-statusbar`
      * @param {boolean=} showStatusBar Whether or not to show the device's status bar. Defaults to false.
      */
     fullScreen: function(showFullScreen, showStatusBar) {
@@ -395,7 +395,7 @@
       self.isFullScreen = (showFullScreen !== false);
 
       // add/remove the fullscreen classname to the body
-      ionic.DomUtil.ready(function() {
+      atajoui.DomUtil.ready(function() {
         // run this only when or if the DOM is ready
         requestAnimationFrame(function() {
           if (self.isFullScreen) {
@@ -461,11 +461,11 @@
       readyCallbacks[x]();
     }
     readyCallbacks = [];
-    ionic.trigger('platformready', { target: document });
+    atajoui.trigger('platformready', { target: document });
 
     requestAnimationFrame(function() {
       document.body.classList.add('platform-ready');
     });
   }
 
-})(window, document, ionic);
+})(window, document, atajoui);

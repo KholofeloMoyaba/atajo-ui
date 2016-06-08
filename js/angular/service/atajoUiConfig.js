@@ -1,9 +1,9 @@
 /**
  * @ngdoc provider
- * @name $ionicConfigProvider
- * @module ionic
+ * @name $atajoUiConfigProvider
+ * @module atajoui
  * @description
- * Ionic automatically takes platform configurations into account to adjust things like what
+ * AtajoUi automatically takes platform configurations into account to adjust things like what
  * transition style to use and whether tab icons should show on the top or bottom. For example,
  * iOS will move forward by transitioning the entering view from right to center and the leaving
  * view from center to left. However, Android will transition with the entering view going from
@@ -11,8 +11,8 @@
  * that when a platform is not iOS or Android, then it'll default to iOS. So if you are
  * developing on a desktop browser, it's going to take on iOS default configs.
  *
- * These configs can be changed using the `$ionicConfigProvider` during the configuration phase
- * of your app. Additionally, `$ionicConfig` can also set and get config values during the run
+ * These configs can be changed using the `$atajoUiConfigProvider` during the configuration phase
+ * of your app. Additionally, `$atajoUiConfig` can also set and get config values during the run
  * phase and within the app itself.
  *
  * By default, all base config variables are set to `'platform'`, which means it'll take on the
@@ -21,32 +21,32 @@
  * The following code would set the same config variable for all platforms:
  *
  * ```js
- * $ionicConfigProvider.views.maxCache(10);
+ * $atajoUiConfigProvider.views.maxCache(10);
  * ```
  *
- * Additionally, each platform can have it's own config within the `$ionicConfigProvider.platform`
+ * Additionally, each platform can have it's own config within the `$atajoUiConfigProvider.platform`
  * property. The config below would only apply to Android devices.
  *
  * ```js
- * $ionicConfigProvider.platform.android.views.maxCache(5);
+ * $atajoUiConfigProvider.platform.android.views.maxCache(5);
  * ```
  *
  * @usage
  * ```js
- * var myApp = angular.module('reallyCoolApp', ['ionic']);
+ * var myApp = angular.module('reallyCoolApp', ['atajoui']);
  *
- * myApp.config(function($ionicConfigProvider) {
- *   $ionicConfigProvider.views.maxCache(5);
+ * myApp.config(function($atajoUiConfigProvider) {
+ *   $atajoUiConfigProvider.views.maxCache(5);
  *
  *   // note that you can also chain configs
- *   $ionicConfigProvider.backButton.text('Go Back').icon('ion-chevron-left');
+ *   $atajoUiConfigProvider.backButton.text('Go Back').icon('ion-chevron-left');
  * });
  * ```
  */
 
 /**
  * @ngdoc method
- * @name $ionicConfigProvider#views.transition
+ * @name $atajoUiConfigProvider#views.transition
  * @description Animation style when transitioning between views. Default `platform`.
  *
  * @param {string} transition Which style of view transitioning to use.
@@ -63,7 +63,7 @@
 
 /**
  * @ngdoc method
- * @name $ionicConfigProvider#views.maxCache
+ * @name $atajoUiConfigProvider#views.maxCache
  * @description  Maximum number of view elements to cache in the DOM. When the max number is
  * exceeded, the view with the longest time period since it was accessed is removed. Views that
  * stay in the DOM cache the view's scope, current state, and scroll position. The scope is
@@ -72,12 +72,12 @@
  * each view transition, and the next time the same view is shown, it will have to re-compile,
  * attach to the DOM, and link the element again. This disables caching, in effect.
  * @param {number} maxNumber Maximum number of views to retain. Default `10`.
- * @returns {number} How many views Ionic will hold onto until the a view is removed.
+ * @returns {number} How many views AtajoUi will hold onto until the a view is removed.
  */
 
 /**
  * @ngdoc method
- * @name $ionicConfigProvider#views.forwardCache
+ * @name $atajoUiConfigProvider#views.forwardCache
  * @description  By default, when navigating, views that were recently visited are cached, and
  * the same instance data and DOM elements are referenced when navigating back. However, when
  * navigating back in the history, the "forward" views are removed from the cache. If you
@@ -90,7 +90,7 @@
 
  /**
   * @ngdoc method
-  * @name $ionicConfigProvider#views.swipeBackEnabled
+  * @name $atajoUiConfigProvider#views.swipeBackEnabled
   * @description  By default on iOS devices, swipe to go back functionality is enabled by default.
   * This method can be used to disable it globally, or on a per-view basis.
   * Note: This functionality is only supported on iOS.
@@ -100,16 +100,16 @@
 
 /**
  * @ngdoc method
- * @name $ionicConfigProvider#scrolling.jsScrolling
+ * @name $atajoUiConfigProvider#scrolling.jsScrolling
  * @description  Whether to use JS or Native scrolling. Defaults to native scrolling. Setting this to
- * `true` has the same effect as setting each `ion-content` to have `overflow-scroll='false'`.
- * @param {boolean} value Defaults to `false` as of Ionic 1.2
+ * `true` has the same effect as setting each `aui-content` to have `overflow-scroll='false'`.
+ * @param {boolean} value Defaults to `false` as of AtajoUi 1.2
  * @returns {boolean}
  */
 
 /**
  * @ngdoc method
- * @name $ionicConfigProvider#backButton.icon
+ * @name $atajoUiConfigProvider#backButton.icon
  * @description Back button icon.
  * @param {string} value
  * @returns {string}
@@ -117,7 +117,7 @@
 
 /**
  * @ngdoc method
- * @name $ionicConfigProvider#backButton.text
+ * @name $atajoUiConfigProvider#backButton.text
  * @description Back button text.
  * @param {string} value Defaults to `Back`.
  * @returns {string}
@@ -125,7 +125,7 @@
 
 /**
  * @ngdoc method
- * @name $ionicConfigProvider#backButton.previousTitleText
+ * @name $atajoUiConfigProvider#backButton.previousTitleText
  * @description If the previous title text should become the back button text. This
  * is the default for iOS.
  * @param {boolean} value
@@ -134,7 +134,7 @@
 
 /**
  * @ngdoc method
- * @name $ionicConfigProvider#form.checkbox
+ * @name $atajoUiConfigProvider#form.checkbox
  * @description Checkbox style. Android defaults to `square` and iOS defaults to `circle`.
  * @param {string} value
  * @returns {string}
@@ -142,7 +142,7 @@
 
 /**
  * @ngdoc method
- * @name $ionicConfigProvider#form.toggle
+ * @name $atajoUiConfigProvider#form.toggle
  * @description Toggle item style. Android defaults to `small` and iOS defaults to `large`.
  * @param {string} value
  * @returns {string}
@@ -150,7 +150,7 @@
 
 /**
  * @ngdoc method
- * @name $ionicConfigProvider#spinner.icon
+ * @name $atajoUiConfigProvider#spinner.icon
  * @description Default spinner icon to use.
  * @param {string} value Can be: `android`, `ios`, `ios-small`, `bubbles`, `circles`, `crescent`,
  * `dots`, `lines`, `ripple`, or `spiral`.
@@ -159,7 +159,7 @@
 
 /**
  * @ngdoc method
- * @name $ionicConfigProvider#tabs.style
+ * @name $atajoUiConfigProvider#tabs.style
  * @description Tab style. Android defaults to `striped` and iOS defaults to `standard`.
  * @param {string} value Available values include `striped` and `standard`.
  * @returns {string}
@@ -167,7 +167,7 @@
 
 /**
  * @ngdoc method
- * @name $ionicConfigProvider#tabs.position
+ * @name $atajoUiConfigProvider#tabs.position
  * @description Tab position. Android defaults to `top` and iOS defaults to `bottom`.
  * @param {string} value Available values include `top` and `bottom`.
  * @returns {string}
@@ -175,7 +175,7 @@
 
 /**
  * @ngdoc method
- * @name $ionicConfigProvider#templates.maxPrefetch
+ * @name $atajoUiConfigProvider#templates.maxPrefetch
  * @description Sets the maximum number of templates to prefetch from the templateUrls defined in
  * $stateProvider.state. If set to `0`, the user will have to wait
  * for a template to be fetched the first time when navigating to a new page. Default `30`.
@@ -186,7 +186,7 @@
 
 /**
  * @ngdoc method
- * @name $ionicConfigProvider#navBar.alignTitle
+ * @name $atajoUiConfigProvider#navBar.alignTitle
  * @description Which side of the navBar to align the title. Default `center`.
  *
  * @param {string} value side of the navBar to align the title.
@@ -205,7 +205,7 @@
 
 /**
   * @ngdoc method
-  * @name $ionicConfigProvider#navBar.positionPrimaryButtons
+  * @name $atajoUiConfigProvider#navBar.positionPrimaryButtons
   * @description Which side of the navBar to align the primary navBar buttons. Default `left`.
   *
   * @param {string} value side of the navBar to align the primary navBar buttons.
@@ -223,7 +223,7 @@
 
 /**
  * @ngdoc method
- * @name $ionicConfigProvider#navBar.positionSecondaryButtons
+ * @name $atajoUiConfigProvider#navBar.positionSecondaryButtons
  * @description Which side of the navBar to align the secondary navBar buttons. Default `right`.
  *
  * @param {string} value side of the navBar to align the secondary navBar buttons.
@@ -239,8 +239,8 @@
  * @returns {string} value
  */
 
-IonicModule
-.provider('$ionicConfig', function() {
+AtajoUiModule
+.provider('$atajoUiConfig', function() {
 
   var provider = this;
   provider.platform = {};
@@ -409,13 +409,13 @@ IonicModule
 
     function setStyles(ele, opacity, x, boxShadowOpacity) {
       var css = {};
-      css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
+      css[atajoui.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
       css.opacity = opacity;
       if (boxShadowOpacity > -1) {
         css.boxShadow = '0 0 10px rgba(0,0,0,' + (d.shouldAnimate ? boxShadowOpacity * 0.45 : 0.3) + ')';
       }
-      css[ionic.CSS.TRANSFORM] = 'translate3d(' + x + '%,0,0)';
-      ionic.DomUtil.cachedStyles(ele, css);
+      css[atajoui.CSS.TRANSFORM] = 'translate3d(' + x + '%,0,0)';
+      atajoui.DomUtil.cachedStyles(ele, css);
     }
 
     var d = {
@@ -444,17 +444,17 @@ IonicModule
 
     function setStyles(ctrl, opacity, titleX, backTextX) {
       var css = {};
-      css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : '0ms';
+      css[atajoui.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : '0ms';
       css.opacity = opacity === 1 ? '' : opacity;
 
       ctrl.setCss('buttons-left', css);
       ctrl.setCss('buttons-right', css);
       ctrl.setCss('back-button', css);
 
-      css[ionic.CSS.TRANSFORM] = 'translate3d(' + backTextX + 'px,0,0)';
+      css[atajoui.CSS.TRANSFORM] = 'translate3d(' + backTextX + 'px,0,0)';
       ctrl.setCss('back-text', css);
 
-      css[ionic.CSS.TRANSFORM] = 'translate3d(' + titleX + 'px,0,0)';
+      css[atajoui.CSS.TRANSFORM] = 'translate3d(' + titleX + 'px,0,0)';
       ctrl.setCss('title', css);
     }
 
@@ -499,10 +499,10 @@ IonicModule
 
     function setStyles(ele, x, opacity) {
       var css = {};
-      css[ionic.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
-      css[ionic.CSS.TRANSFORM] = 'translate3d(' + x + '%,0,0)';
+      css[atajoui.CSS.TRANSITION_DURATION] = d.shouldAnimate ? '' : 0;
+      css[atajoui.CSS.TRANSFORM] = 'translate3d(' + x + '%,0,0)';
       css.opacity = opacity;
-      ionic.DomUtil.cachedStyles(ele, css);
+      atajoui.DomUtil.cachedStyles(ele, css);
     }
 
     var d = {
@@ -621,7 +621,7 @@ IonicModule
           }
           if (configObj[namespace] == PLATFORM) {
             // if the config is set to 'platform', then get this config's platform value
-            var platformConfig = stringObj(configProperties.platform, ionic.Platform.platform() + platformPath + '.' + namespace);
+            var platformConfig = stringObj(configProperties.platform, atajoui.Platform.platform() + platformPath + '.' + namespace);
             if (platformConfig || platformConfig === false) {
               return platformConfig;
             }
@@ -650,11 +650,11 @@ IonicModule
   provider.setPlatformConfig = setPlatformConfig;
 
 
-  // private: Service definition for internal Ionic use
+  // private: Service definition for internal AtajoUi use
   /**
    * @ngdoc service
-   * @name $ionicConfig
-   * @module ionic
+   * @name $atajoUiConfig
+   * @module atajoui
    * @private
    */
   provider.$get = function() {
@@ -663,7 +663,7 @@ IonicModule
 })
 // Fix for URLs in Cordova apps on Windows Phone
 // http://blogs.msdn.com/b/msdn_answers/archive/2015/02/10/
-// running-cordova-apps-on-windows-and-windows-phone-8-1-using-ionic-angularjs-and-other-frameworks.aspx
+// running-cordova-apps-on-windows-and-windows-phone-8-1-using-atajoui-angularjs-and-other-frameworks.aspx
 .config(['$compileProvider', function($compileProvider) {
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|sms|tel|geo|ftp|mailto|file|ghttps?|ms-appx-web|ms-appx|x-wmapp0):/);
   $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|content|blob|ms-appx|ms-appx-web|x-wmapp0):|data:image\//);

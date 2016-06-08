@@ -1,7 +1,7 @@
 /**
  * @ngdoc directive
  * @name navDirection
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -14,14 +14,14 @@
  * <a nav-direction="forward" href="#/home">Home</a>
  * ```
  */
-IonicModule
-.directive('navDirection', ['$ionicViewSwitcher', function($ionicViewSwitcher) {
+AtajoUiModule
+.directive('navDirection', ['$atajoUiViewSwitcher', function($atajoUiViewSwitcher) {
   return {
     restrict: 'A',
     priority: 1000,
     link: function($scope, $element, $attr) {
       $element.bind('click', function() {
-        $ionicViewSwitcher.nextDirection($attr.navDirection);
+        $atajoUiViewSwitcher.nextDirection($attr.navDirection);
       });
     }
   };

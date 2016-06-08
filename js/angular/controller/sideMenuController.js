@@ -1,15 +1,15 @@
-IonicModule
-.controller('$ionicSideMenus', [
+AtajoUiModule
+.controller('$atajoUiSideMenus', [
   '$scope',
   '$attrs',
-  '$ionicSideMenuDelegate',
-  '$ionicPlatform',
-  '$ionicBody',
-  '$ionicHistory',
-  '$ionicScrollDelegate',
-  'IONIC_BACK_PRIORITY',
+  '$atajoUiSideMenuDelegate',
+  '$atajoUiPlatform',
+  '$atajoUiBody',
+  '$atajoUiHistory',
+  '$atajoUiScrollDelegate',
+  'ATAJOUI_BACK_PRIORITY',
   '$rootScope',
-function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $ionicHistory, $ionicScrollDelegate, IONIC_BACK_PRIORITY, $rootScope) {
+function($scope, $attrs, $atajoUiSideMenuDelegate, $atajoUiPlatform, $atajoUiBody, $atajoUiHistory, $atajoUiScrollDelegate, ATAJOUI_BACK_PRIORITY, $rootScope) {
   var self = this;
   var rightShowing, leftShowing, isDragging;
   var startX, lastX, offsetX, isAsideExposed;
@@ -22,7 +22,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     self.right = options.right;
     self.setContent(options.content);
     self.dragThresholdX = options.dragThresholdX || 10;
-    $ionicHistory.registerHistory(self.$scope);
+    $atajoUiHistory.registerHistory(self.$scope);
   };
 
   /**
@@ -64,10 +64,10 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     self.content.enableAnimation();
     if (!shouldOpen) {
       self.openPercentage(0);
-      $rootScope.$emit('$ionicSideMenuClose', 'left');
+      $rootScope.$emit('$atajoUiSideMenuClose', 'left');
     } else {
       self.openPercentage(100);
-      $rootScope.$emit('$ionicSideMenuOpen', 'left');
+      $rootScope.$emit('$atajoUiSideMenuOpen', 'left');
     }
   };
 
@@ -83,10 +83,10 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     self.content.enableAnimation();
     if (!shouldOpen) {
       self.openPercentage(0);
-      $rootScope.$emit('$ionicSideMenuClose', 'right');
+      $rootScope.$emit('$atajoUiSideMenuClose', 'right');
     } else {
       self.openPercentage(-100);
-      $rootScope.$emit('$ionicSideMenuOpen', 'right');
+      $rootScope.$emit('$atajoUiSideMenuOpen', 'right');
     }
   };
 
@@ -103,8 +103,8 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
    */
   self.close = function() {
     self.openPercentage(0);
-    $rootScope.$emit('$ionicSideMenuClose', 'left');
-    $rootScope.$emit('$ionicSideMenuClose', 'right');
+    $rootScope.$emit('$atajoUiSideMenuClose', 'left');
+    $rootScope.$emit('$atajoUiSideMenuClose', 'right');
   };
 
   /**
@@ -155,7 +155,7 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
 
     // add the CSS class "menu-open" if the percentage does not
     // equal 0, otherwise remove the class from the body element
-    $ionicBody.enableClass((percentage !== 0), 'menu-open');
+    $atajoUiBody.enableClass((percentage !== 0), 'menu-open');
 
     self.content.setCanScroll(percentage == 0);
   };
@@ -163,10 +163,10 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
   /*
   function freezeAllScrolls(shouldFreeze) {
     if (shouldFreeze && !self.isScrollFreeze) {
-      $ionicScrollDelegate.freezeAllScrolls(shouldFreeze);
+      $atajoUiScrollDelegate.freezeAllScrolls(shouldFreeze);
 
     } else if (!shouldFreeze && self.isScrollFreeze) {
-      $ionicScrollDelegate.freezeAllScrolls(false);
+      $atajoUiScrollDelegate.freezeAllScrolls(false);
     }
     self.isScrollFreeze = shouldFreeze;
   }
@@ -312,11 +312,11 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     } else if (self.right && self.right.isEnabled) {
       self.content.setMarginRight(isAsideExposed ? self.right.width : 0);
     }
-    self.$scope.$emit('$ionicExposeAside', isAsideExposed);
+    self.$scope.$emit('$atajoUiExposeAside', isAsideExposed);
   };
 
   self.activeAsideResizing = function(isResizing) {
-    $ionicBody.enableClass(isResizing, 'aside-resizing');
+    $atajoUiBody.enableClass(isResizing, 'aside-resizing');
   };
 
   // End a drag with the given event
@@ -393,10 +393,10 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
       startX <= self.edgeThreshold ||
       startX >= self.content.element.offsetWidth - self.edgeThreshold;
 
-    var backView = $ionicHistory.backView();
+    var backView = $atajoUiHistory.backView();
     var menuEnabled = enableMenuWithBackViews ? true : !backView;
     if (!menuEnabled) {
-      var currentView = $ionicHistory.currentView() || {};
+      var currentView = $atajoUiHistory.currentView() || {};
       return (dragIsWithinBounds && (backView.historyId !== currentView.historyId));
     }
 
@@ -419,16 +419,16 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
   }, function(isOpen) {
     deregisterBackButtonAction();
     if (isOpen) {
-      deregisterBackButtonAction = $ionicPlatform.registerBackButtonAction(
+      deregisterBackButtonAction = $atajoUiPlatform.registerBackButtonAction(
         closeSideMenu,
-        IONIC_BACK_PRIORITY.sideMenu
+        ATAJOUI_BACK_PRIORITY.sideMenu
       );
     }
   });
 
-  var deregisterInstance = $ionicSideMenuDelegate._registerInstance(
+  var deregisterInstance = $atajoUiSideMenuDelegate._registerInstance(
     self, $attrs.delegateHandle, function() {
-      return $ionicHistory.isActiveScope($scope);
+      return $atajoUiHistory.isActiveScope($scope);
     }
   );
 

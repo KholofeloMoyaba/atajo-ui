@@ -1,18 +1,18 @@
 /**
  * @ngdoc directive
- * @name ionNavView
- * @module ionic
+ * @name auiNavView
+ * @module atajoui
  * @restrict E
  * @codepen odqCz
  *
  * @description
- * As a user navigates throughout your app, Ionic is able to keep track of their
+ * As a user navigates throughout your app, AtajoUi is able to keep track of their
  * navigation history. By knowing their history, transitions between views
  * correctly enter and exit using the platform's transition style. An additional
- * benefit to Ionic's navigation system is its ability to manage multiple
+ * benefit to AtajoUi's navigation system is its ability to manage multiple
  * histories. For example, each tab can have it's own navigation history stack.
  *
- * Ionic uses the AngularUI Router module so app interfaces can be organized
+ * AtajoUi uses the AngularUI Router module so app interfaces can be organized
  * into various "states". Like Angular's core $route service, URLs can be used
  * to control the views. However, the AngularUI Router provides a more powerful
  * state manager in that states are bound to named, nested, and parallel views,
@@ -20,22 +20,22 @@
  * Additionally, each state is not required to be bound to a URL, and data can
  * be pushed to each state which allows much flexibility.
  *
- * The ionNavView directive is used to render templates in your application. Each template
+ * The auiNavView directive is used to render templates in your application. Each template
  * is part of a state. States are usually mapped to a url, and are defined programatically
  * using angular-ui-router (see [their docs](https://github.com/angular-ui/ui-router/wiki),
- * and remember to replace ui-view with ion-nav-view in examples).
+ * and remember to replace ui-view with aui-nav-view in examples).
  *
  * @usage
  * In this example, we will create a navigation view that contains our different states for the app.
  *
- * To do this, in our markup we use ionNavView top level directive. To display a header bar we use
- * the {@link ionic.directive:ionNavBar} directive that updates as we navigate through the
+ * To do this, in our markup we use auiNavView top level directive. To display a header bar we use
+ * the {@link atajoui.directive:auiNavBar} directive that updates as we navigate through the
  * navigation stack.
  *
  * Next, we need to setup our states that will be rendered.
  *
  * ```js
- * var app = angular.module('myApp', ['ionic']);
+ * var app = angular.module('myApp', ['atajoui']);
  * app.config(function($stateProvider) {
  *   $stateProvider
  *   .state('index', {
@@ -49,7 +49,7 @@
  * });
  * ```
  * Then on app start, $stateProvider will look at the url, see if it matches the index state,
- * and then try to load home.html into the `<ion-nav-view>`.
+ * and then try to load home.html into the `<aui-nav-view>`.
  *
  * Pages are loaded by the URLs given. One simple way to create templates in Angular is to put
  * them directly into your HTML file and use the `<script type="text/ng-template">` syntax.
@@ -57,13 +57,13 @@
  *
  * ```html
  * <script id="home" type="text/ng-template">
- *   <!-- The title of the ion-view will be shown on the navbar -->
- *   <ion-view view-title="Home">
- *     <ion-content ng-controller="HomeCtrl">
+ *   <!-- The title of the aui-view will be shown on the navbar -->
+ *   <aui-view view-title="Home">
+ *     <aui-content ng-controller="HomeCtrl">
  *       <!-- The content of the page -->
  *       <a href="#/music">Go to music page!</a>
- *     </ion-content>
- *   </ion-view>
+ *     </aui-content>
+ *   </aui-view>
  * </script>
  * ```
  *
@@ -78,7 +78,7 @@
  * element that was left in the DOM becomes the active view. This also allows for the scroll
  * position of previous views to be maintained.
  *
- * Caching can be disabled and enabled in multiple ways. By default, Ionic will cache a maximum of
+ * Caching can be disabled and enabled in multiple ways. By default, AtajoUi will cache a maximum of
  * 10 views, and not only can this be configured, but apps can also explicitly state which views
  * should and should not be cached.
  *
@@ -86,24 +86,24 @@
  * are being disconnected from the watch cycle. Because scopes are not being destroyed and
  * recreated, controllers are not loading again on a subsequent viewing. If the app/controller
  * needs to know when a view has entered or has left, then view events emitted from the
- * {@link ionic.directive:ionView} scope, such as `$ionicView.enter`, may be useful.
+ * {@link atajoui.directive:auiView} scope, such as `$atajoUiView.enter`, may be useful.
  *
  * By default, when navigating back in the history, the "forward" views are removed from the cache.
  * If you navigate forward to the same view again, it'll create a new DOM element and controller
  * instance. Basically, any forward views are reset each time. This can be configured using the
- * {@link ionic.provider:$ionicConfigProvider}:
+ * {@link atajoui.provider:$atajoUiConfigProvider}:
  *
  * ```js
- * $ionicConfigProvider.views.forwardCache(true);
+ * $atajoUiConfigProvider.views.forwardCache(true);
  * ```
  *
  * #### Disable cache globally
  *
- * The {@link ionic.provider:$ionicConfigProvider} can be used to set the maximum allowable views
+ * The {@link atajoui.provider:$atajoUiConfigProvider} can be used to set the maximum allowable views
  * which can be cached, but this can also be use to disable all caching by setting it to 0.
  *
  * ```js
- * $ionicConfigProvider.views.maxCache(0);
+ * $atajoUiConfigProvider.views.maxCache(0);
  * ```
  *
  * #### Disable cache within state provider
@@ -119,9 +119,9 @@
  * #### Disable cache with an attribute
  *
  * ```html
- * <ion-view cache-view="false" view-title="My Title!">
+ * <aui-view cache-view="false" view-title="My Title!">
  *   ...
- * </ion-view>
+ * </aui-view>
  * ```
  *
  *
@@ -142,11 +142,11 @@
  * information, see ui-router's
  * [ui-view documentation](http://angular-ui.github.io/ui-router/site/#/api/ui.router.state.directive:ui-view).
  */
-IonicModule
-.directive('ionNavView', [
+AtajoUiModule
+.directive('auiNavView', [
   '$state',
-  '$ionicConfig',
-function($state, $ionicConfig) {
+  '$atajoUiConfig',
+function($state, $atajoUiConfig) {
   // IONIC's fork of Angular UI Router, v0.2.10
   // the navView handles registering views in the history and how to transition between them
   return {
@@ -154,12 +154,12 @@ function($state, $ionicConfig) {
     terminal: true,
     priority: 2000,
     transclude: true,
-    controller: '$ionicNavView',
+    controller: '$atajoUiNavView',
     compile: function(tElement, tAttrs, transclude) {
 
       // a nav view element is a container for numerous views
       tElement.addClass('view-container');
-      ionic.DomUtil.cachedAttr(tElement, 'nav-view-transition', $ionicConfig.views.transition());
+      atajoui.DomUtil.cachedAttr(tElement, 'nav-view-transition', $atajoUiConfig.views.transition());
 
       return function($scope, $element, $attr, navViewCtrl) {
         var latestLocals;

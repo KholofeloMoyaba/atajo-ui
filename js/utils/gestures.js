@@ -5,24 +5,24 @@
   *
   * Ported from github.com/EightMedia/hammer.js Gestures - thanks!
   */
-(function(ionic) {
+(function(atajoui) {
 
   /**
-   * ionic.Gestures
+   * atajoui.Gestures
    * use this to create instances
    * @param   {HTMLElement}   element
    * @param   {Object}        options
-   * @returns {ionic.Gestures.Instance}
+   * @returns {atajoui.Gestures.Instance}
    * @constructor
    */
-  ionic.Gesture = function(element, options) {
-    return new ionic.Gestures.Instance(element, options || {});
+  atajoui.Gesture = function(element, options) {
+    return new atajoui.Gestures.Instance(element, options || {});
   };
 
-  ionic.Gestures = {};
+  atajoui.Gestures = {};
 
   // default settings
-  ionic.Gestures.defaults = {
+  atajoui.Gestures.defaults = {
     // add css to the element to prevent the browser from doing
     // its native behavior. this doesnt prevent the scrolling,
     // but cancels the contextmenu, tap highlighting etc
@@ -31,66 +31,66 @@
   };
 
   // detect touchevents
-  ionic.Gestures.HAS_POINTEREVENTS = window.navigator.pointerEnabled || window.navigator.msPointerEnabled;
-  ionic.Gestures.HAS_TOUCHEVENTS = ('ontouchstart' in window);
+  atajoui.Gestures.HAS_POINTEREVENTS = window.navigator.pointerEnabled || window.navigator.msPointerEnabled;
+  atajoui.Gestures.HAS_TOUCHEVENTS = ('ontouchstart' in window);
 
   // dont use mouseevents on mobile devices
-  ionic.Gestures.MOBILE_REGEX = /mobile|tablet|ip(ad|hone|od)|android|silk/i;
-  ionic.Gestures.NO_MOUSEEVENTS = ionic.Gestures.HAS_TOUCHEVENTS && window.navigator.userAgent.match(ionic.Gestures.MOBILE_REGEX);
+  atajoui.Gestures.MOBILE_REGEX = /mobile|tablet|ip(ad|hone|od)|android|silk/i;
+  atajoui.Gestures.NO_MOUSEEVENTS = atajoui.Gestures.HAS_TOUCHEVENTS && window.navigator.userAgent.match(atajoui.Gestures.MOBILE_REGEX);
 
   // eventtypes per touchevent (start, move, end)
-  // are filled by ionic.Gestures.event.determineEventTypes on setup
-  ionic.Gestures.EVENT_TYPES = {};
+  // are filled by atajoui.Gestures.event.determineEventTypes on setup
+  atajoui.Gestures.EVENT_TYPES = {};
 
   // direction defines
-  ionic.Gestures.DIRECTION_DOWN = 'down';
-  ionic.Gestures.DIRECTION_LEFT = 'left';
-  ionic.Gestures.DIRECTION_UP = 'up';
-  ionic.Gestures.DIRECTION_RIGHT = 'right';
+  atajoui.Gestures.DIRECTION_DOWN = 'down';
+  atajoui.Gestures.DIRECTION_LEFT = 'left';
+  atajoui.Gestures.DIRECTION_UP = 'up';
+  atajoui.Gestures.DIRECTION_RIGHT = 'right';
 
   // pointer type
-  ionic.Gestures.POINTER_MOUSE = 'mouse';
-  ionic.Gestures.POINTER_TOUCH = 'touch';
-  ionic.Gestures.POINTER_PEN = 'pen';
+  atajoui.Gestures.POINTER_MOUSE = 'mouse';
+  atajoui.Gestures.POINTER_TOUCH = 'touch';
+  atajoui.Gestures.POINTER_PEN = 'pen';
 
   // touch event defines
-  ionic.Gestures.EVENT_START = 'start';
-  ionic.Gestures.EVENT_MOVE = 'move';
-  ionic.Gestures.EVENT_END = 'end';
+  atajoui.Gestures.EVENT_START = 'start';
+  atajoui.Gestures.EVENT_MOVE = 'move';
+  atajoui.Gestures.EVENT_END = 'end';
 
   // hammer document where the base events are added at
-  ionic.Gestures.DOCUMENT = window.document;
+  atajoui.Gestures.DOCUMENT = window.document;
 
   // plugins namespace
-  ionic.Gestures.plugins = {};
+  atajoui.Gestures.plugins = {};
 
   // if the window events are set...
-  ionic.Gestures.READY = false;
+  atajoui.Gestures.READY = false;
 
   /**
    * setup events to detect gestures on the document
    */
   function setup() {
-    if(ionic.Gestures.READY) {
+    if(atajoui.Gestures.READY) {
       return;
     }
 
     // find what eventtypes we add listeners to
-    ionic.Gestures.event.determineEventTypes();
+    atajoui.Gestures.event.determineEventTypes();
 
-    // Register all gestures inside ionic.Gestures.gestures
-    for(var name in ionic.Gestures.gestures) {
-      if(ionic.Gestures.gestures.hasOwnProperty(name)) {
-        ionic.Gestures.detection.register(ionic.Gestures.gestures[name]);
+    // Register all gestures inside atajoui.Gestures.gestures
+    for(var name in atajoui.Gestures.gestures) {
+      if(atajoui.Gestures.gestures.hasOwnProperty(name)) {
+        atajoui.Gestures.detection.register(atajoui.Gestures.gestures[name]);
       }
     }
 
     // Add touch events on the document
-    ionic.Gestures.event.onTouch(ionic.Gestures.DOCUMENT, ionic.Gestures.EVENT_MOVE, ionic.Gestures.detection.detect);
-    ionic.Gestures.event.onTouch(ionic.Gestures.DOCUMENT, ionic.Gestures.EVENT_END, ionic.Gestures.detection.detect);
+    atajoui.Gestures.event.onTouch(atajoui.Gestures.DOCUMENT, atajoui.Gestures.EVENT_MOVE, atajoui.Gestures.detection.detect);
+    atajoui.Gestures.event.onTouch(atajoui.Gestures.DOCUMENT, atajoui.Gestures.EVENT_END, atajoui.Gestures.detection.detect);
 
-    // ionic.Gestures is ready...!
-    ionic.Gestures.READY = true;
+    // atajoui.Gestures is ready...!
+    atajoui.Gestures.READY = true;
   }
 
   /**
@@ -98,11 +98,11 @@
    * all methods should return the instance itself, so it is chainable.
    * @param   {HTMLElement}       element
    * @param   {Object}            [options={}]
-   * @returns {ionic.Gestures.Instance}
+   * @returns {atajoui.Gestures.Instance}
    * @name Gesture.Instance
    * @constructor
    */
-  ionic.Gestures.Instance = function(element, options) {
+  atajoui.Gestures.Instance = function(element, options) {
     var self = this;
 
     // A null element was passed into the instance, which means
@@ -113,7 +113,7 @@
       return this;
     }
 
-    // setup ionic.GesturesJS window events and register all gestures
+    // setup atajoui.GesturesJS window events and register all gestures
     // this also sets up the default options
     setup();
 
@@ -123,19 +123,19 @@
     this.enabled = true;
 
     // merge options
-    this.options = ionic.Gestures.utils.extend(
-        ionic.Gestures.utils.extend({}, ionic.Gestures.defaults),
+    this.options = atajoui.Gestures.utils.extend(
+        atajoui.Gestures.utils.extend({}, atajoui.Gestures.defaults),
         options || {});
 
     // add some css to the element to prevent the browser from doing its native behavoir
     if(this.options.stop_browser_behavior) {
-      ionic.Gestures.utils.stopDefaultBrowserBehavior(this.element, this.options.stop_browser_behavior);
+      atajoui.Gestures.utils.stopDefaultBrowserBehavior(this.element, this.options.stop_browser_behavior);
     }
 
     // start detection on touchstart
-    ionic.Gestures.event.onTouch(element, ionic.Gestures.EVENT_START, function(ev) {
+    atajoui.Gestures.event.onTouch(element, atajoui.Gestures.EVENT_START, function(ev) {
       if(self.enabled) {
-        ionic.Gestures.detection.startDetect(self, ev);
+        atajoui.Gestures.detection.startDetect(self, ev);
       }
     });
 
@@ -144,12 +144,12 @@
   };
 
 
-  ionic.Gestures.Instance.prototype = {
+  atajoui.Gestures.Instance.prototype = {
     /**
      * bind events to the instance
      * @param   {String}      gesture
      * @param   {Function}    handler
-     * @returns {ionic.Gestures.Instance}
+     * @returns {atajoui.Gestures.Instance}
      */
     on: function onEvent(gesture, handler){
       var gestures = gesture.split(' ');
@@ -164,7 +164,7 @@
      * unbind events to the instance
      * @param   {String}      gesture
      * @param   {Function}    handler
-     * @returns {ionic.Gestures.Instance}
+     * @returns {atajoui.Gestures.Instance}
      */
     off: function offEvent(gesture, handler){
       var gestures = gesture.split(' ');
@@ -179,18 +179,18 @@
      * trigger gesture event
      * @param   {String}      gesture
      * @param   {Object}      eventData
-     * @returns {ionic.Gestures.Instance}
+     * @returns {atajoui.Gestures.Instance}
      */
     trigger: function triggerEvent(gesture, eventData){
       // create DOM event
-      var event = ionic.Gestures.DOCUMENT.createEvent('Event');
+      var event = atajoui.Gestures.DOCUMENT.createEvent('Event');
       event.initEvent(gesture, true, true);
       event.gesture = eventData;
 
       // trigger on the target if it is in the instance element,
       // this is for event delegation tricks
       var element = this.element;
-      if(ionic.Gestures.utils.hasParent(eventData.target, element)) {
+      if(atajoui.Gestures.utils.hasParent(eventData.target, element)) {
         element = eventData.target;
       }
 
@@ -202,7 +202,7 @@
     /**
      * enable of disable hammer.js detection
      * @param   {Boolean}   state
-     * @returns {ionic.Gestures.Instance}
+     * @returns {atajoui.Gestures.Instance}
      */
     enable: function enable(state) {
       this.enabled = state;
@@ -233,7 +233,7 @@
   var touch_triggered = false;
 
 
-  ionic.Gestures.event = {
+  atajoui.Gestures.event = {
     /**
      * simple addEventListener
      * @param   {HTMLElement}   element
@@ -251,13 +251,13 @@
     /**
      * touch events with mouse fallback
      * @param   {HTMLElement}   element
-     * @param   {String}        eventType        like ionic.Gestures.EVENT_MOVE
+     * @param   {String}        eventType        like atajoui.Gestures.EVENT_MOVE
      * @param   {Function}      handler
      */
     onTouch: function onTouch(element, eventType, handler) {
       var self = this;
 
-      this.bindDom(element, ionic.Gestures.EVENT_TYPES[eventType], function bindDomOnTouch(ev) {
+      this.bindDom(element, atajoui.Gestures.EVENT_TYPES[eventType], function bindDomOnTouch(ev) {
         var sourceEventType = ev.type.toLowerCase();
 
         // onmouseup, but when touchend has been fired we do nothing.
@@ -293,8 +293,8 @@
         // and we are now handling a mouse event, we stop that to prevent conflicts
         if(enable_detect) {
           // update pointerevent
-          if(ionic.Gestures.HAS_POINTEREVENTS && eventType != ionic.Gestures.EVENT_END) {
-            count_touches = ionic.Gestures.PointerEvent.updatePointer(eventType, ev);
+          if(atajoui.Gestures.HAS_POINTEREVENTS && eventType != atajoui.Gestures.EVENT_END) {
+            count_touches = atajoui.Gestures.PointerEvent.updatePointer(eventType, ev);
           }
           // touch
           else if(sourceEventType.match(/touch/)) {
@@ -307,12 +307,12 @@
 
           // if we are in a end event, but when we remove one touch and
           // we still have enough, set eventType to move
-          if(count_touches > 0 && eventType == ionic.Gestures.EVENT_END) {
-            eventType = ionic.Gestures.EVENT_MOVE;
+          if(count_touches > 0 && eventType == atajoui.Gestures.EVENT_END) {
+            eventType = atajoui.Gestures.EVENT_MOVE;
           }
           // no touches, force the end event
           else if(!count_touches) {
-            eventType = ionic.Gestures.EVENT_END;
+            eventType = atajoui.Gestures.EVENT_END;
           }
 
           // store the last move event
@@ -321,11 +321,11 @@
           }
 
           // trigger the handler
-          handler.call(ionic.Gestures.detection, self.collectEventData(element, eventType, self.getTouchList(last_move_event, eventType), ev));
+          handler.call(atajoui.Gestures.detection, self.collectEventData(element, eventType, self.getTouchList(last_move_event, eventType), ev));
 
           // remove pointerevent from list
-          if(ionic.Gestures.HAS_POINTEREVENTS && eventType == ionic.Gestures.EVENT_END) {
-            count_touches = ionic.Gestures.PointerEvent.updatePointer(eventType, ev);
+          if(atajoui.Gestures.HAS_POINTEREVENTS && eventType == atajoui.Gestures.EVENT_END) {
+            count_touches = atajoui.Gestures.PointerEvent.updatePointer(eventType, ev);
           }
         }
 
@@ -336,7 +336,7 @@
           last_move_event = null;
           enable_detect = false;
           touch_triggered = false;
-          ionic.Gestures.PointerEvent.reset();
+          atajoui.Gestures.PointerEvent.reset();
         }
       });
     },
@@ -344,18 +344,18 @@
 
     /**
      * we have different events for each device/browser
-     * determine what we need and set them in the ionic.Gestures.EVENT_TYPES constant
+     * determine what we need and set them in the atajoui.Gestures.EVENT_TYPES constant
      */
     determineEventTypes: function determineEventTypes() {
       // determine the eventtype we want to set
       var types;
 
       // pointerEvents magic
-      if(ionic.Gestures.HAS_POINTEREVENTS) {
-        types = ionic.Gestures.PointerEvent.getEvents();
+      if(atajoui.Gestures.HAS_POINTEREVENTS) {
+        types = atajoui.Gestures.PointerEvent.getEvents();
       }
       // on Android, iOS, blackberry, windows mobile we dont want any mouseevents
-      else if(ionic.Gestures.NO_MOUSEEVENTS) {
+      else if(atajoui.Gestures.NO_MOUSEEVENTS) {
         types = [
           'touchstart',
           'touchmove',
@@ -370,9 +370,9 @@
           'touchend touchcancel mouseup'];
       }
 
-      ionic.Gestures.EVENT_TYPES[ionic.Gestures.EVENT_START] = types[0];
-      ionic.Gestures.EVENT_TYPES[ionic.Gestures.EVENT_MOVE] = types[1];
-      ionic.Gestures.EVENT_TYPES[ionic.Gestures.EVENT_END] = types[2];
+      atajoui.Gestures.EVENT_TYPES[atajoui.Gestures.EVENT_START] = types[0];
+      atajoui.Gestures.EVENT_TYPES[atajoui.Gestures.EVENT_MOVE] = types[1];
+      atajoui.Gestures.EVENT_TYPES[atajoui.Gestures.EVENT_END] = types[2];
     },
 
 
@@ -383,8 +383,8 @@
      */
     getTouchList: function getTouchList(ev/*, eventType*/) {
       // get the fake pointerEvent touchlist
-      if(ionic.Gestures.HAS_POINTEREVENTS) {
-        return ionic.Gestures.PointerEvent.getTouchList();
+      if(atajoui.Gestures.HAS_POINTEREVENTS) {
+        return atajoui.Gestures.PointerEvent.getTouchList();
       }
       // get the touchlist
       else if(ev.touches) {
@@ -399,21 +399,21 @@
 
 
     /**
-     * collect event data for ionic.Gestures js
+     * collect event data for atajoui.Gestures js
      * @param   {HTMLElement}   element
-     * @param   {String}        eventType        like ionic.Gestures.EVENT_MOVE
+     * @param   {String}        eventType        like atajoui.Gestures.EVENT_MOVE
      * @param   {Object}        eventData
      */
     collectEventData: function collectEventData(element, eventType, touches, ev) {
 
       // find out pointerType
-      var pointerType = ionic.Gestures.POINTER_TOUCH;
-      if(ev.type.match(/mouse/) || ionic.Gestures.PointerEvent.matchType(ionic.Gestures.POINTER_MOUSE, ev)) {
-        pointerType = ionic.Gestures.POINTER_MOUSE;
+      var pointerType = atajoui.Gestures.POINTER_TOUCH;
+      if(ev.type.match(/mouse/) || atajoui.Gestures.PointerEvent.matchType(atajoui.Gestures.POINTER_MOUSE, ev)) {
+        pointerType = atajoui.Gestures.POINTER_MOUSE;
       }
 
       return {
-        center: ionic.Gestures.utils.getCenter(touches),
+        center: atajoui.Gestures.utils.getCenter(touches),
         timeStamp: new Date().getTime(),
         target: ev.target,
         touches: touches,
@@ -448,13 +448,13 @@
          * @return {*}
          */
         stopDetect: function() {
-          return ionic.Gestures.detection.stopDetect();
+          return atajoui.Gestures.detection.stopDetect();
         }
       };
     }
   };
 
-  ionic.Gestures.PointerEvent = {
+  atajoui.Gestures.PointerEvent = {
     /**
      * holds all pointers
      * type {Object}
@@ -478,11 +478,11 @@
 
     /**
      * update the position of a pointer
-     * @param   {String}   type             ionic.Gestures.EVENT_END
+     * @param   {String}   type             atajoui.Gestures.EVENT_END
      * @param   {Object}   pointerEvent
      */
     updatePointer: function(type, pointerEvent) {
-      if(type == ionic.Gestures.EVENT_END) {
+      if(type == atajoui.Gestures.EVENT_END) {
         this.pointers = {};
       }
       else {
@@ -495,7 +495,7 @@
 
     /**
      * check if ev matches pointertype
-     * @param   {String}        pointerType     ionic.Gestures.POINTER_MOUSE
+     * @param   {String}        pointerType     atajoui.Gestures.POINTER_MOUSE
      * @param   {PointerEvent}  ev
      */
     matchType: function(pointerType, ev) {
@@ -504,9 +504,9 @@
       }
 
       var types = {};
-      types[ionic.Gestures.POINTER_MOUSE] = (ev.pointerType == ev.MSPOINTER_TYPE_MOUSE || ev.pointerType == ionic.Gestures.POINTER_MOUSE);
-      types[ionic.Gestures.POINTER_TOUCH] = (ev.pointerType == ev.MSPOINTER_TYPE_TOUCH || ev.pointerType == ionic.Gestures.POINTER_TOUCH);
-      types[ionic.Gestures.POINTER_PEN] = (ev.pointerType == ev.MSPOINTER_TYPE_PEN || ev.pointerType == ionic.Gestures.POINTER_PEN);
+      types[atajoui.Gestures.POINTER_MOUSE] = (ev.pointerType == ev.MSPOINTER_TYPE_MOUSE || ev.pointerType == atajoui.Gestures.POINTER_MOUSE);
+      types[atajoui.Gestures.POINTER_TOUCH] = (ev.pointerType == ev.MSPOINTER_TYPE_TOUCH || ev.pointerType == atajoui.Gestures.POINTER_TOUCH);
+      types[atajoui.Gestures.POINTER_PEN] = (ev.pointerType == ev.MSPOINTER_TYPE_PEN || ev.pointerType == atajoui.Gestures.POINTER_PEN);
       return types[pointerType];
     },
 
@@ -531,7 +531,7 @@
   };
 
 
-  ionic.Gestures.utils = {
+  atajoui.Gestures.utils = {
     /**
      * extend method,
      * also used for cloning when dest is an empty object
@@ -621,17 +621,17 @@
      * angle to direction define
      * @param   {Touch}     touch1
      * @param   {Touch}     touch2
-     * @returns {String}    direction constant, like ionic.Gestures.DIRECTION_LEFT
+     * @returns {String}    direction constant, like atajoui.Gestures.DIRECTION_LEFT
      */
     getDirection: function getDirection(touch1, touch2) {
       var x = Math.abs(touch1.pageX - touch2.pageX),
       y = Math.abs(touch1.pageY - touch2.pageY);
 
       if(x >= y) {
-        return touch1.pageX - touch2.pageX > 0 ? ionic.Gestures.DIRECTION_LEFT : ionic.Gestures.DIRECTION_RIGHT;
+        return touch1.pageX - touch2.pageX > 0 ? atajoui.Gestures.DIRECTION_LEFT : atajoui.Gestures.DIRECTION_RIGHT;
       }
       else {
-        return touch1.pageY - touch2.pageY > 0 ? ionic.Gestures.DIRECTION_UP : ionic.Gestures.DIRECTION_DOWN;
+        return touch1.pageY - touch2.pageY > 0 ? atajoui.Gestures.DIRECTION_UP : atajoui.Gestures.DIRECTION_DOWN;
       }
     },
 
@@ -688,7 +688,7 @@
      * @returns  {Boolean}   is_vertical
      */
     isVertical: function isVertical(direction) {
-      return (direction == ionic.Gestures.DIRECTION_UP || direction == ionic.Gestures.DIRECTION_DOWN);
+      return (direction == atajoui.Gestures.DIRECTION_UP || direction == atajoui.Gestures.DIRECTION_DOWN);
     },
 
 
@@ -700,7 +700,7 @@
     stopDefaultBrowserBehavior: function stopDefaultBrowserBehavior(element, css_class) {
       // changed from making many style changes to just adding a preset classname
       // less DOM manipulations, less code, and easier to control in the CSS side of things
-      // hammer.js doesn't come with CSS, but ionic does, which is why we prefer this method
+      // hammer.js doesn't come with CSS, but atajoui does, which is why we prefer this method
       if(element && element.classList) {
         element.classList.add(css_class);
         element.onselectstart = function() {
@@ -711,14 +711,14 @@
   };
 
 
-  ionic.Gestures.detection = {
-    // contains all registred ionic.Gestures.gestures in the correct order
+  atajoui.Gestures.detection = {
+    // contains all registred atajoui.Gestures.gestures in the correct order
     gestures: [],
 
-    // data of the current ionic.Gestures.gesture detection session
+    // data of the current atajoui.Gestures.gesture detection session
     current: null,
 
-    // the previous ionic.Gestures.gesture session data
+    // the previous atajoui.Gestures.gesture session data
     // is a full clone of the previous gesture.current object
     previous: null,
 
@@ -727,12 +727,12 @@
 
 
     /**
-     * start ionic.Gestures.gesture detection
-     * @param   {ionic.Gestures.Instance}   inst
+     * start atajoui.Gestures.gesture detection
+     * @param   {atajoui.Gestures.Instance}   inst
      * @param   {Object}            eventData
      */
     startDetect: function startDetect(inst, eventData) {
-      // already busy with a ionic.Gestures.gesture detection on an element
+      // already busy with a atajoui.Gestures.gesture detection on an element
       if(this.current) {
         return;
       }
@@ -740,8 +740,8 @@
       this.stopped = false;
 
       this.current = {
-        inst: inst, // reference to ionic.GesturesInstance we're working for
-        startEvent: ionic.Gestures.utils.extend({}, eventData), // start eventData for distances, timing etc
+        inst: inst, // reference to atajoui.GesturesInstance we're working for
+        startEvent: atajoui.Gestures.utils.extend({}, eventData), // start eventData for distances, timing etc
         lastEvent: false, // last eventData
         name: '' // current gesture we're in/detected, can be 'tap', 'hold' etc
       };
@@ -751,7 +751,7 @@
 
 
     /**
-     * ionic.Gestures.gesture detection
+     * atajoui.Gestures.gesture detection
      * @param   {Object}    eventData
      */
     detect: function detect(eventData) {
@@ -765,7 +765,7 @@
       // instance options
       var inst_options = this.current.inst.options;
 
-      // call ionic.Gestures.gesture handlers
+      // call atajoui.Gestures.gesture handlers
       for(var g = 0, len = this.gestures.length; g < len; g++) {
         var gesture = this.gestures[g];
 
@@ -785,7 +785,7 @@
       }
 
       // endevent, but not the last touch, so dont stop
-      if(eventData.eventType == ionic.Gestures.EVENT_END && !eventData.touches.length - 1) {
+      if(eventData.eventType == atajoui.Gestures.EVENT_END && !eventData.touches.length - 1) {
         this.stopDetect();
       }
 
@@ -794,14 +794,14 @@
 
 
     /**
-     * clear the ionic.Gestures.gesture vars
-     * this is called on endDetect, but can also be used when a final ionic.Gestures.gesture has been detected
-     * to stop other ionic.Gestures.gestures from being fired
+     * clear the atajoui.Gestures.gesture vars
+     * this is called on endDetect, but can also be used when a final atajoui.Gestures.gesture has been detected
+     * to stop other atajoui.Gestures.gestures from being fired
      */
     stopDetect: function stopDetect() {
       // clone current data to the store as the previous gesture
       // used for the double tap gesture, since this is an other gesture detect session
-      this.previous = ionic.Gestures.utils.extend({}, this.current);
+      this.previous = atajoui.Gestures.utils.extend({}, this.current);
 
       // reset the current
       this.current = null;
@@ -812,7 +812,7 @@
 
 
     /**
-     * extend eventData for ionic.Gestures.gestures
+     * extend eventData for atajoui.Gestures.gestures
      * @param   {Object}   ev
      * @returns {Object}   ev
      */
@@ -827,16 +827,16 @@
         // extend 1 level deep to get the touchlist with the touch objects
         startEv.touches = [];
         for(var i = 0, len = ev.touches.length; i < len; i++) {
-          startEv.touches.push(ionic.Gestures.utils.extend({}, ev.touches[i]));
+          startEv.touches.push(atajoui.Gestures.utils.extend({}, ev.touches[i]));
         }
       }
 
       var delta_time = ev.timeStamp - startEv.timeStamp,
           delta_x = ev.center.pageX - startEv.center.pageX,
           delta_y = ev.center.pageY - startEv.center.pageY,
-          velocity = ionic.Gestures.utils.getVelocity(delta_time, delta_x, delta_y);
+          velocity = atajoui.Gestures.utils.getVelocity(delta_time, delta_x, delta_y);
 
-      ionic.Gestures.utils.extend(ev, {
+      atajoui.Gestures.utils.extend(ev, {
         deltaTime: delta_time,
         deltaX: delta_x,
         deltaY: delta_y,
@@ -844,12 +844,12 @@
         velocityX: velocity.x,
         velocityY: velocity.y,
 
-        distance: ionic.Gestures.utils.getDistance(startEv.center, ev.center),
-        angle: ionic.Gestures.utils.getAngle(startEv.center, ev.center),
-        direction: ionic.Gestures.utils.getDirection(startEv.center, ev.center),
+        distance: atajoui.Gestures.utils.getDistance(startEv.center, ev.center),
+        angle: atajoui.Gestures.utils.getAngle(startEv.center, ev.center),
+        direction: atajoui.Gestures.utils.getDirection(startEv.center, ev.center),
 
-        scale: ionic.Gestures.utils.getScale(startEv.touches, ev.touches),
-        rotation: ionic.Gestures.utils.getRotation(startEv.touches, ev.touches),
+        scale: atajoui.Gestures.utils.getScale(startEv.touches, ev.touches),
+        rotation: atajoui.Gestures.utils.getRotation(startEv.touches, ev.touches),
 
         startEvent: startEv
       });
@@ -870,13 +870,13 @@
         options[gesture.name] = true;
       }
 
-      // extend ionic.Gestures default options with the ionic.Gestures.gesture options
-      ionic.Gestures.utils.extend(ionic.Gestures.defaults, options, true);
+      // extend atajoui.Gestures default options with the atajoui.Gestures.gesture options
+      atajoui.Gestures.utils.extend(atajoui.Gestures.defaults, options, true);
 
       // set its index
       gesture.index = gesture.index || 1000;
 
-      // add ionic.Gestures.gesture to the list
+      // add atajoui.Gestures.gesture to the list
       this.gestures.push(gesture);
 
       // sort the list by index
@@ -895,7 +895,7 @@
   };
 
 
-  ionic.Gestures.gestures = ionic.Gestures.gestures || {};
+  atajoui.Gestures.gestures = atajoui.Gestures.gestures || {};
 
   /**
    * Custom gestures
@@ -939,7 +939,7 @@
    *          timeStamp   {Number}        time the event occurred
    *          target      {HTMLElement}   target element
    *          touches     {Array}         touches (fingers, pointers, mouse) on the screen
-   *          pointerType {String}        kind of pointer that was used. matches ionic.Gestures.POINTER_MOUSE|TOUCH
+   *          pointerType {String}        kind of pointer that was used. matches atajoui.Gestures.POINTER_MOUSE|TOUCH
    *          center      {Object}        center position of the touches. contains pageX and pageY
    *          deltaTime   {Number}        the total time of the touches in the screen
    *          deltaX      {Number}        the delta on x axis we haved moved
@@ -947,46 +947,46 @@
    *          velocityX   {Number}        the velocity on the x
    *          velocityY   {Number}        the velocity on y
    *          angle       {Number}        the angle we are moving
-   *          direction   {String}        the direction we are moving. matches ionic.Gestures.DIRECTION_UP|DOWN|LEFT|RIGHT
+   *          direction   {String}        the direction we are moving. matches atajoui.Gestures.DIRECTION_UP|DOWN|LEFT|RIGHT
    *          distance    {Number}        the distance we haved moved
    *          scale       {Number}        scaling of the touches, needs 2 touches
    *          rotation    {Number}        rotation of the touches, needs 2 touches *
-   *          eventType   {String}        matches ionic.Gestures.EVENT_START|MOVE|END
+   *          eventType   {String}        matches atajoui.Gestures.EVENT_START|MOVE|END
    *          srcEvent    {Object}        the source event, like TouchStart or MouseDown *
    *          startEvent  {Object}        contains the same properties as above,
    *                                      but from the first touch. this is used to calculate
    *                                      distances, deltaTime, scaling etc
    *
-   *      @param  {ionic.Gestures.Instance}    inst
+   *      @param  {atajoui.Gestures.Instance}    inst
    *      the instance we are doing the detection for. you can get the options from
    *      the inst.options object and trigger the gesture event by calling inst.trigger
    *
    *
    * Handle gestures
    * --------------------
-   * inside the handler you can get/set ionic.Gestures.detectionic.current. This is the current
-   * detection sessionic. It has the following properties
+   * inside the handler you can get/set atajoui.Gestures.detectatajoui.current. This is the current
+   * detection sessatajoui. It has the following properties
    *      @param  {String}    name
    *      contains the name of the gesture we have detected. it has not a real function,
    *      only to check in other gestures if something is detected.
    *      like in the drag gesture we set it to 'drag' and in the swipe gesture we can
-   *      check if the current gesture is 'drag' by accessing ionic.Gestures.detectionic.current.name
+   *      check if the current gesture is 'drag' by accessing atajoui.Gestures.detectatajoui.current.name
    *
    *      readonly
-   *      @param  {ionic.Gestures.Instance}    inst
+   *      @param  {atajoui.Gestures.Instance}    inst
    *      the instance we do the detection for
    *
    *      readonly
    *      @param  {Object}    startEvent
-   *      contains the properties of the first gesture detection in this sessionic.
+   *      contains the properties of the first gesture detection in this sessatajoui.
    *      Used for calculations about timing, distance, etc.
    *
    *      readonly
    *      @param  {Object}    lastEvent
-   *      contains all the properties of the last gesture detect in this sessionic.
+   *      contains all the properties of the last gesture detect in this sessatajoui.
    *
    * after the gesture detection session has been completed (user has released the screen)
-   * the ionic.Gestures.detectionic.current object is copied into ionic.Gestures.detectionic.previous,
+   * the atajoui.Gestures.detectatajoui.current object is copied into atajoui.Gestures.detectatajoui.previous,
    * this is usefull for gestures like doubletap, where you need to know if the
    * previous gesture was a tap
    *
@@ -998,8 +998,8 @@
    *
    * Register gestures
    * --------------------
-   * When an gesture is added to the ionic.Gestures.gestures object, it is auto registered
-   * at the setup of the first ionic.Gestures instance. You can also call ionic.Gestures.detectionic.register
+   * When an gesture is added to the atajoui.Gestures.gestures object, it is auto registered
+   * at the setup of the first atajoui.Gestures instance. You can also call atajoui.Gestures.detectatajoui.register
    * manually and pass your gesture object as a param
    *
    */
@@ -1009,7 +1009,7 @@
    * Touch stays at the same place for x time
    * events  hold
    */
-  ionic.Gestures.gestures.Hold = {
+  atajoui.Gestures.gestures.Hold = {
     name: 'hold',
     index: 10,
     defaults: {
@@ -1019,31 +1019,31 @@
     timer: null,
     handler: function holdGesture(ev, inst) {
       switch(ev.eventType) {
-        case ionic.Gestures.EVENT_START:
+        case atajoui.Gestures.EVENT_START:
           // clear any running timers
           clearTimeout(this.timer);
 
           // set the gesture so we can check in the timeout if it still is
-          ionic.Gestures.detection.current.name = this.name;
+          atajoui.Gestures.detection.current.name = this.name;
 
           // set timer and if after the timeout it still is hold,
           // we trigger the hold event
           this.timer = setTimeout(function() {
-            if(ionic.Gestures.detection.current.name == 'hold') {
-              ionic.tap.cancelClick();
+            if(atajoui.Gestures.detection.current.name == 'hold') {
+              atajoui.tap.cancelClick();
               inst.trigger('hold', ev);
             }
           }, inst.options.hold_timeout);
           break;
 
           // when you move or end we clear the timer
-        case ionic.Gestures.EVENT_MOVE:
+        case atajoui.Gestures.EVENT_MOVE:
           if(ev.distance > inst.options.hold_threshold) {
             clearTimeout(this.timer);
           }
           break;
 
-        case ionic.Gestures.EVENT_END:
+        case atajoui.Gestures.EVENT_END:
           clearTimeout(this.timer);
           break;
       }
@@ -1056,7 +1056,7 @@
    * Quick touch at a place or double at the same place
    * events  tap, doubletap
    */
-  ionic.Gestures.gestures.Tap = {
+  atajoui.Gestures.gestures.Tap = {
     name: 'tap',
     index: 100,
     defaults: {
@@ -1067,9 +1067,9 @@
       doubletap_interval: 300
     },
     handler: function tapGesture(ev, inst) {
-      if(ev.eventType == ionic.Gestures.EVENT_END && ev.srcEvent.type != 'touchcancel') {
+      if(ev.eventType == atajoui.Gestures.EVENT_END && ev.srcEvent.type != 'touchcancel') {
         // previous gesture, for the double tap since these are two different gesture detections
-        var prev = ionic.Gestures.detection.previous,
+        var prev = atajoui.Gestures.detection.previous,
         did_doubletap = false;
 
         // when the touchtime is higher then the max touch time
@@ -1089,7 +1089,7 @@
 
         // do a single tap
         if(!did_doubletap || inst.options.tap_always) {
-          ionic.Gestures.detection.current.name = 'tap';
+          atajoui.Gestures.detection.current.name = 'tap';
           inst.trigger('tap', ev);
         }
       }
@@ -1102,7 +1102,7 @@
    * triggers swipe events when the end velocity is above the threshold
    * events  swipe, swipeleft, swiperight, swipeup, swipedown
    */
-  ionic.Gestures.gestures.Swipe = {
+  atajoui.Gestures.gestures.Swipe = {
     name: 'swipe',
     index: 40,
     defaults: {
@@ -1111,7 +1111,7 @@
       swipe_velocity: 0.4
     },
     handler: function swipeGesture(ev, inst) {
-      if(ev.eventType == ionic.Gestures.EVENT_END) {
+      if(ev.eventType == atajoui.Gestures.EVENT_END) {
         // max touches
         if(inst.options.swipe_max_touches > 0 &&
             ev.touches.length > inst.options.swipe_max_touches) {
@@ -1138,7 +1138,7 @@
    * you disable scrolling on that area.
    * events  drag, drapleft, dragright, dragup, dragdown
    */
-  ionic.Gestures.gestures.Drag = {
+  atajoui.Gestures.gestures.Drag = {
     name: 'drag',
     index: 50,
     defaults: {
@@ -1180,7 +1180,7 @@
 
       // current gesture isnt drag, but dragged is true
       // this means an other gesture is busy. now call dragend
-      if(ionic.Gestures.detection.current.name != this.name && this.triggered) {
+      if(atajoui.Gestures.detection.current.name != this.name && this.triggered) {
         inst.trigger(this.name + 'end', ev);
         this.triggered = false;
         return;
@@ -1193,46 +1193,46 @@
           }
 
       switch(ev.eventType) {
-        case ionic.Gestures.EVENT_START:
+        case atajoui.Gestures.EVENT_START:
           this.triggered = false;
           break;
 
-        case ionic.Gestures.EVENT_MOVE:
+        case atajoui.Gestures.EVENT_MOVE:
           // when the distance we moved is too small we skip this gesture
           // or we can be already in dragging
           if(ev.distance < inst.options.drag_min_distance &&
-              ionic.Gestures.detection.current.name != this.name) {
+              atajoui.Gestures.detection.current.name != this.name) {
                 return;
               }
 
           // we are dragging!
-          if(ionic.Gestures.detection.current.name != this.name) {
-            ionic.Gestures.detection.current.name = this.name;
+          if(atajoui.Gestures.detection.current.name != this.name) {
+            atajoui.Gestures.detection.current.name = this.name;
             if (inst.options.correct_for_drag_min_distance) {
               // When a drag is triggered, set the event center to drag_min_distance pixels from the original event center.
               // Without this correction, the dragged distance would jumpstart at drag_min_distance pixels instead of at 0.
               // It might be useful to save the original start point somewhere
               var factor = Math.abs(inst.options.drag_min_distance / ev.distance);
-              ionic.Gestures.detection.current.startEvent.center.pageX += ev.deltaX * factor;
-              ionic.Gestures.detection.current.startEvent.center.pageY += ev.deltaY * factor;
+              atajoui.Gestures.detection.current.startEvent.center.pageX += ev.deltaX * factor;
+              atajoui.Gestures.detection.current.startEvent.center.pageY += ev.deltaY * factor;
 
               // recalculate event data using new start point
-              ev = ionic.Gestures.detection.extendEventData(ev);
+              ev = atajoui.Gestures.detection.extendEventData(ev);
             }
           }
 
           // lock drag to axis?
-          if(ionic.Gestures.detection.current.lastEvent.drag_locked_to_axis || (inst.options.drag_lock_to_axis && inst.options.drag_lock_min_distance <= ev.distance)) {
+          if(atajoui.Gestures.detection.current.lastEvent.drag_locked_to_axis || (inst.options.drag_lock_to_axis && inst.options.drag_lock_min_distance <= ev.distance)) {
             ev.drag_locked_to_axis = true;
           }
-          var last_direction = ionic.Gestures.detection.current.lastEvent.direction;
+          var last_direction = atajoui.Gestures.detection.current.lastEvent.direction;
           if(ev.drag_locked_to_axis && last_direction !== ev.direction) {
             // keep direction on the axis that the drag gesture started on
-            if(ionic.Gestures.utils.isVertical(last_direction)) {
-              ev.direction = (ev.deltaY < 0) ? ionic.Gestures.DIRECTION_UP : ionic.Gestures.DIRECTION_DOWN;
+            if(atajoui.Gestures.utils.isVertical(last_direction)) {
+              ev.direction = (ev.deltaY < 0) ? atajoui.Gestures.DIRECTION_UP : atajoui.Gestures.DIRECTION_DOWN;
             }
             else {
-              ev.direction = (ev.deltaX < 0) ? ionic.Gestures.DIRECTION_LEFT : ionic.Gestures.DIRECTION_RIGHT;
+              ev.direction = (ev.deltaX < 0) ? atajoui.Gestures.DIRECTION_LEFT : atajoui.Gestures.DIRECTION_RIGHT;
             }
           }
 
@@ -1249,13 +1249,13 @@
           inst.trigger(this.name + ev.direction, ev);
 
           // block the browser events
-          if( (inst.options.drag_block_vertical && ionic.Gestures.utils.isVertical(ev.direction)) ||
-              (inst.options.drag_block_horizontal && !ionic.Gestures.utils.isVertical(ev.direction))) {
+          if( (inst.options.drag_block_vertical && atajoui.Gestures.utils.isVertical(ev.direction)) ||
+              (inst.options.drag_block_horizontal && !atajoui.Gestures.utils.isVertical(ev.direction))) {
                 ev.preventDefault();
               }
           break;
 
-        case ionic.Gestures.EVENT_END:
+        case atajoui.Gestures.EVENT_END:
           // trigger dragend
           if(this.triggered) {
             inst.trigger(this.name + 'end', ev);
@@ -1273,7 +1273,7 @@
    * User want to scale or rotate with 2 fingers
    * events  transform, pinch, pinchin, pinchout, rotate
    */
-  ionic.Gestures.gestures.Transform = {
+  atajoui.Gestures.gestures.Transform = {
     name: 'transform',
     index: 45,
     defaults: {
@@ -1290,7 +1290,7 @@
     handler: function transformGesture(ev, inst) {
       // current gesture isnt drag, but dragged is true
       // this means an other gesture is busy. now call dragend
-      if(ionic.Gestures.detection.current.name != this.name && this.triggered) {
+      if(atajoui.Gestures.detection.current.name != this.name && this.triggered) {
         inst.trigger(this.name + 'end', ev);
         this.triggered = false;
         return;
@@ -1307,11 +1307,11 @@
       }
 
       switch(ev.eventType) {
-        case ionic.Gestures.EVENT_START:
+        case atajoui.Gestures.EVENT_START:
           this.triggered = false;
           break;
 
-        case ionic.Gestures.EVENT_MOVE:
+        case atajoui.Gestures.EVENT_MOVE:
           var scale_threshold = Math.abs(1 - ev.scale);
           var rotation_threshold = Math.abs(ev.rotation);
 
@@ -1323,7 +1323,7 @@
               }
 
           // we are transforming!
-          ionic.Gestures.detection.current.name = this.name;
+          atajoui.Gestures.detection.current.name = this.name;
 
           // first time, trigger dragstart event
           if(!this.triggered) {
@@ -1345,7 +1345,7 @@
           }
           break;
 
-        case ionic.Gestures.EVENT_END:
+        case atajoui.Gestures.EVENT_END:
           // trigger dragend
           if(this.triggered) {
             inst.trigger(this.name + 'end', ev);
@@ -1363,7 +1363,7 @@
    * Called as first, tells the user has touched the screen
    * events  touch
    */
-  ionic.Gestures.gestures.Touch = {
+  atajoui.Gestures.gestures.Touch = {
     name: 'touch',
     index: -Infinity,
     defaults: {
@@ -1378,7 +1378,7 @@
       prevent_mouseevents: false
     },
     handler: function touchGesture(ev, inst) {
-      if(inst.options.prevent_mouseevents && ev.pointerType == ionic.Gestures.POINTER_MOUSE) {
+      if(inst.options.prevent_mouseevents && ev.pointerType == atajoui.Gestures.POINTER_MOUSE) {
         ev.stopDetect();
         return;
       }
@@ -1387,7 +1387,7 @@
         ev.preventDefault();
       }
 
-      if(ev.eventType == ionic.Gestures.EVENT_START) {
+      if(ev.eventType == atajoui.Gestures.EVENT_START) {
         inst.trigger(this.name, ev);
       }
     }
@@ -1399,13 +1399,13 @@
    * Called as last, tells the user has released the screen
    * events  release
    */
-  ionic.Gestures.gestures.Release = {
+  atajoui.Gestures.gestures.Release = {
     name: 'release',
     index: Infinity,
     handler: function releaseGesture(ev, inst) {
-      if(ev.eventType == ionic.Gestures.EVENT_END) {
+      if(ev.eventType == atajoui.Gestures.EVENT_END) {
         inst.trigger(this.name, ev);
       }
     }
   };
-})(window.ionic);
+})(window.atajoui);

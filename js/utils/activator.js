@@ -1,4 +1,4 @@
-(function(document, ionic) {
+(function(document, atajoui) {
   'use strict';
 
   var queueElements = {};   // elements that should get an active state in XX milliseconds
@@ -6,18 +6,18 @@
   var keyId = 0;            // a counter for unique keys for the above ojects
   var ACTIVATED_CLASS = 'activated';
 
-  ionic.activator = {
+  atajoui.activator = {
 
     start: function(e) {
-      var hitX = ionic.tap.pointerCoord(e).x;
+      var hitX = atajoui.tap.pointerCoord(e).x;
       if (hitX > 0 && hitX < 30) {
         return;
       }
 
       // when an element is touched/clicked, it climbs up a few
       // parents to see if it is an .item or .button element
-      ionic.requestAnimationFrame(function() {
-        if ((ionic.scroll && ionic.scroll.isScrolling) || ionic.tap.requiresNativeClick(e.target)) return;
+      atajoui.requestAnimationFrame(function() {
+        if ((atajoui.scroll && atajoui.scroll.isScrolling) || atajoui.tap.requiresNativeClick(e.target)) return;
         var ele = e.target;
         var eleToActivate;
 
@@ -36,7 +36,7 @@
             break;
           }
           // no sense climbing past these
-          if (ele.tagName == 'ION-CONTENT' || (ele.classList && ele.classList.contains('pane')) || ele.tagName == 'BODY') {
+          if (ele.tagName == 'AUI-CONTENT' || (ele.classList && ele.classList.contains('pane')) || ele.tagName == 'BODY') {
             break;
           }
           ele = ele.parentElement;
@@ -47,7 +47,7 @@
           queueElements[keyId] = eleToActivate;
 
           // on the next frame, set the queued elements to active
-          ionic.requestAnimationFrame(activateElements);
+          atajoui.requestAnimationFrame(activateElements);
 
           keyId = (keyId > 29 ? 0 : keyId + 1);
         }
@@ -67,7 +67,7 @@
     queueElements = {};
 
     // in the next frame, remove the active class from all active elements
-    ionic.requestAnimationFrame(deactivateElements);
+    atajoui.requestAnimationFrame(deactivateElements);
   }
 
   function activateElements() {
@@ -82,7 +82,7 @@
   }
 
   function deactivateElements() {
-    if (ionic.transition && ionic.transition.isActive) {
+    if (atajoui.transition && atajoui.transition.isActive) {
       setTimeout(deactivateElements, 400);
       return;
     }
@@ -95,4 +95,4 @@
     }
   }
 
-})(document, ionic);
+})(document, atajoui);

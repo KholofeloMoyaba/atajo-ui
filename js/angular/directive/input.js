@@ -1,31 +1,31 @@
 /**
 * @ngdoc directive
-* @name ionInput
-* @parent ionic.directive:ionList
-* @module ionic
+* @name auiInput
+* @parent atajoui.directive:auiList
+* @module atajoui
 * @restrict E
 * Creates a text input group that can easily be focused
 *
 * @usage
 *
 * ```html
-* <ion-list>
-*   <ion-input>
+* <aui-list>
+*   <aui-input>
 *     <input type="text" placeholder="First Name">
-*   </ion-input>
+*   </aui-input>
 *
-*   <ion-input>
-*     <ion-label>Username</ion-label>
+*   <aui-input>
+*     <aui-label>Username</aui-label>
 *     <input type="text">
-*   </ion-input>
-* </ion-list>
+*   </aui-input>
+* </aui-list>
 * ```
 */
 
 var labelIds = -1;
 
-IonicModule
-.directive('ionInput', [function() {
+AtajoUiModule
+.directive('auiInput', [function() {
   return {
     restrict: 'E',
     controller: ['$scope', '$element', function($scope, $element) {
@@ -47,12 +47,12 @@ IonicModule
 
 /**
 * @ngdoc directive
-* @name ionLabel
-* @parent ionic.directive:ionList
-* @module ionic
+* @name auiLabel
+* @parent atajoui.directive:auiList
+* @module atajoui
 * @restrict E
 *
-* New in Ionic 1.2. It is strongly recommended that you use `<ion-label>` in place
+* New in AtajoUi 1.2. It is strongly recommended that you use `<aui-label>` in place
 * of any `<label>` elements for maximum cross-browser support and performance.
 *
 * Creates a label for a form input.
@@ -60,22 +60,22 @@ IonicModule
 * @usage
 *
 * ```html
-* <ion-list>
-*   <ion-input>
-*     <ion-label>Username</ion-label>
+* <aui-list>
+*   <aui-input>
+*     <aui-label>Username</aui-label>
 *     <input type="text">
-*   </ion-input>
-* </ion-list>
+*   </aui-input>
+* </aui-list>
 * ```
 */
-IonicModule
-.directive('ionLabel', [function() {
+AtajoUiModule
+.directive('auiLabel', [function() {
   return {
     restrict: 'E',
-    require: '?^ionInput',
+    require: '?^auiInput',
     compile: function() {
 
-      return function link($scope, $element, $attrs, ionInputCtrl) {
+      return function link($scope, $element, $attrs, auiInputCtrl) {
         var element = $element[0];
 
         $element.addClass('input-label');
@@ -87,12 +87,12 @@ IonicModule
           $element.attr('id', id);
         }
 
-        if (ionInputCtrl) {
+        if (auiInputCtrl) {
 
-          ionInputCtrl.setInputAriaLabeledBy(id);
+          auiInputCtrl.setInputAriaLabeledBy(id);
 
           $element.on('click', function() {
-            ionInputCtrl.focus();
+            auiInputCtrl.focus();
           });
         }
       };
@@ -103,14 +103,14 @@ IonicModule
 /**
  * Input label adds accessibility to <span class="input-label">.
  */
-IonicModule
+AtajoUiModule
 .directive('inputLabel', [function() {
   return {
     restrict: 'C',
-    require: '?^ionInput',
+    require: '?^auiInput',
     compile: function() {
 
-      return function link($scope, $element, $attrs, ionInputCtrl) {
+      return function link($scope, $element, $attrs, auiInputCtrl) {
         var element = $element[0];
 
         $element.attr('aria-label', $element.text());
@@ -120,8 +120,8 @@ IonicModule
           $element.attr('id', id);
         }
 
-        if (ionInputCtrl) {
-          ionInputCtrl.setInputAriaLabeledBy(id);
+        if (auiInputCtrl) {
+          auiInputCtrl.setInputAriaLabeledBy(id);
         }
 
       };

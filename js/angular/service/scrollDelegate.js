@@ -1,30 +1,30 @@
 
 /**
  * @ngdoc service
- * @name $ionicScrollDelegate
- * @module ionic
+ * @name $atajoUiScrollDelegate
+ * @module atajoui
  * @description
  * Delegate for controlling scrollViews (created by
- * {@link ionic.directive:ionContent} and
- * {@link ionic.directive:ionScroll} directives).
+ * {@link atajoui.directive:auiContent} and
+ * {@link atajoui.directive:auiScroll} directives).
  *
- * Methods called directly on the $ionicScrollDelegate service will control all scroll
- * views.  Use the {@link ionic.service:$ionicScrollDelegate#$getByHandle $getByHandle}
+ * Methods called directly on the $atajoUiScrollDelegate service will control all scroll
+ * views.  Use the {@link atajoui.service:$atajoUiScrollDelegate#$getByHandle $getByHandle}
  * method to control specific scrollViews.
  *
  * @usage
  *
  * ```html
  * <body ng-controller="MainCtrl">
- *   <ion-content>
+ *   <aui-content>
  *     <button ng-click="scrollTop()">Scroll to Top!</button>
- *   </ion-content>
+ *   </aui-content>
  * </body>
  * ```
  * ```js
- * function MainCtrl($scope, $ionicScrollDelegate) {
+ * function MainCtrl($scope, $atajoUiScrollDelegate) {
  *   $scope.scrollTop = function() {
- *     $ionicScrollDelegate.scrollTop();
+ *     $atajoUiScrollDelegate.scrollTop();
  *   };
  * }
  * ```
@@ -34,52 +34,52 @@
  *
  * ```html
  * <body ng-controller="MainCtrl">
- *   <ion-content delegate-handle="mainScroll">
+ *   <aui-content delegate-handle="mainScroll">
  *     <button ng-click="scrollMainToTop()">
  *       Scroll content to top!
  *     </button>
- *     <ion-scroll delegate-handle="small" style="height: 100px;">
+ *     <aui-scroll delegate-handle="small" style="height: 100px;">
  *       <button ng-click="scrollSmallToTop()">
  *         Scroll small area to top!
  *       </button>
- *     </ion-scroll>
- *   </ion-content>
+ *     </aui-scroll>
+ *   </aui-content>
  * </body>
  * ```
  * ```js
- * function MainCtrl($scope, $ionicScrollDelegate) {
+ * function MainCtrl($scope, $atajoUiScrollDelegate) {
  *   $scope.scrollMainToTop = function() {
- *     $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+ *     $atajoUiScrollDelegate.$getByHandle('mainScroll').scrollTop();
  *   };
  *   $scope.scrollSmallToTop = function() {
- *     $ionicScrollDelegate.$getByHandle('small').scrollTop();
+ *     $atajoUiScrollDelegate.$getByHandle('small').scrollTop();
  *   };
  * }
  * ```
  */
-IonicModule
-.service('$ionicScrollDelegate', ionic.DelegateService([
+AtajoUiModule
+.service('$atajoUiScrollDelegate', atajoui.DelegateService([
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#resize
+   * @name $atajoUiScrollDelegate#resize
    * @description Tell the scrollView to recalculate the size of its container.
    */
   'resize',
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#scrollTop
+   * @name $atajoUiScrollDelegate#scrollTop
    * @param {boolean=} shouldAnimate Whether the scroll should animate.
    */
   'scrollTop',
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#scrollBottom
+   * @name $atajoUiScrollDelegate#scrollBottom
    * @param {boolean=} shouldAnimate Whether the scroll should animate.
    */
   'scrollBottom',
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#scrollTo
+   * @name $atajoUiScrollDelegate#scrollTo
    * @param {number} left The x-value to scroll to.
    * @param {number} top The y-value to scroll to.
    * @param {boolean=} shouldAnimate Whether the scroll should animate.
@@ -87,7 +87,7 @@ IonicModule
   'scrollTo',
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#scrollBy
+   * @name $atajoUiScrollDelegate#scrollBy
    * @param {number} left The x-offset to scroll by.
    * @param {number} top The y-offset to scroll by.
    * @param {boolean=} shouldAnimate Whether the scroll should animate.
@@ -95,7 +95,7 @@ IonicModule
   'scrollBy',
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#zoomTo
+   * @name $atajoUiScrollDelegate#zoomTo
    * @param {number} level Level to zoom to.
    * @param {boolean=} animate Whether to animate the zoom.
    * @param {number=} originLeft Zoom in at given left coordinate.
@@ -104,7 +104,7 @@ IonicModule
   'zoomTo',
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#zoomBy
+   * @name $atajoUiScrollDelegate#zoomBy
    * @param {number} factor The factor to zoom by.
    * @param {boolean=} animate Whether to animate the zoom.
    * @param {number=} originLeft Zoom in at given left coordinate.
@@ -113,7 +113,7 @@ IonicModule
   'zoomBy',
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#getScrollPosition
+   * @name $atajoUiScrollDelegate#getScrollPosition
    * @returns {object} The scroll position of this view, with the following properties:
    *  - `{number}` `left` The distance the user has scrolled from the left (starts at 0).
    *  - `{number}` `top` The distance the user has scrolled from the top (starts at 0).
@@ -122,7 +122,7 @@ IonicModule
   'getScrollPosition',
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#anchorScroll
+   * @name $atajoUiScrollDelegate#anchorScroll
    * @description Tell the scrollView to scroll to the element with an id
    * matching window.location.hash.
    *
@@ -133,7 +133,7 @@ IonicModule
   'anchorScroll',
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#freezeScroll
+   * @name $atajoUiScrollDelegate#freezeScroll
    * @description Does not allow this scroll view to scroll either x or y.
    * @param {boolean=} shouldFreeze Should this scroll view be prevented from scrolling or not.
    * @returns {boolean} If the scroll view is being prevented from scrolling or not.
@@ -141,25 +141,25 @@ IonicModule
   'freezeScroll',
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#freezeAllScrolls
+   * @name $atajoUiScrollDelegate#freezeAllScrolls
    * @description Does not allow any of the app's scroll views to scroll either x or y.
    * @param {boolean=} shouldFreeze Should all app scrolls be prevented from scrolling or not.
    */
   'freezeAllScrolls',
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#getScrollView
+   * @name $atajoUiScrollDelegate#getScrollView
    * @returns {object} The scrollView associated with this delegate.
    */
   'getScrollView'
   /**
    * @ngdoc method
-   * @name $ionicScrollDelegate#$getByHandle
+   * @name $atajoUiScrollDelegate#$getByHandle
    * @param {string} handle
    * @returns `delegateInstance` A delegate instance that controls only the
    * scrollViews with `delegate-handle` matching the given handle.
    *
-   * Example: `$ionicScrollDelegate.$getByHandle('my-handle').scrollTop();`
+   * Example: `$atajoUiScrollDelegate.$getByHandle('my-handle').scrollTop();`
    */
 ]));
 

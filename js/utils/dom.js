@@ -1,4 +1,4 @@
-(function(window, document, ionic) {
+(function(window, document, atajoui) {
 
   var readyCallbacks = [];
   var isDomReady = document.readyState === 'complete' || document.readyState === 'interactive';
@@ -6,7 +6,7 @@
   function domReady() {
     isDomReady = true;
     for (var x = 0; x < readyCallbacks.length; x++) {
-      ionic.requestAnimationFrame(readyCallbacks[x]);
+      atajoui.requestAnimationFrame(readyCallbacks[x]);
     }
     readyCallbacks = [];
     document.removeEventListener('DOMContentLoaded', domReady);
@@ -36,15 +36,15 @@
 
   /**
   * @ngdoc utility
-  * @name ionic.DomUtil
-  * @module ionic
+  * @name atajoui.DomUtil
+  * @module atajoui
   */
-  ionic.DomUtil = {
+  atajoui.DomUtil = {
     //Call with proper context
     /**
      * @ngdoc method
-     * @name ionic.DomUtil#requestAnimationFrame
-     * @alias ionic.requestAnimationFrame
+     * @name atajoui.DomUtil#requestAnimationFrame
+     * @alias atajoui.requestAnimationFrame
      * @description Calls [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window.requestAnimationFrame), or a polyfill if not available.
      * @param {function} callback The function to call when the next frame
      * happens.
@@ -59,8 +59,8 @@
 
     /**
      * @ngdoc method
-     * @name ionic.DomUtil#animationFrameThrottle
-     * @alias ionic.animationFrameThrottle
+     * @name atajoui.DomUtil#animationFrameThrottle
+     * @alias atajoui.animationFrameThrottle
      * @description
      * When given a callback, if that callback is called 100 times between
      * animation frames, adding Throttle will make it only run the last of
@@ -79,7 +79,7 @@
         context = this;
         if (!isQueued) {
           isQueued = true;
-          ionic.requestAnimationFrame(function() {
+          atajoui.requestAnimationFrame(function() {
             cb.apply(context, args);
             isQueued = false;
           });
@@ -97,7 +97,7 @@
 
     /**
      * @ngdoc method
-     * @name ionic.DomUtil#getPositionInParent
+     * @name atajoui.DomUtil#getPositionInParent
      * @description
      * Find an element's scroll offset within its container.
      * @param {DOMElement} element The element to find the offset of.
@@ -125,7 +125,7 @@
 
     /**
      * @ngdoc method
-     * @name ionic.DomUtil#ready
+     * @name atajoui.DomUtil#ready
      * @description
      * Call a function when the DOM is ready, or if it is already ready
      * call the function immediately.
@@ -133,7 +133,7 @@
      */
     ready: function(cb) {
       if (isDomReady) {
-        ionic.requestAnimationFrame(cb);
+        atajoui.requestAnimationFrame(cb);
       } else {
         readyCallbacks.push(cb);
       }
@@ -141,7 +141,7 @@
 
     /**
      * @ngdoc method
-     * @name ionic.DomUtil#getTextBounds
+     * @name atajoui.DomUtil#getTextBounds
      * @description
      * Get a rect representing the bounds of the given textNode.
      * @param {DOMElement} textNode The textNode to find the bounds of.
@@ -179,7 +179,7 @@
 
     /**
      * @ngdoc method
-     * @name ionic.DomUtil#getChildIndex
+     * @name atajoui.DomUtil#getChildIndex
      * @description
      * Get the first index of a child node within the given element of the
      * specified type.
@@ -222,7 +222,7 @@
 
     /**
      * @ngdoc method
-     * @name ionic.DomUtil#getParentWithClass
+     * @name atajoui.DomUtil#getParentWithClass
      * @param {DOMElement} element
      * @param {string} className
      * @returns {DOMElement} The closest parent of element matching the
@@ -240,7 +240,7 @@
     },
     /**
      * @ngdoc method
-     * @name ionic.DomUtil#getParentOrSelfWithClass
+     * @name atajoui.DomUtil#getParentOrSelfWithClass
      * @param {DOMElement} element
      * @param {string} className
      * @returns {DOMElement} The closest parent or self matching the
@@ -259,7 +259,7 @@
 
     /**
      * @ngdoc method
-     * @name ionic.DomUtil#rectContains
+     * @name atajoui.DomUtil#rectContains
      * @param {number} x
      * @param {number} y
      * @param {number} x1
@@ -277,7 +277,7 @@
 
     /**
      * @ngdoc method
-     * @name ionic.DomUtil#blurAll
+     * @name atajoui.DomUtil#blurAll
      * @description
      * Blurs any currently focused input element
      * @returns {DOMElement} The element blurred or null
@@ -320,8 +320,8 @@
   };
 
   //Shortcuts
-  ionic.requestAnimationFrame = ionic.DomUtil.requestAnimationFrame;
-  ionic.cancelAnimationFrame = ionic.DomUtil.cancelAnimationFrame;
-  ionic.animationFrameThrottle = ionic.DomUtil.animationFrameThrottle;
+  atajoui.requestAnimationFrame = atajoui.DomUtil.requestAnimationFrame;
+  atajoui.cancelAnimationFrame = atajoui.DomUtil.cancelAnimationFrame;
+  atajoui.animationFrameThrottle = atajoui.DomUtil.animationFrameThrottle;
 
-})(window, document, ionic);
+})(window, document, atajoui);

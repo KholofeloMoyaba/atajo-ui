@@ -1,13 +1,13 @@
-IonicModule
+AtajoUiModule
 
-.controller('$ionicHeaderBar', [
+.controller('$atajoUiHeaderBar', [
   '$scope',
   '$element',
   '$attrs',
   '$q',
-  '$ionicConfig',
-  '$ionicHistory',
-function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
+  '$atajoUiConfig',
+  '$atajoUiHistory',
+function($scope, $element, $attrs, $q, $atajoUiConfig, $atajoUiHistory) {
   var TITLE = 'title';
   var BACK_TEXT = 'back-text';
   var BACK_BUTTON = 'back-button';
@@ -29,7 +29,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
 
 
   self.beforeEnter = function(viewData) {
-    $scope.$broadcast('$ionicView.beforeEnter', viewData);
+    $scope.$broadcast('$atajoUiView.beforeEnter', viewData);
   };
 
 
@@ -84,18 +84,18 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
     if (isBackEnabled) {
       ele = ele || getEle(BACK_BUTTON);
       if (ele) {
-        if (self.backButtonIcon !== $ionicConfig.backButton.icon()) {
+        if (self.backButtonIcon !== $atajoUiConfig.backButton.icon()) {
           ele = getEle(BACK_BUTTON + ' .icon');
           if (ele) {
-            self.backButtonIcon = $ionicConfig.backButton.icon();
+            self.backButtonIcon = $atajoUiConfig.backButton.icon();
             ele.className = 'icon ' + self.backButtonIcon;
           }
         }
 
-        if (self.backButtonText !== $ionicConfig.backButton.text()) {
+        if (self.backButtonText !== $atajoUiConfig.backButton.text()) {
           ele = getEle(BACK_BUTTON + ' .back-text');
           if (ele) {
-            ele.textContent = self.backButtonText = $ionicConfig.backButton.text();
+            ele.textContent = self.backButtonText = $atajoUiConfig.backButton.text();
           }
         }
       }
@@ -116,7 +116,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
         }
       }
     }
-    var bounds = ionic.DomUtil.getTextBounds(element);
+    var bounds = atajoui.DomUtil.getTextBounds(element);
     titleTextWidth = Math.min(bounds && bounds.width || 30);
     return titleTextWidth;
   };
@@ -154,13 +154,13 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
 
 
   self.resetBackButton = function(viewData) {
-    if ($ionicConfig.backButton.previousTitleText()) {
+    if ($atajoUiConfig.backButton.previousTitleText()) {
       var previousTitleEle = getEle(PREVIOUS_TITLE);
       if (previousTitleEle) {
         previousTitleEle.classList.remove(HIDE);
 
-        var view = (viewData && $ionicHistory.getViewById(viewData.viewId));
-        var newPreviousTitleText = $ionicHistory.backTitle(view);
+        var view = (viewData && $atajoUiHistory.getViewById(viewData.viewId));
+        var newPreviousTitleText = $atajoUiHistory.backTitle(view);
 
         if (newPreviousTitleText !== previousTitleText) {
           previousTitleText = previousTitleEle.innerHTML = newPreviousTitleText;
@@ -177,11 +177,11 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
   self.align = function(textAlign) {
     var titleEle = getEle(TITLE);
 
-    textAlign = textAlign || $attrs.alignTitle || $ionicConfig.navBar.alignTitle();
+    textAlign = textAlign || $attrs.alignTitle || $atajoUiConfig.navBar.alignTitle();
 
     var widths = self.calcWidths(textAlign, false);
 
-    if (isBackShown && previousTitleText && $ionicConfig.backButton.previousTitleText()) {
+    if (isBackShown && previousTitleText && $atajoUiConfig.backButton.previousTitleText()) {
       var previousTitleWidths = self.calcWidths(textAlign, true);
 
       var availableTitleWidth = $element[0].offsetWidth - previousTitleWidths.titleLeft - previousTitleWidths.titleRight;
@@ -251,7 +251,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
               }
 
             } else if (b.nodeType == 3 && b.nodeValue.trim()) {
-              bounds = ionic.DomUtil.getTextBounds(b);
+              bounds = atajoui.DomUtil.getTextBounds(b);
               backButtonWidth += bounds && bounds.width || 0;
             }
 
@@ -265,7 +265,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
 
       } else if (c.nodeType == 3 && c.nodeValue.trim()) {
         // text node
-        bounds = ionic.DomUtil.getTextBounds(c);
+        bounds = atajoui.DomUtil.getTextBounds(c);
         childSize = bounds && bounds.width || 0;
       }
 
@@ -337,7 +337,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
       }
     }
 
-    if ($ionicConfig.backButton.previousTitleText()) {
+    if ($atajoUiConfig.backButton.previousTitleText()) {
       var prevTitle = getEle(PREVIOUS_TITLE);
       var defaultTitle = getEle(DEFAULT_TITLE);
 
@@ -345,7 +345,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
       defaultTitle && defaultTitle.classList[ showPreviousTitle ? 'add' : 'remove'](HIDE);
     }
 
-    ionic.requestAnimationFrame(function() {
+    atajoui.requestAnimationFrame(function() {
       if (titleEle && titleEle.offsetWidth + 10 < titleEle.scrollWidth) {
         var minRight = buttonsRight + 5;
         var testRight = $element[0].offsetWidth - titleLeft - self.titleTextWidth() - 20;
@@ -363,7 +363,7 @@ function($scope, $element, $attrs, $q, $ionicConfig, $ionicHistory) {
 
 
   self.setCss = function(elementClassname, css) {
-    ionic.DomUtil.cachedStyles(getEle(elementClassname), css);
+    atajoui.DomUtil.cachedStyles(getEle(elementClassname), css);
   };
 
 

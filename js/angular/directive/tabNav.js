@@ -1,9 +1,9 @@
-IonicModule
-.directive('ionTabNav', [function() {
+AtajoUiModule
+.directive('auiTabNav', [function() {
   return {
     restrict: 'E',
     replace: true,
-    require: ['^ionTabs', '^ionTab'],
+    require: ['^auiTabs', '^auiTab'],
     template:
     '<a ng-class="{\'has-badge\':badge, \'tab-hidden\':isHidden(), \'tab-item-active\': isTabActive()}" ' +
       ' ng-disabled="disabled()" class="tab-item">' +

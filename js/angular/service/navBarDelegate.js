@@ -1,35 +1,35 @@
 
 /**
  * @ngdoc service
- * @name $ionicNavBarDelegate
- * @module ionic
+ * @name $atajoUiNavBarDelegate
+ * @module atajoui
  * @description
- * Delegate for controlling the {@link ionic.directive:ionNavBar} directive.
+ * Delegate for controlling the {@link atajoui.directive:auiNavBar} directive.
  *
  * @usage
  *
  * ```html
  * <body ng-controller="MyCtrl">
- *   <ion-nav-bar>
+ *   <aui-nav-bar>
  *     <button ng-click="setNavTitle('banana')">
  *       Set title to banana!
  *     </button>
- *   </ion-nav-bar>
+ *   </aui-nav-bar>
  * </body>
  * ```
  * ```js
- * function MyCtrl($scope, $ionicNavBarDelegate) {
+ * function MyCtrl($scope, $atajoUiNavBarDelegate) {
  *   $scope.setNavTitle = function(title) {
- *     $ionicNavBarDelegate.title(title);
+ *     $atajoUiNavBarDelegate.title(title);
  *   }
  * }
  * ```
  */
-IonicModule
-.service('$ionicNavBarDelegate', ionic.DelegateService([
+AtajoUiModule
+.service('$atajoUiNavBarDelegate', atajoui.DelegateService([
   /**
    * @ngdoc method
-   * @name $ionicNavBarDelegate#align
+   * @name $atajoUiNavBarDelegate#align
    * @description Aligns the title with the buttons in a given direction.
    * @param {string=} direction The direction to the align the title text towards.
    * Available: 'left', 'right', 'center'. Default: 'center'.
@@ -37,9 +37,9 @@ IonicModule
   'align',
   /**
    * @ngdoc method
-   * @name $ionicNavBarDelegate#showBackButton
+   * @name $atajoUiNavBarDelegate#showBackButton
    * @description
-   * Set/get whether the {@link ionic.directive:ionNavBackButton} is shown
+   * Set/get whether the {@link atajoui.directive:auiNavBackButton} is shown
    * (if it exists and there is a previous view that can be navigated to).
    * @param {boolean=} show Whether to show the back button.
    * @returns {boolean} Whether the back button is shown.
@@ -47,18 +47,18 @@ IonicModule
   'showBackButton',
   /**
    * @ngdoc method
-   * @name $ionicNavBarDelegate#showBar
+   * @name $atajoUiNavBarDelegate#showBar
    * @description
-   * Set/get whether the {@link ionic.directive:ionNavBar} is shown.
+   * Set/get whether the {@link atajoui.directive:auiNavBar} is shown.
    * @param {boolean} show Whether to show the bar.
    * @returns {boolean} Whether the bar is shown.
    */
   'showBar',
   /**
    * @ngdoc method
-   * @name $ionicNavBarDelegate#title
+   * @name $atajoUiNavBarDelegate#title
    * @description
-   * Set the title for the {@link ionic.directive:ionNavBar}.
+   * Set the title for the {@link atajoui.directive:auiNavBar}.
    * @param {string} title The new title to show.
    */
   'title',

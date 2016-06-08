@@ -1,33 +1,33 @@
 /**
  * @ngdoc directive
- * @name ionSideMenu
- * @module ionic
+ * @name auiSideMenu
+ * @module atajoui
  * @restrict E
- * @parent ionic.directive:ionSideMenus
+ * @parent atajoui.directive:auiSideMenus
  *
  * @description
- * A container for a side menu, sibling to an {@link ionic.directive:ionSideMenuContent} directive.
+ * A container for a side menu, sibling to an {@link atajoui.directive:auiSideMenuContent} directive.
  *
  * @usage
  * ```html
- * <ion-side-menu
+ * <aui-side-menu
  *   side="left"
  *   width="myWidthValue + 20"
  *   is-enabled="shouldLeftSideMenuBeEnabled()">
- * </ion-side-menu>
+ * </aui-side-menu>
  * ```
  * For a complete side menu example, see the
- * {@link ionic.directive:ionSideMenus} documentation.
+ * {@link atajoui.directive:auiSideMenus} documentation.
  *
  * @param {string} side Which side the side menu is currently on.  Allowed values: 'left' or 'right'.
  * @param {boolean=} is-enabled Whether this side menu is enabled.
  * @param {number=} width How many pixels wide the side menu should be.  Defaults to 275.
  */
-IonicModule
-.directive('ionSideMenu', function() {
+AtajoUiModule
+.directive('auiSideMenu', function() {
   return {
     restrict: 'E',
-    require: '^ionSideMenus',
+    require: '^auiSideMenus',
     scope: true,
     compile: function(element, attr) {
       angular.isUndefined(attr.isEnabled) && attr.$set('isEnabled', 'true');
@@ -38,7 +38,7 @@ IonicModule
       return function($scope, $element, $attr, sideMenuCtrl) {
         $scope.side = $attr.side || 'left';
 
-        var sideMenu = sideMenuCtrl[$scope.side] = new ionic.views.SideMenu({
+        var sideMenu = sideMenuCtrl[$scope.side] = new atajoui.views.SideMenu({
           width: attr.width,
           el: $element[0],
           isEnabled: true

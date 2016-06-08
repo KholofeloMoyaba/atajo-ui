@@ -1,16 +1,16 @@
 /**
  * @ngdoc service
- * @name $ionicModal
- * @module ionic
+ * @name $atajoUiModal
+ * @module atajoui
  * @codepen gblny
  * @description
  *
- * Related: {@link ionic.controller:ionicModal ionicModal controller}.
+ * Related: {@link atajoui.controller:atajoUiModal atajoUiModal controller}.
  *
  * The Modal is a content pane that can go over the user's main view
  * temporarily.  Usually used for making a choice or editing an item.
  *
- * Put the content of the modal inside of an `<ion-modal-view>` element.
+ * Put the content of the modal inside of an `<aui-modal-view>` element.
  *
  * **Notes:**
  * - A modal will broadcast 'modal.shown', 'modal.hidden', and 'modal.removed' events from its originating
@@ -23,20 +23,20 @@
  * @usage
  * ```html
  * <script id="my-modal.html" type="text/ng-template">
- *   <ion-modal-view>
- *     <ion-header-bar>
+ *   <aui-modal-view>
+ *     <aui-header-bar>
  *       <h1 class="title">My Modal title</h1>
- *     </ion-header-bar>
- *     <ion-content>
+ *     </aui-header-bar>
+ *     <aui-content>
  *       Hello!
- *     </ion-content>
- *   </ion-modal-view>
+ *     </aui-content>
+ *   </aui-modal-view>
  * </script>
  * ```
  * ```js
- * angular.module('testApp', ['ionic'])
- * .controller('MyController', function($scope, $ionicModal) {
- *   $ionicModal.fromTemplateUrl('my-modal.html', {
+ * angular.module('testApp', ['atajoui'])
+ * .controller('MyController', function($scope, $atajoUiModal) {
+ *   $atajoUiModal.fromTemplateUrl('my-modal.html', {
  *     scope: $scope,
  *     animation: 'slide-in-up'
  *   }).then(function(modal) {
@@ -63,27 +63,27 @@
  * });
  * ```
  */
-IonicModule
-.factory('$ionicModal', [
+AtajoUiModule
+.factory('$atajoUiModal', [
   '$rootScope',
-  '$ionicBody',
+  '$atajoUiBody',
   '$compile',
   '$timeout',
-  '$ionicPlatform',
-  '$ionicTemplateLoader',
+  '$atajoUiPlatform',
+  '$atajoUiTemplateLoader',
   '$$q',
   '$log',
-  '$ionicClickBlock',
+  '$atajoUiClickBlock',
   '$window',
-  'IONIC_BACK_PRIORITY',
-function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $$q, $log, $ionicClickBlock, $window, IONIC_BACK_PRIORITY) {
+  'ATAJOUI_BACK_PRIORITY',
+function($rootScope, $atajoUiBody, $compile, $timeout, $atajoUiPlatform, $atajoUiTemplateLoader, $$q, $log, $atajoUiClickBlock, $window, ATAJOUI_BACK_PRIORITY) {
 
   /**
    * @ngdoc controller
-   * @name ionicModal
-   * @module ionic
+   * @name atajoUiModal
+   * @module atajoui
    * @description
-   * Instantiated by the {@link ionic.service:$ionicModal} service.
+   * Instantiated by the {@link atajoui.service:$atajoUiModal} service.
    *
    * Be sure to call [remove()](#remove) when you are done with each modal
    * to clean it up and avoid memory leaks.
@@ -92,10 +92,10 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
    * scope, passing in itself as an event argument. Note: both modal.removed and modal.hidden are
    * called when the modal is removed.
    */
-  var ModalView = ionic.views.Modal.inherit({
+  var ModalView = atajoui.views.Modal.inherit({
     /**
      * @ngdoc method
-     * @name ionicModal#initialize
+     * @name atajoUiModal#initialize
      * @description Creates a new modal controller instance.
      * @param {object} options An options object with the following properties:
      *  - `{object=}` `scope` The scope to be a child of.
@@ -104,7 +104,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
      *    Default: 'slide-in-up'
      *  - `{boolean=}` `focusFirstInput` Whether to autofocus the first input of
      *    the modal when shown. Will only show the keyboard on iOS, to force the keyboard to show
-     *    on Android, please use the [Ionic keyboard plugin](https://github.com/driftyco/ionic-plugin-keyboard#keyboardshow).
+     *    on Android, please use the [AtajoUi keyboard plugin](https://github.com/driftyco/atajoui-plugin-keyboard#keyboardshow).
      *    Default: false.
      *  - `{boolean=}` `backdropClickToClose` Whether to close the modal on clicking the backdrop.
      *    Default: true.
@@ -112,13 +112,13 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
      *    back button on Android and similar devices.  Default: true.
      */
     initialize: function(opts) {
-      ionic.views.Modal.prototype.initialize.call(this, opts);
+      atajoui.views.Modal.prototype.initialize.call(this, opts);
       this.animation = opts.animation || 'slide-in-up';
     },
 
     /**
      * @ngdoc method
-     * @name ionicModal#show
+     * @name atajoUiModal#show
      * @description Show this modal instance.
      * @returns {promise} A promise which is resolved when the modal is finished animating in.
      */
@@ -132,7 +132,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
       // on iOS, clicks will sometimes bleed through/ghost click on underlying
       // elements
-      $ionicClickBlock.show(600);
+      $atajoUiClickBlock.show(600);
       stack.add(self);
 
       var modalEl = jqLite(self.modalEl);
@@ -140,56 +140,56 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       self.el.classList.remove('hide');
       $timeout(function() {
         if (!self._isShown) return;
-        $ionicBody.addClass(self.viewType + '-open');
+        $atajoUiBody.addClass(self.viewType + '-open');
       }, 400, false);
 
       if (!self.el.parentElement) {
         modalEl.addClass(self.animation);
-        $ionicBody.append(self.el);
+        $atajoUiBody.append(self.el);
       }
 
       // if modal was closed while the keyboard was up, reset scroll view on
       // next show since we can only resize it once it's visible
-      var scrollCtrl = modalEl.data('$$ionicScrollController');
+      var scrollCtrl = modalEl.data('$$atajoUiScrollController');
       scrollCtrl && scrollCtrl.resize();
 
-      if (target && self.positionView) {
-        self.positionView(target, modalEl);
+      if (target && self.positauiView) {
+        self.positauiView(target, modalEl);
         // set up a listener for in case the window size changes
 
         self._onWindowResize = function() {
-          if (self._isShown) self.positionView(target, modalEl);
+          if (self._isShown) self.positauiView(target, modalEl);
         };
-        ionic.on('resize', self._onWindowResize, window);
+        atajoui.on('resize', self._onWindowResize, window);
       }
 
       modalEl.addClass('ng-enter active')
              .removeClass('ng-leave ng-leave-active');
 
       self._isShown = true;
-      self._deregisterBackButton = $ionicPlatform.registerBackButtonAction(
+      self._deregisterBackButton = $atajoUiPlatform.registerBackButtonAction(
         self.hardwareBackButtonClose ? angular.bind(self, self.hide) : noop,
-        IONIC_BACK_PRIORITY.modal
+        ATAJOUI_BACK_PRIORITY.modal
       );
 
-      ionic.views.Modal.prototype.show.call(self);
+      atajoui.views.Modal.prototype.show.call(self);
 
       $timeout(function() {
         if (!self._isShown) return;
         modalEl.addClass('ng-enter-active');
-        ionic.trigger('resize');
+        atajoui.trigger('resize');
         self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.shown', self);
         self.el.classList.add('active');
-        self.scope.$broadcast('$ionicHeader.align');
-        self.scope.$broadcast('$ionicFooter.align');
-        self.scope.$broadcast('$ionic.modalPresented');
+        self.scope.$broadcast('$atajoUiHeader.align');
+        self.scope.$broadcast('$atajoUiFooter.align');
+        self.scope.$broadcast('$atajoui.modalPresented');
       }, 20);
 
       return $timeout(function() {
         if (!self._isShown) return;
         self.$el.on('touchmove', function(e) {
           //Don't allow scrolling while open by dragging on backdrop
-          var isInScroll = ionic.DomUtil.getParentOrSelfWithClass(e.target, 'scroll');
+          var isInScroll = atajoui.DomUtil.getParentOrSelfWithClass(e.target, 'scroll');
           if (!isInScroll) {
             e.preventDefault();
           }
@@ -205,7 +205,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
     /**
      * @ngdoc method
-     * @name ionicModal#hide
+     * @name atajoUiModal#hide
      * @description Hide this modal instance.
      * @returns {promise} A promise which is resolved when the modal is finished animating out.
      */
@@ -215,7 +215,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
       // on iOS, clicks will sometimes bleed through/ghost click on underlying
       // elements
-      $ionicClickBlock.show(600);
+      $atajoUiClickBlock.show(600);
       stack.remove(self);
 
       self.el.classList.remove('active');
@@ -226,7 +226,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
         modalEl.addClass('ng-leave-active')
                .removeClass('ng-enter ng-enter-active active');
 
-        self.scope.$broadcast('$ionic.modalRemoved');
+        self.scope.$broadcast('$atajoui.modalRemoved');
       }, 20, false);
 
       self.$el.off('click');
@@ -234,22 +234,22 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
       self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.hidden', self);
       self._deregisterBackButton && self._deregisterBackButton();
 
-      ionic.views.Modal.prototype.hide.call(self);
+      atajoui.views.Modal.prototype.hide.call(self);
 
       // clean up event listeners
-      if (self.positionView) {
-        ionic.off('resize', self._onWindowResize, window);
+      if (self.positauiView) {
+        atajoui.off('resize', self._onWindowResize, window);
       }
 
       return $timeout(function() {
-        $ionicBody.removeClass(self.viewType + '-open');
+        $atajoUiBody.removeClass(self.viewType + '-open');
         self.el.classList.add('hide');
       }, self.hideDelay || 320);
     },
 
     /**
      * @ngdoc method
-     * @name ionicModal#remove
+     * @name atajoUiModal#remove
      * @description Remove this modal instance from the DOM and clean up.
      * @returns {promise} A promise which is resolved when the modal is finished animating out.
      */
@@ -279,7 +279,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
     /**
      * @ngdoc method
-     * @name ionicModal#isShown
+     * @name atajoUiModal#isShown
      * @returns boolean Whether this modal is currently shown.
      */
     isShown: function() {
@@ -303,7 +303,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
     });
 
     // Compile the template
-    var element = $compile('<ion-' + options.viewType + '>' + templateString + '</ion-' + options.viewType + '>')(scope);
+    var element = $compile('<aui-' + options.viewType + '>' + templateString + '</aui-' + options.viewType + '>')(scope);
 
     options.$el = element;
     options.el = element[0];
@@ -341,11 +341,11 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
   return {
     /**
      * @ngdoc method
-     * @name $ionicModal#fromTemplate
+     * @name $atajoUiModal#fromTemplate
      * @param {string} templateString The template string to use as the modal's
      * content.
-     * @param {object} options Options to be passed {@link ionic.controller:ionicModal#initialize ionicModal#initialize} method.
-     * @returns {object} An instance of an {@link ionic.controller:ionicModal}
+     * @param {object} options Options to be passed {@link atajoui.controller:atajoUiModal#initialize atajoUiModal#initialize} method.
+     * @returns {object} An instance of an {@link atajoui.controller:atajoUiModal}
      * controller.
      */
     fromTemplate: function(templateString, options) {
@@ -354,12 +354,12 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
     },
     /**
      * @ngdoc method
-     * @name $ionicModal#fromTemplateUrl
+     * @name $atajoUiModal#fromTemplateUrl
      * @param {string} templateUrl The url to load the template from.
-     * @param {object} options Options to be passed {@link ionic.controller:ionicModal#initialize ionicModal#initialize} method.
+     * @param {object} options Options to be passed {@link atajoui.controller:atajoUiModal#initialize atajoUiModal#initialize} method.
      * options object.
      * @returns {promise} A promise that will be resolved with an instance of
-     * an {@link ionic.controller:ionicModal} controller.
+     * an {@link atajoui.controller:atajoUiModal} controller.
      */
     fromTemplateUrl: function(url, options, _) {
       var cb;
@@ -368,7 +368,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
         cb = options;
         options = _;
       }
-      return $ionicTemplateLoader.load(url).then(function(templateString) {
+      return $atajoUiTemplateLoader.load(url).then(function(templateString) {
         var modal = createModal(templateString, options || {});
         cb && cb(modal);
         return modal;

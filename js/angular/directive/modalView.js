@@ -1,5 +1,5 @@
-IonicModule
-.directive('ionModalView', function() {
+AtajoUiModule
+.directive('auiModalView', function() {
   return {
     restrict: 'E',
     compile: function(element) {

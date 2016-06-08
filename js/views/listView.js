@@ -1,4 +1,4 @@
-(function(ionic) {
+(function(atajoui) {
 'use strict';
 
   var ITEM_CLASS = 'item';
@@ -40,7 +40,7 @@
     } else if (e.target.classList.contains(ITEM_CLASS)) {
       content = e.target.querySelector('.' + ITEM_CONTENT_CLASS);
     } else {
-      content = ionic.DomUtil.getParentWithClass(e.target, ITEM_CONTENT_CLASS);
+      content = atajoui.DomUtil.getParentWithClass(e.target, ITEM_CONTENT_CLASS);
     }
 
     // If we don't have a content area as one of our children (or ourselves), skip
@@ -52,7 +52,7 @@
     content.classList.remove(ITEM_SLIDING_CLASS);
 
     // Grab the starting X point for the item (for example, so we can tell whether it is open or closed to start)
-    offsetX = parseFloat(content.style[ionic.CSS.TRANSFORM].replace('translate3d(', '').split(',')[0]) || 0;
+    offsetX = parseFloat(content.style[atajoui.CSS.TRANSFORM].replace('translate3d(', '').split(',')[0]) || 0;
 
     // Grab the buttons
     buttons = content.parentNode.querySelector('.' + ITEM_OPTIONS_CLASS);
@@ -86,16 +86,16 @@
 
     if (!lastDrag || !lastDrag.content) return;
 
-    lastDrag.content.style[ionic.CSS.TRANSITION] = '';
-    lastDrag.content.style[ionic.CSS.TRANSFORM] = '';
+    lastDrag.content.style[atajoui.CSS.TRANSITION] = '';
+    lastDrag.content.style[atajoui.CSS.TRANSFORM] = '';
     if (isInstant) {
-      lastDrag.content.style[ionic.CSS.TRANSITION] = 'none';
+      lastDrag.content.style[atajoui.CSS.TRANSITION] = 'none';
       makeInvisible();
-      ionic.requestAnimationFrame(function() {
-        lastDrag.content.style[ionic.CSS.TRANSITION] = '';
+      atajoui.requestAnimationFrame(function() {
+        lastDrag.content.style[atajoui.CSS.TRANSITION] = '';
       });
     } else {
-      ionic.requestAnimationFrame(function() {
+      atajoui.requestAnimationFrame(function() {
         setTimeout(makeInvisible, 250);
       });
     }
@@ -104,7 +104,7 @@
     }
   };
 
-  SlideDrag.prototype.drag = ionic.animationFrameThrottle(function(e) {
+  SlideDrag.prototype.drag = atajoui.animationFrameThrottle(function(e) {
     var buttonsWidth;
 
     // We really aren't dragging
@@ -132,10 +132,10 @@
         newX = Math.min(-buttonsWidth, -buttonsWidth + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
       }
 
-      this._currentDrag.content.$$ionicOptionsOpen = newX !== 0;
+      this._currentDrag.content.$$atajoUiOptionsOpen = newX !== 0;
 
-      this._currentDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(' + newX + 'px, 0, 0)';
-      this._currentDrag.content.style[ionic.CSS.TRANSITION] = 'none';
+      this._currentDrag.content.style[atajoui.CSS.TRANSFORM] = 'translate3d(' + newX + 'px, 0, 0)';
+      this._currentDrag.content.style[atajoui.CSS.TRANSITION] = 'none';
     }
   });
 
@@ -166,24 +166,24 @@
 
     }
 
-    ionic.requestAnimationFrame(function() {
+    atajoui.requestAnimationFrame(function() {
       if (restingPoint === 0) {
-        self._currentDrag.content.style[ionic.CSS.TRANSFORM] = '';
+        self._currentDrag.content.style[atajoui.CSS.TRANSFORM] = '';
         var buttons = self._currentDrag.buttons;
         setTimeout(function() {
           buttons && buttons.classList.add('invisible');
         }, 250);
       } else {
-        self._currentDrag.content.style[ionic.CSS.TRANSFORM] = 'translate3d(' + restingPoint + 'px,0,0)';
+        self._currentDrag.content.style[atajoui.CSS.TRANSFORM] = 'translate3d(' + restingPoint + 'px,0,0)';
       }
-      self._currentDrag.content.style[ionic.CSS.TRANSITION] = '';
+      self._currentDrag.content.style[atajoui.CSS.TRANSITION] = '';
 
 
       // Kill the current drag
       if (!self._lastDrag) {
         self._lastDrag = {};
       }
-      ionic.extend(self._lastDrag, self._currentDrag);
+      atajoui.extend(self._lastDrag, self._currentDrag);
       if (self._currentDrag) {
         self._currentDrag.buttons = null;
         self._currentDrag.content = null;
@@ -222,7 +222,7 @@
       this.scrollView.getValues().top -
       (this._currentDrag.elementHeight / 2) -
       this.listElTrueTop;
-    this.el.style[ionic.CSS.TRANSFORM] = 'translate3d(0, ' + y + 'px, 0)';
+    this.el.style[atajoui.CSS.TRANSFORM] = 'translate3d(0, ' + y + 'px, 0)';
   };
 
   ReorderDrag.prototype.deregister = function() {
@@ -231,7 +231,7 @@
 
   ReorderDrag.prototype.start = function(e) {
 
-    var startIndex = ionic.DomUtil.getChildIndex(this.el, this.el.nodeName.toLowerCase());
+    var startIndex = atajoui.DomUtil.getChildIndex(this.el, this.el.nodeName.toLowerCase());
     var elementHeight = this.el.scrollHeight;
     var placeholder = this.el.cloneNode(true);
 
@@ -251,7 +251,7 @@
     this._moveElement(e);
   };
 
-  ReorderDrag.prototype.drag = ionic.animationFrameThrottle(function(e) {
+  ReorderDrag.prototype.drag = atajoui.animationFrameThrottle(function(e) {
     // We really aren't dragging
     var self = this;
     if (!this._currentDrag) {
@@ -275,7 +275,7 @@
       if (e.gesture.deltaY < 0 && pixelsPastTop > 0 && scrollY > 0) {
         this.scrollView.scrollBy(null, -pixelsPastTop);
         //Trigger another drag so the scrolling keeps going
-        ionic.requestAnimationFrame(function() {
+        atajoui.requestAnimationFrame(function() {
           self.drag(e);
         });
       }
@@ -283,7 +283,7 @@
         if (scrollY < this.scrollView.getScrollMax().top) {
           this.scrollView.scrollBy(null, pixelsPastBottom);
           //Trigger another drag so the scrolling keeps going
-          ionic.requestAnimationFrame(function() {
+          atajoui.requestAnimationFrame(function() {
             self.drag(e);
           });
         }
@@ -345,7 +345,7 @@
 
     // Reposition the element
     this.el.classList.remove(ITEM_REORDERING_CLASS);
-    this.el.style[ionic.CSS.TRANSFORM] = '';
+    this.el.style[atajoui.CSS.TRANSFORM] = '';
 
     placeholder.parentNode.insertBefore(this.el, placeholder);
     placeholder.parentNode.removeChild(placeholder);
@@ -366,11 +366,11 @@
    * The ListView handles a list of items. It will process drag animations, edit mode,
    * and other operations that are common on mobile lists or table views.
    */
-  ionic.views.ListView = ionic.views.View.inherit({
+  atajoui.views.ListView = atajoui.views.View.inherit({
     initialize: function(opts) {
       var self = this;
 
-      opts = ionic.extend({
+      opts = atajoui.extend({
         onReorder: function() {},
         virtualRemoveThreshold: -200,
         virtualAddThreshold: 200,
@@ -379,7 +379,7 @@
         }
       }, opts);
 
-      ionic.extend(self, opts);
+      atajoui.extend(self, opts);
 
       if (!self.itemHeight && self.listEl) {
         self.itemHeight = self.listEl.children[0] && parseInt(self.listEl.children[0].style.height, 10);
@@ -391,15 +391,15 @@
 
       var gestureOpts = {};
       // don't prevent native scrolling
-      if (ionic.DomUtil.getParentOrSelfWithClass(self.el, 'overflow-scroll')) {
+      if (atajoui.DomUtil.getParentOrSelfWithClass(self.el, 'overflow-scroll')) {
         gestureOpts.prevent_default_directions = ['left', 'right'];
       }
 
-      window.ionic.onGesture('release', function(e) {
+      window.atajoui.onGesture('release', function(e) {
         self._handleEndDrag(e);
       }, self.el, gestureOpts);
 
-      window.ionic.onGesture('drag', function(e) {
+      window.atajoui.onGesture('drag', function(e) {
         self._handleDrag(e);
       }, self.el, gestureOpts);
       // Start the drag states
@@ -521,7 +521,7 @@
       }
 
       // Check if this is a reorder drag
-      if (ionic.DomUtil.getParentOrSelfWithClass(e.target, ITEM_REORDER_BTN_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
+      if (atajoui.DomUtil.getParentOrSelfWithClass(e.target, ITEM_REORDER_BTN_CLASS) && (e.gesture.direction == 'up' || e.gesture.direction == 'down')) {
         item = self._getItem(e.target);
 
         if (item) {
@@ -608,4 +608,4 @@
 
   });
 
-})(ionic);
+})(atajoui);

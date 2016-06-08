@@ -6,10 +6,10 @@
  *
 */
 
-(function(ionic) {
+(function(atajoui) {
 'use strict';
 
-ionic.views.Slider = ionic.views.View.inherit({
+atajoui.views.Slider = atajoui.views.View.inherit({
   initialize: function (options) {
     var slider = this;
 
@@ -649,4 +649,4 @@ ionic.views.Slider = ionic.views.View.inherit({
   }
 });
 
-})(ionic);
+})(atajoui);

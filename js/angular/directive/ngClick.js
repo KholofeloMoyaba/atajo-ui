@@ -1,4 +1,4 @@
-IonicModule
+AtajoUiModule
 
 .config(['$provide', function($provide) {
   $provide.decorator('ngClickDirective', ['$delegate', function($delegate) {
@@ -11,7 +11,7 @@ IonicModule
 /**
  * @private
  */
-.factory('$ionicNgClick', ['$parse', function($parse) {
+.factory('$atajoUiNgClick', ['$parse', function($parse) {
   return function(scope, element, clickExpr) {
     var clickHandler = angular.isFunction(clickExpr) ?
       clickExpr :
@@ -29,17 +29,17 @@ IonicModule
   };
 }])
 
-.directive('ngClick', ['$ionicNgClick', function($ionicNgClick) {
+.directive('ngClick', ['$atajoUiNgClick', function($atajoUiNgClick) {
   return function(scope, element, attr) {
-    $ionicNgClick(scope, element, attr.ngClick);
+    $atajoUiNgClick(scope, element, attr.ngClick);
   };
 }])
 
-.directive('ionStopEvent', function() {
+.directive('auiStopEvent', function() {
   return {
     restrict: 'A',
     link: function(scope, element, attr) {
-      element.bind(attr.ionStopEvent, eventStopPropagation);
+      element.bind(attr.auiStopEvent, eventStopPropagation);
     }
   };
 });

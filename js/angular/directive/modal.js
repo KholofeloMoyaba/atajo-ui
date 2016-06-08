@@ -1,9 +1,9 @@
 /*
- * We don't document the ionModal directive, we instead document
- * the $ionicModal service
+ * We don't document the auiModal directive, we instead document
+ * the $atajoUiModal service
  */
-IonicModule
-.directive('ionModal', [function() {
+AtajoUiModule
+.directive('auiModal', [function() {
   return {
     restrict: 'E',
     transclude: true,

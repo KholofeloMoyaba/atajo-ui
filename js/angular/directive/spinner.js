@@ -1,21 +1,21 @@
 /**
 * @ngdoc directive
-* @name ionSpinner
-* @module ionic
+* @name auiSpinner
+* @module atajoui
 * @restrict E
  *
  * @description
- * The `ionSpinner` directive provides a variety of animated spinners.
+ * The `auiSpinner` directive provides a variety of animated spinners.
  * Spinners enables you to give your users feedback that the app is
  * processing/thinking/waiting/chillin' out, or whatever you'd like it to indicate.
- * By default, the {@link ionic.directive:ionRefresher} feature uses this spinner, rather
+ * By default, the {@link atajoui.directive:auiRefresher} feature uses this spinner, rather
  * than rotating font icons (previously included in [ionicons](http://ionicons.com/)).
  * While font icons are great for simple or stationary graphics, they're not suited to
- * provide great animations, which is why Ionic uses SVG instead.
+ * provide great animations, which is why AtajoUi uses SVG instead.
  *
- * Ionic offers ten spinners out of the box, and by default, it will use the appropriate spinner
- * for the platform on which it's running. Under the hood, the `ionSpinner` directive dynamically
- * builds the required SVG element, which allows Ionic to provide all ten of the animated SVGs
+ * AtajoUi offers ten spinners out of the box, and by default, it will use the appropriate spinner
+ * for the platform on which it's running. Under the hood, the `auiSpinner` directive dynamically
+ * builds the required SVG element, which allows AtajoUi to provide all ten of the animated SVGs
  * within 3KB.
  *
  * <style>
@@ -52,14 +52,14 @@
  *   stop-color: #fff; }
  * </style>
  *
- * <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.min.js"></script>
- * <table class="table spinner-table" ng-app="ionic">
+ * <script src="http://code.ionicframework.com/nightly/js/atajoui.bundle.min.js"></script>
+ * <table class="table spinner-table" ng-app="atajoui">
  *  <tr>
  *    <th>
  *      <code>android</code>
  *    </th>
  *    <td>
- *      <ion-spinner icon="android"></ion-spinner>
+ *      <aui-spinner icon="android"></aui-spinner>
  *    </td>
  *  </tr>
  *  <tr>
@@ -67,7 +67,7 @@
  *      <code>ios</code>
  *    </th>
  *    <td>
- *      <ion-spinner icon="ios"></ion-spinner>
+ *      <aui-spinner icon="ios"></aui-spinner>
  *    </td>
  *  </tr>
  *  <tr>
@@ -75,7 +75,7 @@
  *      <code>ios-small</code>
  *    </th>
  *    <td>
- *      <ion-spinner icon="ios-small"></ion-spinner>
+ *      <aui-spinner icon="ios-small"></aui-spinner>
  *    </td>
  *  </tr>
  *  <tr>
@@ -83,7 +83,7 @@
  *      <code>bubbles</code>
  *    </th>
  *    <td>
- *      <ion-spinner icon="bubbles"></ion-spinner>
+ *      <aui-spinner icon="bubbles"></aui-spinner>
  *    </td>
  *  </tr>
  *  <tr>
@@ -91,7 +91,7 @@
  *      <code>circles</code>
  *    </th>
  *    <td>
- *      <ion-spinner icon="circles"></ion-spinner>
+ *      <aui-spinner icon="circles"></aui-spinner>
  *    </td>
  *  </tr>
  *  <tr>
@@ -99,7 +99,7 @@
  *      <code>crescent</code>
  *    </th>
  *    <td>
- *      <ion-spinner icon="crescent"></ion-spinner>
+ *      <aui-spinner icon="crescent"></aui-spinner>
  *    </td>
  *  </tr>
  *  <tr>
@@ -107,7 +107,7 @@
  *      <code>dots</code>
  *    </th>
  *    <td>
- *      <ion-spinner icon="dots"></ion-spinner>
+ *      <aui-spinner icon="dots"></aui-spinner>
  *    </td>
  *  </tr>
  *  <tr>
@@ -115,7 +115,7 @@
  *      <code>lines</code>
  *    </th>
  *    <td>
- *      <ion-spinner icon="lines"></ion-spinner>
+ *      <aui-spinner icon="lines"></aui-spinner>
  *    </td>
  *  </tr>
  *  <tr>
@@ -123,7 +123,7 @@
  *      <code>ripple</code>
  *    </th>
  *    <td>
- *      <ion-spinner icon="ripple"></ion-spinner>
+ *      <aui-spinner icon="ripple"></aui-spinner>
  *    </td>
  *  </tr>
  *  <tr>
@@ -131,7 +131,7 @@
  *      <code>spiral</code>
  *    </th>
  *    <td>
- *      <ion-spinner icon="spiral"></ion-spinner>
+ *      <aui-spinner icon="spiral"></aui-spinner>
  *    </td>
  *  </tr>
  * </table>
@@ -146,22 +146,22 @@
  * iOS or Android, it'll default to use `ios`.
  *
  * ```html
- * <ion-spinner></ion-spinner>
+ * <aui-spinner></aui-spinner>
  * ```
  *
  * By setting the `icon` attribute, you can specify which spinner to use, no matter what
  * the platform is.
  *
  * ```html
- * <ion-spinner icon="spiral"></ion-spinner>
+ * <aui-spinner icon="spiral"></aui-spinner>
  * ```
  *
  * ## Spinner Colors
- * Like with most of Ionic's other components, spinners can also be styled using
- * Ionic's standard color naming convention. For example:
+ * Like with most of AtajoUi's other components, spinners can also be styled using
+ * AtajoUi's standard color naming convention. For example:
  *
  * ```html
- * <ion-spinner class="spinner-energized"></ion-spinner>
+ * <aui-spinner class="spinner-energized"></aui-spinner>
  * ```
  *
  *
@@ -180,11 +180,11 @@
  * ```
  *
 */
-IonicModule
-.directive('ionSpinner', function() {
+AtajoUiModule
+.directive('auiSpinner', function() {
   return {
     restrict: 'E',
-    controller: '$ionicSpinner',
+    controller: '$atajoUiSpinner',
     link: function($scope, $element, $attrs, ctrl) {
       var spinnerName = ctrl.init();
       $element.addClass('spinner spinner-' + spinnerName);

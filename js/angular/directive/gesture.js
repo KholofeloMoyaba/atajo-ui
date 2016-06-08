@@ -1,14 +1,14 @@
 var GESTURE_DIRECTIVES = 'onHold onTap onDoubleTap onTouch onRelease onDragStart onDrag onDragEnd onDragUp onDragRight onDragDown onDragLeft onSwipe onSwipeUp onSwipeRight onSwipeDown onSwipeLeft'.split(' ');
 
 GESTURE_DIRECTIVES.forEach(function(name) {
-  IonicModule.directive(name, gestureDirective(name));
+  AtajoUiModule.directive(name, gestureDirective(name));
 });
 
 
 /**
  * @ngdoc directive
  * @name onHold
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -24,7 +24,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onTap
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -41,7 +41,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onDoubleTap
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -57,7 +57,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onTouch
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -74,7 +74,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onRelease
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -89,7 +89,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onDragStart
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -105,7 +105,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onDrag
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -122,7 +122,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onDragEnd
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -137,7 +137,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onDragUp
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -153,7 +153,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onDragRight
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -169,7 +169,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onDragDown
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -185,7 +185,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onDragLeft
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -201,7 +201,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onSwipe
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -217,7 +217,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onSwipeUp
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -233,7 +233,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onSwipeRight
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -249,7 +249,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onSwipeDown
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -265,7 +265,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 /**
  * @ngdoc directive
  * @name onSwipeLeft
- * @module ionic
+ * @module atajoui
  * @restrict A
  *
  * @description
@@ -279,7 +279,7 @@ GESTURE_DIRECTIVES.forEach(function(name) {
 
 
 function gestureDirective(directiveName) {
-  return ['$ionicGesture', '$parse', function($ionicGesture, $parse) {
+  return ['$atajoUiGesture', '$parse', function($atajoUiGesture, $parse) {
     var eventType = directiveName.substr(2).toLowerCase();
 
     return function(scope, element, attr) {
@@ -293,10 +293,10 @@ function gestureDirective(directiveName) {
         });
       };
 
-      var gesture = $ionicGesture.on(eventType, listener, element);
+      var gesture = $atajoUiGesture.on(eventType, listener, element);
 
       scope.$on('$destroy', function() {
-        $ionicGesture.off(gesture, eventType, listener);
+        $atajoUiGesture.off(gesture, eventType, listener);
       });
     };
   }];

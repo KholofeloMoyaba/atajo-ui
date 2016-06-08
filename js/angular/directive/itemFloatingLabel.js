@@ -1,5 +1,5 @@
 
-IonicModule
+AtajoUiModule
 .directive('itemFloatingLabel', function() {
   return {
     restrict: 'C',

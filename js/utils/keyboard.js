@@ -1,20 +1,20 @@
 /**
  * @ngdoc page
  * @name keyboard
- * @module ionic
+ * @module atajoui
  * @description
- * On both Android and iOS, Ionic will attempt to prevent the keyboard from
+ * On both Android and iOS, AtajoUi will attempt to prevent the keyboard from
  * obscuring inputs and focusable elements when it appears by scrolling them
  * into view.  In order for this to work, any focusable elements must be within
- * a [Scroll View](http://ionicframework.com/docs/api/directive/ionScroll/)
- * or a directive such as [Content](http://ionicframework.com/docs/api/directive/ionContent/)
+ * a [Scroll View](http://ionicframework.com/docs/api/directive/auiScroll/)
+ * or a directive such as [Content](http://ionicframework.com/docs/api/directive/auiContent/)
  * that has a Scroll View.
  *
  * It will also attempt to prevent the native overflow scrolling on focus,
  * which can cause layout issues such as pushing headers up and out of view.
  *
  * The keyboard fixes work best in conjunction with the
- * [Ionic Keyboard Plugin](https://github.com/driftyco/ionic-plugins-keyboard),
+ * [AtajoUi Keyboard Plugin](https://github.com/driftyco/atajoui-plugins-keyboard),
  * although it will perform reasonably well without.  However, if you are using
  * Cordova there is no reason not to use the plugin.
  *
@@ -29,7 +29,7 @@
  * ```
  *
  * Note: For performance reasons, elements will not be hidden for 400ms after the start of the `native.keyboardshow` event
- * from the Ionic Keyboard plugin. If you would like them to disappear immediately, you could do something
+ * from the AtajoUi Keyboard plugin. If you would like them to disappear immediately, you could do something
  * like:
  *
  * ```js
@@ -37,7 +37,7 @@
  *     document.body.classList.add('keyboard-open');
  *   });
  * ```
- * This adds the same `keyboard-open` class that is normally added by Ionic 400ms after the keyboard
+ * This adds the same `keyboard-open` class that is normally added by AtajoUi 400ms after the keyboard
  * opens. However, bear in mind that adding this class to the body immediately may cause jank in any
  * animations on Android that occur when the keyboard opens (for example, scrolling any obscured inputs into view).
  *
@@ -45,21 +45,21 @@
  *
  * ### Plugin Usage
  * Information on using the plugin can be found at
- * [https://github.com/driftyco/ionic-plugins-keyboard](https://github.com/driftyco/ionic-plugins-keyboard).
+ * [https://github.com/driftyco/atajoui-plugins-keyboard](https://github.com/driftyco/atajoui-plugins-keyboard).
  *
  * ----------
  *
  * ### Android Notes
  * - If your app is running in fullscreen, i.e. you have
  *   `<preference name="Fullscreen" value="true" />` in your `config.xml` file
- *   you will need to set `ionic.Platform.isFullScreen = true` manually.
+ *   you will need to set `atajoui.Platform.isFullScreen = true` manually.
  *
  * - You can configure the behavior of the web view when the keyboard shows by setting
  *   [android:windowSoftInputMode](http://developer.android.com/reference/android/R.attr.html#windowSoftInputMode)
  *   to either `adjustPan`, `adjustResize` or `adjustNothing` in your app's
  *   activity in `AndroidManifest.xml`. `adjustResize` is the recommended setting
- *   for Ionic, but if for some reason you do use `adjustPan` you will need to
- *   set `ionic.Platform.isFullScreen = true`.
+ *   for AtajoUi, but if for some reason you do use `adjustPan` you will need to
+ *   set `atajoui.Platform.isFullScreen = true`.
  *
  *   ```xml
  *   <activity android:windowSoftInputMode="adjustResize">
@@ -69,7 +69,7 @@
  * ### iOS Notes
  * - If the content of your app (including the header) is being pushed up and
  *   out of view on input focus, try setting `cordova.plugins.Keyboard.disableScroll(true)`.
- *   This does **not** disable scrolling in the Ionic scroll view, rather it
+ *   This does **not** disable scrolling in the AtajoUi scroll view, rather it
  *   disables the native overflow scrolling that happens automatically as a
  *   result of focusing on inputs below the keyboard.
  *
@@ -140,18 +140,18 @@ var SCROLL_CONTAINER_CSS = 'scroll-content';
 /**
  * Debounced keyboardFocusIn function
  */
-var debouncedKeyboardFocusIn = ionic.debounce(keyboardFocusIn, 200, true);
+var debouncedKeyboardFocusIn = atajoui.debounce(keyboardFocusIn, 200, true);
 
 /**
  * Debounced keyboardNativeShow function
  */
-var debouncedKeyboardNativeShow = ionic.debounce(keyboardNativeShow, 100, true);
+var debouncedKeyboardNativeShow = atajoui.debounce(keyboardNativeShow, 100, true);
 
 /**
- * Ionic keyboard namespace.
+ * AtajoUi keyboard namespace.
  * @namespace keyboard
  */
-ionic.keyboard = {
+atajoui.keyboard = {
 
   /**
    * Whether the keyboard is open or not.
@@ -206,7 +206,7 @@ ionic.keyboard = {
   },
 
   /**
-   * Remove all keyboard related event listeners, effectively disabling Ionic's
+   * Remove all keyboard related event listeners, effectively disabling AtajoUi's
    * keyboard adjustments.
    */
   disable: function() {
@@ -217,7 +217,7 @@ ionic.keyboard = {
       document.body.removeEventListener('focusout', keyboardFocusOut);
     }
 
-    document.body.removeEventListener('ionic.focusin', debouncedKeyboardFocusIn);
+    document.body.removeEventListener('atajoui.focusin', debouncedKeyboardFocusIn);
     document.body.removeEventListener('focusin', debouncedKeyboardFocusIn);
 
     window.removeEventListener('orientationchange', keyboardOrientationChange);
@@ -227,7 +227,7 @@ ionic.keyboard = {
     } else {
       document.removeEventListener('touchstart', keyboardInit);
     }
-    ionic.keyboard.isInitialized = false;
+    atajoui.keyboard.isInitialized = false;
   },
 
   /**
@@ -238,7 +238,7 @@ ionic.keyboard = {
   }
 };
 
-// Initialize the viewport height (after ionic.keyboard.height has been
+// Initialize the viewport height (after atajoui.keyboard.height has been
 // defined).
 keyboardCurrentViewportHeight = getViewportHeight();
 
@@ -248,11 +248,11 @@ keyboardCurrentViewportHeight = getViewportHeight();
 
 /**
  * Event handler for first touch event, initializes all event listeners
- * for keyboard related events. Also aliased by ionic.keyboard.enable.
+ * for keyboard related events. Also aliased by atajoui.keyboard.enable.
  */
 function keyboardInit() {
 
-  if (ionic.keyboard.isInitialized) return;
+  if (atajoui.keyboard.isInitialized) return;
 
   if (keyboardHasPlugin()) {
     window.addEventListener('native.keyboardshow', debouncedKeyboardNativeShow);
@@ -261,7 +261,7 @@ function keyboardInit() {
     document.body.addEventListener('focusout', keyboardFocusOut);
   }
 
-  document.body.addEventListener('ionic.focusin', debouncedKeyboardFocusIn);
+  document.body.addEventListener('atajoui.focusin', debouncedKeyboardFocusIn);
   document.body.addEventListener('focusin', debouncedKeyboardFocusIn);
 
   if (window.navigator.msPointerEnabled) {
@@ -270,7 +270,7 @@ function keyboardInit() {
     document.removeEventListener('touchstart', keyboardInit);
   }
 
-  ionic.keyboard.isInitialized = true;
+  atajoui.keyboard.isInitialized = true;
 }
 
 /**
@@ -285,12 +285,12 @@ function keyboardNativeShow(e) {
   //console.log("keyboardNativeShow fired at: " + Date.now());
   //console.log("keyboardNativeshow window.innerHeight: " + window.innerHeight);
 
-  if (!ionic.keyboard.isOpen || ionic.keyboard.isClosing) {
-    ionic.keyboard.isOpening = true;
-    ionic.keyboard.isClosing = false;
+  if (!atajoui.keyboard.isOpen || atajoui.keyboard.isClosing) {
+    atajoui.keyboard.isOpening = true;
+    atajoui.keyboard.isClosing = false;
   }
 
-  ionic.keyboard.height = e.keyboardHeight;
+  atajoui.keyboard.height = e.keyboardHeight;
   //console.log('nativeshow keyboard height:' + e.keyboardHeight);
 
   if (wasOrientationChange) {
@@ -301,7 +301,7 @@ function keyboardNativeShow(e) {
 }
 
 /**
- * Event handler for 'focusin' and 'ionic.focusin' events. Initializes
+ * Event handler for 'focusin' and 'atajoui.focusin' events. Initializes
  * keyboard state (keyboardActiveElement and keyboard.isOpening) for the
  * appropriate adjustments once the window has resized.  If not using the
  * keyboard plugin, calls keyboardWaitForResize with keyboardShow as the
@@ -315,8 +315,8 @@ function keyboardFocusIn(e) {
 
   if (!e.target ||
       e.target.readOnly ||
-      !ionic.tap.isKeyboardElement(e.target) ||
-      !(scrollView = ionic.DomUtil.getParentWithClass(e.target, SCROLL_CONTAINER_CSS))) {
+      !atajoui.tap.isKeyboardElement(e.target) ||
+      !(scrollView = atajoui.DomUtil.getParentWithClass(e.target, SCROLL_CONTAINER_CSS))) {
     if (keyboardActiveElement) {
         lastKeyboardActiveElement = keyboardActiveElement;
     }
@@ -331,7 +331,7 @@ function keyboardFocusIn(e) {
   if (!scrollView.classList.contains("overflow-scroll")) {
     document.body.scrollTop = 0;
     scrollView.scrollTop = 0;
-    ionic.requestAnimationFrame(function(){
+    atajoui.requestAnimationFrame(function(){
       document.body.scrollTop = 0;
       scrollView.scrollTop = 0;
     });
@@ -346,9 +346,9 @@ function keyboardFocusIn(e) {
     }
   }
 
-  if (!ionic.keyboard.isOpen || ionic.keyboard.isClosing) {
-    ionic.keyboard.isOpening = true;
-    ionic.keyboard.isClosing = false;
+  if (!atajoui.keyboard.isOpen || atajoui.keyboard.isClosing) {
+    atajoui.keyboard.isOpening = true;
+    atajoui.keyboard.isClosing = false;
   }
 
   // attempt to prevent browser from natively scrolling input into view while
@@ -364,10 +364,10 @@ function keyboardFocusIn(e) {
   // an exact keyboard height
   // if the keyboard is already open, go ahead and scroll the input into view
   // if necessary
-  if (!ionic.keyboard.isOpen && !keyboardHasPlugin()) {
+  if (!atajoui.keyboard.isOpen && !keyboardHasPlugin()) {
     keyboardWaitForResize(keyboardShow, true);
 
-  } else if (ionic.keyboard.isOpen) {
+  } else if (atajoui.keyboard.isOpen) {
     keyboardShow();
   }
 }
@@ -382,16 +382,16 @@ function keyboardFocusOut() {
   //console.log("keyboardFocusOut fired at: " + Date.now());
   //console.log("keyboardFocusOut event type: " + e.type);
 
-  if (ionic.keyboard.isOpen || ionic.keyboard.isOpening) {
-    ionic.keyboard.isClosing = true;
-    ionic.keyboard.isOpening = false;
+  if (atajoui.keyboard.isOpen || atajoui.keyboard.isOpening) {
+    atajoui.keyboard.isClosing = true;
+    atajoui.keyboard.isOpening = false;
   }
 
   // Call keyboardHide with a slight delay because sometimes on focus or
   // orientation change focusin is called immediately after, so we give it time
   // to cancel keyboardHide
   keyboardFocusOutTimer = setTimeout(function() {
-    ionic.requestAnimationFrame(function() {
+    atajoui.requestAnimationFrame(function() {
       // focusOut during or right after an orientationchange, so we didn't get
       // a chance to update the viewport height yet, do it and keyboardHide
       //console.log("focusOut, wasOrientationChange: " + wasOrientationChange);
@@ -420,15 +420,15 @@ function keyboardFocusOut() {
  */
 function keyboardOrientationChange() {
   //console.log("orientationchange fired at: " + Date.now());
-  //console.log("orientation was: " + (ionic.keyboard.isLandscape ? "landscape" : "portrait"));
+  //console.log("orientation was: " + (atajoui.keyboard.isLandscape ? "landscape" : "portrait"));
 
   // toggle orientation
-  ionic.keyboard.isLandscape = !ionic.keyboard.isLandscape;
-  // //console.log("now orientation is: " + (ionic.keyboard.isLandscape ? "landscape" : "portrait"));
+  atajoui.keyboard.isLandscape = !atajoui.keyboard.isLandscape;
+  // //console.log("now orientation is: " + (atajoui.keyboard.isLandscape ? "landscape" : "portrait"));
 
   // no need to wait for resizing on iOS, and orientationchange always fires
   // after the keyboard has opened, so it doesn't matter if it's open or not
-  if (ionic.Platform.isIOS()) {
+  if (atajoui.Platform.isIOS()) {
     keyboardUpdateViewportHeight();
   }
 
@@ -436,8 +436,8 @@ function keyboardOrientationChange() {
   // plugin, update the viewport height once everything has resized. If the
   // keyboard is open and we are using the keyboard plugin do nothing and let
   // nativeShow handle it using an accurate keyboard height.
-  if ( ionic.Platform.isAndroid()) {
-    if (!ionic.keyboard.isOpen || !keyboardHasPlugin()) {
+  if ( atajoui.Platform.isAndroid()) {
+    if (!atajoui.keyboard.isOpen || !keyboardHasPlugin()) {
       keyboardWaitForResize(keyboardUpdateViewportHeight, false);
     } else {
       wasOrientationChange = true;
@@ -451,7 +451,7 @@ function keyboardOrientationChange() {
  * scrolling the input into view ourselves with JS.
  */
 function keyboardOnKeyDown(e) {
-  if (ionic.scroll.isScrolling) {
+  if (atajoui.scroll.isScrolling) {
     keyboardPreventDefault(e);
   }
 }
@@ -497,9 +497,9 @@ function keyboardWaitForResize(callback, isOpening) {
 
   // want to fail relatively quickly on modern android devices, since it's much
   // more likely we just have a bad keyboard height
-  if (ionic.Platform.isAndroid() && ionic.Platform.version() < 4.4) {
+  if (atajoui.Platform.isAndroid() && atajoui.Platform.version() < 4.4) {
     maxCount = 30;
-  } else if (ionic.Platform.isAndroid()) {
+  } else if (atajoui.Platform.isAndroid()) {
     maxCount = 10;
   } else {
     maxCount = 1;
@@ -515,17 +515,17 @@ function keyboardWaitForResize(callback, isOpening) {
     if (++count < maxCount &&
         ((!isPortraitViewportHeight(viewportHeight) &&
          !isLandscapeViewportHeight(viewportHeight)) ||
-         !ionic.keyboard.height)) {
+         !atajoui.keyboard.height)) {
       return;
     }
 
     // infer the keyboard height from the resize if not using the keyboard plugin
     if (!keyboardHasPlugin()) {
-      ionic.keyboard.height = Math.abs(initialHeight - window.innerHeight);
+      atajoui.keyboard.height = Math.abs(initialHeight - window.innerHeight);
     }
 
     // set to true if we were waiting for the keyboard to open
-    ionic.keyboard.isOpen = isOpening;
+    atajoui.keyboard.isOpen = isOpening;
 
     clearInterval(waitForResizeTimer);
     //var end = Date.now();
@@ -552,16 +552,16 @@ function keyboardHide() {
   clearTimeout(keyboardFocusOutTimer);
   //console.log("keyboardHide");
 
-  ionic.keyboard.isOpen = false;
-  ionic.keyboard.isClosing = false;
+  atajoui.keyboard.isOpen = false;
+  atajoui.keyboard.isClosing = false;
 
   if (keyboardActiveElement || lastKeyboardActiveElement) {
-    ionic.trigger('resetScrollView', {
+    atajoui.trigger('resetScrollView', {
       target: keyboardActiveElement || lastKeyboardActiveElement
     }, true);
   }
 
-  ionic.requestAnimationFrame(function(){
+  atajoui.requestAnimationFrame(function(){
     document.body.classList.remove(KEYBOARD_OPEN_CSS);
   });
 
@@ -573,7 +573,7 @@ function keyboardHide() {
   }
   document.removeEventListener('keydown', keyboardOnKeyDown);
 
-  if (ionic.Platform.isAndroid()) {
+  if (atajoui.Platform.isAndroid()) {
     // on android closing the keyboard with the back/dismiss button won't remove
     // focus and keyboard can re-appear on subsequent taps (like scrolling)
     if (keyboardHasPlugin()) cordova.plugins.Keyboard.close();
@@ -591,8 +591,8 @@ function keyboardHide() {
  */
 function keyboardShow() {
 
-  ionic.keyboard.isOpen = true;
-  ionic.keyboard.isOpening = false;
+  atajoui.keyboard.isOpen = true;
+  atajoui.keyboard.isOpening = false;
 
   var details = {
     keyboardHeight: keyboardGetHeight(),
@@ -618,7 +618,7 @@ function keyboardShow() {
     //console.log("elementBottom: " + details.elementBottom);
 
     // send event so the scroll view adjusts
-    ionic.trigger('scrollChildIntoView', details, true);
+    atajoui.trigger('scrollChildIntoView', details, true);
   }
 
   setTimeout(function(){
@@ -631,13 +631,13 @@ function keyboardShow() {
 /* eslint no-unused-vars:0 */
 function keyboardGetHeight() {
   // check if we already have a keyboard height from the plugin or resize calculations
-  if (ionic.keyboard.height) {
-    return ionic.keyboard.height;
+  if (atajoui.keyboard.height) {
+    return atajoui.keyboard.height;
   }
 
-  if (ionic.Platform.isAndroid()) {
+  if (atajoui.Platform.isAndroid()) {
     // should be using the plugin, no way to know how big the keyboard is, so guess
-    if ( ionic.Platform.isFullScreen ) {
+    if ( atajoui.Platform.isFullScreen ) {
       return 275;
     }
     // otherwise just calculate it
@@ -652,12 +652,12 @@ function keyboardGetHeight() {
   // fallback for when it's the webview without the plugin
   // or for just the standard web browser
   // TODO: have these be based on device
-  if (ionic.Platform.isIOS()) {
-    if (ionic.keyboard.isLandscape) {
+  if (atajoui.Platform.isIOS()) {
+    if (atajoui.keyboard.isLandscape) {
       return 206;
     }
 
-    if (!ionic.Platform.isWebView()) {
+    if (!atajoui.Platform.isWebView()) {
       return 216;
     }
 
@@ -669,13 +669,13 @@ function keyboardGetHeight() {
 }
 
 function isPortraitViewportHeight(viewportHeight) {
-  return !!(!ionic.keyboard.isLandscape &&
+  return !!(!atajoui.keyboard.isLandscape &&
          keyboardPortraitViewportHeight &&
          (Math.abs(keyboardPortraitViewportHeight - viewportHeight) < 2));
 }
 
 function isLandscapeViewportHeight(viewportHeight) {
-  return !!(ionic.keyboard.isLandscape &&
+  return !!(atajoui.keyboard.isLandscape &&
          keyboardLandscapeViewportHeight &&
          (Math.abs(keyboardLandscapeViewportHeight - viewportHeight) < 2));
 }
@@ -684,22 +684,22 @@ function keyboardUpdateViewportHeight() {
   wasOrientationChange = false;
   keyboardCurrentViewportHeight = getViewportHeight();
 
-  if (ionic.keyboard.isLandscape && !keyboardLandscapeViewportHeight) {
+  if (atajoui.keyboard.isLandscape && !keyboardLandscapeViewportHeight) {
     //console.log("saved landscape: " + keyboardCurrentViewportHeight);
     keyboardLandscapeViewportHeight = keyboardCurrentViewportHeight;
 
-  } else if (!ionic.keyboard.isLandscape && !keyboardPortraitViewportHeight) {
+  } else if (!atajoui.keyboard.isLandscape && !keyboardPortraitViewportHeight) {
     //console.log("saved portrait: " + keyboardCurrentViewportHeight);
     keyboardPortraitViewportHeight = keyboardCurrentViewportHeight;
   }
 
   if (keyboardActiveElement) {
-    ionic.trigger('resetScrollView', {
+    atajoui.trigger('resetScrollView', {
       target: keyboardActiveElement
     }, true);
   }
 
-  if (ionic.keyboard.isOpen && ionic.tap.isTextInput(keyboardActiveElement)) {
+  if (atajoui.keyboard.isOpen && atajoui.tap.isTextInput(keyboardActiveElement)) {
     keyboardShow();
   }
 }
@@ -709,15 +709,15 @@ function keyboardInitViewportHeight() {
   //console.log("Keyboard init VP: " + viewportHeight + " " + window.innerWidth);
   // can't just use window.innerHeight in case the keyboard is opened immediately
   if ((viewportHeight / window.innerWidth) < 1) {
-    ionic.keyboard.isLandscape = true;
+    atajoui.keyboard.isLandscape = true;
   }
-  //console.log("ionic.keyboard.isLandscape is: " + ionic.keyboard.isLandscape);
+  //console.log("atajoui.keyboard.isLandscape is: " + atajoui.keyboard.isLandscape);
 
   // initialize or update the current viewport height values
   keyboardCurrentViewportHeight = viewportHeight;
-  if (ionic.keyboard.isLandscape && !keyboardLandscapeViewportHeight) {
+  if (atajoui.keyboard.isLandscape && !keyboardLandscapeViewportHeight) {
     keyboardLandscapeViewportHeight = keyboardCurrentViewportHeight;
-  } else if (!ionic.keyboard.isLandscape && !keyboardPortraitViewportHeight) {
+  } else if (!atajoui.keyboard.isLandscape && !keyboardPortraitViewportHeight) {
     keyboardPortraitViewportHeight = keyboardCurrentViewportHeight;
   }
 }
@@ -725,14 +725,14 @@ function keyboardInitViewportHeight() {
 function getViewportHeight() {
   var windowHeight = window.innerHeight;
   //console.log('window.innerHeight is: ' + windowHeight);
-  //console.log('kb height is: ' + ionic.keyboard.height);
-  //console.log('kb isOpen: ' + ionic.keyboard.isOpen);
+  //console.log('kb height is: ' + atajoui.keyboard.height);
+  //console.log('kb isOpen: ' + atajoui.keyboard.isOpen);
 
   //TODO: add iPad undocked/split kb once kb plugin supports it
   // the keyboard overlays the window on Android fullscreen
-  if (!(ionic.Platform.isAndroid() && ionic.Platform.isFullScreen) &&
-      (ionic.keyboard.isOpen || ionic.keyboard.isOpening) &&
-      !ionic.keyboard.isClosing) {
+  if (!(atajoui.Platform.isAndroid() && atajoui.Platform.isFullScreen) &&
+      (atajoui.keyboard.isOpen || atajoui.keyboard.isOpening) &&
+      !atajoui.keyboard.isClosing) {
 
      return windowHeight + keyboardGetHeight();
   }
@@ -743,24 +743,24 @@ function keyboardHasPlugin() {
   return !!(window.cordova && cordova.plugins && cordova.plugins.Keyboard);
 }
 
-ionic.Platform.ready(function() {
+atajoui.Platform.ready(function() {
   keyboardInitViewportHeight();
 
   window.addEventListener('orientationchange', keyboardOrientationChange);
 
   // if orientation changes while app is in background, update on resuming
   /*
-  if ( ionic.Platform.isWebView() ) {
+  if ( atajoui.Platform.isWebView() ) {
     document.addEventListener('resume', keyboardInitViewportHeight);
 
-    if (ionic.Platform.isAndroid()) {
+    if (atajoui.Platform.isAndroid()) {
       //TODO: onbackpressed to detect keyboard close without focusout or plugin
     }
   }
   */
 
   // if orientation changes while app is in background, update on resuming
-/*  if ( ionic.Platform.isWebView() ) {
+/*  if ( atajoui.Platform.isWebView() ) {
     document.addEventListener('pause', function() {
       window.removeEventListener('orientationchange', keyboardOrientationChange);
     })

@@ -16,13 +16,13 @@ var POPUP_TPL =
 
 /**
  * @ngdoc service
- * @name $ionicPopup
- * @module ionic
+ * @name $atajoUiPopup
+ * @module atajoui
  * @restrict E
  * @codepen zkmhJ
  * @description
  *
- * The Ionic Popup service allows programmatically creating and showing popup
+ * The AtajoUi Popup service allows programmatically creating and showing popup
  * windows that require the user to respond in order to continue.
  *
  * The popup system has support for more flexible versions of the built in `alert()`, `prompt()`,
@@ -31,22 +31,22 @@ var POPUP_TPL =
  *
  * An input can be given an `autofocus` attribute so it automatically receives focus when
  * the popup first shows. However, depending on certain use-cases this can cause issues with
- * the tap/click system, which is why Ionic prefers using the `autofocus` attribute as
+ * the tap/click system, which is why AtajoUi prefers using the `autofocus` attribute as
  * an opt-in feature and not the default.
  *
  * @usage
  * A few basic examples, see below for details about all of the options available.
  *
  * ```js
- *angular.module('mySuperApp', ['ionic'])
- *.controller('PopupCtrl',function($scope, $ionicPopup, $timeout) {
+ *angular.module('mySuperApp', ['atajoui'])
+ *.controller('PopupCtrl',function($scope, $atajoUiPopup, $timeout) {
  *
  * // Triggered on a button click, or some other target
  * $scope.showPopup = function() {
  *   $scope.data = {};
  *
  *   // An elaborate, custom popup
- *   var myPopup = $ionicPopup.show({
+ *   var myPopup = $atajoUiPopup.show({
  *     template: '<input type="password" ng-model="data.wifi">',
  *     title: 'Enter Wi-Fi Password',
  *     subTitle: 'Please use normal things',
@@ -79,7 +79,7 @@ var POPUP_TPL =
  *
  *  // A confirm dialog
  *  $scope.showConfirm = function() {
- *    var confirmPopup = $ionicPopup.confirm({
+ *    var confirmPopup = $atajoUiPopup.confirm({
  *      title: 'Consume Ice Cream',
  *      template: 'Are you sure you want to eat this ice cream?'
  *    });
@@ -95,7 +95,7 @@ var POPUP_TPL =
  *
  *  // An alert dialog
  *  $scope.showAlert = function() {
- *    var alertPopup = $ionicPopup.alert({
+ *    var alertPopup = $atajoUiPopup.alert({
  *      title: 'Don\'t eat that!',
  *      template: 'It might taste good'
  *    });
@@ -108,26 +108,26 @@ var POPUP_TPL =
  *```
  */
 
-IonicModule
-.factory('$ionicPopup', [
-  '$ionicTemplateLoader',
-  '$ionicBackdrop',
+AtajoUiModule
+.factory('$atajoUiPopup', [
+  '$atajoUiTemplateLoader',
+  '$atajoUiBackdrop',
   '$q',
   '$timeout',
   '$rootScope',
-  '$ionicBody',
+  '$atajoUiBody',
   '$compile',
-  '$ionicPlatform',
-  '$ionicModal',
-  'IONIC_BACK_PRIORITY',
-function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicBody, $compile, $ionicPlatform, $ionicModal, IONIC_BACK_PRIORITY) {
+  '$atajoUiPlatform',
+  '$atajoUiModal',
+  'ATAJOUI_BACK_PRIORITY',
+function($atajoUiTemplateLoader, $atajoUiBackdrop, $q, $timeout, $rootScope, $atajoUiBody, $compile, $atajoUiPlatform, $atajoUiModal, ATAJOUI_BACK_PRIORITY) {
   //TODO allow this to be configured
   var config = {
     stackPushDelay: 75
   };
   var popupStack = [];
 
-  var $ionicPopup = {
+  var $atajoUiPopup = {
     /**
      * @ngdoc method
      * @description
@@ -140,7 +140,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
      * default and keep the popup open on button tap, call `event.preventDefault()` on the
      * passed in tap event.  Details below.
      *
-     * @name $ionicPopup#show
+     * @name $atajoUiPopup#show
      * @param {object} options The options for the new popup, of the form:
      *
      * ```
@@ -176,7 +176,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
 
     /**
      * @ngdoc method
-     * @name $ionicPopup#alert
+     * @name $atajoUiPopup#alert
      * @description Show a simple alert popup with a message and one button that the user can
      * tap to close the popup.
      *
@@ -202,7 +202,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
 
     /**
      * @ngdoc method
-     * @name $ionicPopup#confirm
+     * @name $atajoUiPopup#confirm
      * @description
      * Show a simple confirm popup with a Cancel and OK button.
      *
@@ -233,13 +233,13 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
 
     /**
      * @ngdoc method
-     * @name $ionicPopup#prompt
+     * @name $atajoUiPopup#prompt
      * @description Show a simple prompt popup, which has an input, OK button, and Cancel button.
      * Resolves the promise with the value of the input if the user presses OK, and with undefined
      * if the user presses Cancel.
      *
      * ```javascript
-     *  $ionicPopup.prompt({
+     *  $atajoUiPopup.prompt({
      *    title: 'Password Check',
      *    template: 'Enter your secret password',
      *    inputType: 'password',
@@ -280,7 +280,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     _popupStack: popupStack
   };
 
-  return $ionicPopup;
+  return $atajoUiPopup;
 
   function createPopup(options) {
     options = extend({
@@ -294,7 +294,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     self.element = jqLite(POPUP_TPL);
     self.responseDeferred = $q.defer();
 
-    $ionicBody.get().appendChild(self.element[0]);
+    $atajoUiBody.get().appendChild(self.element[0]);
     $compile(self.element)(self.scope);
 
     extend(self.scope, {
@@ -314,7 +314,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
 
     $q.when(
       options.templateUrl ?
-      $ionicTemplateLoader.load(options.templateUrl) :
+      $atajoUiTemplateLoader.load(options.templateUrl) :
         (options.template || options.content || '')
     ).then(function(template) {
       var popupBody = jqLite(self.element[0].querySelector('.popup-body'));
@@ -329,9 +329,9 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     self.show = function() {
       if (self.isShown || self.removed) return;
 
-      $ionicModal.stack.add(self);
+      $atajoUiModal.stack.add(self);
       self.isShown = true;
-      ionic.requestAnimationFrame(function() {
+      atajoui.requestAnimationFrame(function() {
         //if hidden while waiting for raf, don't show
         if (!self.isShown) return;
 
@@ -345,7 +345,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       callback = callback || noop;
       if (!self.isShown) return callback();
 
-      $ionicModal.stack.remove(self);
+      $atajoUiModal.stack.remove(self);
       self.isShown = false;
       self.element.removeClass('active');
       self.element.addClass('popup-hidden');
@@ -372,7 +372,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
   }
 
   function showPopup(options) {
-    var popup = $ionicPopup._createPopup(options);
+    var popup = $atajoUiPopup._createPopup(options);
     var showDelay = 0;
 
     if (popupStack.length > 0) {
@@ -380,12 +380,12 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
       $timeout(popupStack[popupStack.length - 1].hide, showDelay, false);
     } else {
       //Add popup-open & backdrop if this is first popup
-      $ionicBody.addClass('popup-open');
-      $ionicBackdrop.retain();
+      $atajoUiBody.addClass('popup-open');
+      $atajoUiBackdrop.retain();
       //only show the backdrop on the first popup
-      $ionicPopup._backButtonActionDone = $ionicPlatform.registerBackButtonAction(
+      $atajoUiPopup._backButtonActionDone = $atajoUiPlatform.registerBackButtonAction(
         onHardwareBackButton,
-        IONIC_BACK_PRIORITY.popup
+        ATAJOUI_BACK_PRIORITY.popup
       );
     }
 
@@ -415,16 +415,16 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
         if (popupStack.length > 0) {
           popupStack[popupStack.length - 1].show();
         } else {
-          $ionicBackdrop.release();
+          $atajoUiBackdrop.release();
           //Remove popup-open & backdrop if this is last popup
           $timeout(function() {
             // wait to remove this due to a 300ms delay native
             // click which would trigging whatever was underneath this
             if (!popupStack.length) {
-              $ionicBody.removeClass('popup-open');
+              $atajoUiBody.removeClass('popup-open');
             }
           }, 400, false);
-          ($ionicPopup._backButtonActionDone || noop)();
+          ($atajoUiPopup._backButtonActionDone || noop)();
         }
 
 

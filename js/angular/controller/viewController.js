@@ -1,5 +1,5 @@
-IonicModule
-.controller('$ionicView', [
+AtajoUiModule
+.controller('$atajoUiView', [
   '$scope',
   '$element',
   '$attrs',
@@ -14,8 +14,8 @@ function($scope, $element, $attrs, $compile, $rootScope) {
   var deregisters = [];
   var viewTitle;
 
-  var deregIonNavBarInit = $scope.$on('ionNavBar.init', function(ev, delegateHandle) {
-    // this view has its own ion-nav-bar, remember the navBarDelegateHandle for this view
+  var deregIonNavBarInit = $scope.$on('auiNavBar.init', function(ev, delegateHandle) {
+    // this view has its own aui-nav-bar, remember the navBarDelegateHandle for this view
     ev.stopPropagation();
     navBarDelegateHandle = delegateHandle;
   });
@@ -24,21 +24,21 @@ function($scope, $element, $attrs, $compile, $rootScope) {
   self.init = function() {
     deregIonNavBarInit();
 
-    var modalCtrl = $element.inheritedData('$ionModalController');
-    navViewCtrl = $element.inheritedData('$ionNavViewController');
+    var modalCtrl = $element.inheritedData('$auiModalController');
+    navViewCtrl = $element.inheritedData('$auiNavViewController');
 
     // don't bother if inside a modal or there's no parent navView
     if (!navViewCtrl || modalCtrl) return;
 
     // add listeners for when this view changes
-    $scope.$on('$ionicView.beforeEnter', self.beforeEnter);
-    $scope.$on('$ionicView.afterEnter', afterEnter);
-    $scope.$on('$ionicView.beforeLeave', deregisterFns);
+    $scope.$on('$atajoUiView.beforeEnter', self.beforeEnter);
+    $scope.$on('$atajoUiView.afterEnter', afterEnter);
+    $scope.$on('$atajoUiView.beforeLeave', deregisterFns);
   };
 
   self.beforeEnter = function(ev, transData) {
-    // this event was emitted, starting at intial ion-view, then bubbles up
-    // only the first ion-view should do something with it, parent ion-views should ignore
+    // this event was emitted, starting at intial aui-view, then bubbles up
+    // only the first aui-view should do something with it, parent aui-views should ignore
     if (transData && !transData.viewNotified) {
       transData.viewNotified = true;
 

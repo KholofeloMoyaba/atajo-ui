@@ -1,4 +1,4 @@
-(function(ionic) {
+(function(atajoui) {
 
   var TRANSLATE32 = 'translate(32,32)';
   var STROKE_OPACITY = 'stroke-opacity';
@@ -373,7 +373,7 @@
           startTime = Date.now();
         }
 
-        ionic.requestAnimationFrame(run);
+        atajoui.requestAnimationFrame(run);
       }
 
       return function() {
@@ -394,16 +394,16 @@
   }
 
 
-  IonicModule
-  .controller('$ionicSpinner', [
+  AtajoUiModule
+  .controller('$atajoUiSpinner', [
     '$element',
     '$attrs',
-    '$ionicConfig',
-  function($element, $attrs, $ionicConfig) {
+    '$atajoUiConfig',
+  function($element, $attrs, $atajoUiConfig) {
     var spinnerName, anim;
 
     this.init = function() {
-      spinnerName = $attrs.icon || $ionicConfig.spinner.icon();
+      spinnerName = $attrs.icon || $atajoUiConfig.spinner.icon();
 
       var container = document.createElement('div');
       createSvgElement('svg', {
@@ -432,4 +432,4 @@
 
   }]);
 
-})(ionic);
+})(atajoui);

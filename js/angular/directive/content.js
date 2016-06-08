@@ -1,38 +1,38 @@
 /**
  * @ngdoc directive
- * @name ionContent
- * @module ionic
- * @delegate ionic.service:$ionicScrollDelegate
+ * @name auiContent
+ * @module atajoui
+ * @delegate atajoui.service:$atajoUiScrollDelegate
  * @restrict E
  *
  * @description
- * The ionContent directive provides an easy to use content area that can be configured
- * to use Ionic's custom Scroll View, or the built in overflow scrolling of the browser.
+ * The auiContent directive provides an easy to use content area that can be configured
+ * to use AtajoUi's custom Scroll View, or the built in overflow scrolling of the browser.
  *
- * While we recommend using the custom Scroll features in Ionic in most cases, sometimes
+ * While we recommend using the custom Scroll features in AtajoUi in most cases, sometimes
  * (for performance reasons) only the browser's native overflow scrolling will suffice,
- * and so we've made it easy to toggle between the Ionic scroll implementation and
+ * and so we've made it easy to toggle between the AtajoUi scroll implementation and
  * overflow scrolling.
  *
- * You can implement pull-to-refresh with the {@link ionic.directive:ionRefresher}
- * directive, and infinite scrolling with the {@link ionic.directive:ionInfiniteScroll}
+ * You can implement pull-to-refresh with the {@link atajoui.directive:auiRefresher}
+ * directive, and infinite scrolling with the {@link atajoui.directive:auiInfiniteScroll}
  * directive.
  *
- * If there is any dynamic content inside the ion-content, be sure to call `.resize()` with {@link ionic.service:$ionicScrollDelegate}
+ * If there is any dynamic content inside the aui-content, be sure to call `.resize()` with {@link atajoui.service:$atajoUiScrollDelegate}
  * after the content has been added.
  *
  * Be aware that this directive gets its own child scope. If you do not understand why this
  * is important, you can read [https://docs.angularjs.org/guide/scope](https://docs.angularjs.org/guide/scope).
  *
  * @param {string=} delegate-handle The handle used to identify this scrollView
- * with {@link ionic.service:$ionicScrollDelegate}.
+ * with {@link atajoui.service:$atajoUiScrollDelegate}.
  * @param {string=} direction Which way to scroll. 'x' or 'y' or 'xy'. Default 'y'.
  * @param {boolean=} locking Whether to lock scrolling in one direction at a time. Useful to set to false when zoomed in or scrolling in two directions. Default true.
  * @param {boolean=} padding Whether to add padding to the content.
  * Defaults to true on iOS, false on Android.
  * @param {boolean=} scroll Whether to allow scrolling of content.  Defaults to true.
  * @param {boolean=} overflow-scroll Whether to use overflow-scrolling instead of
- * Ionic scroll. See {@link ionic.provider:$ionicConfigProvider} to set this as the global default.
+ * AtajoUi scroll. See {@link atajoui.provider:$atajoUiConfigProvider} to set this as the global default.
  * @param {boolean=} scrollbar-x Whether to show the horizontal scrollbar. Default true.
  * @param {boolean=} scrollbar-y Whether to show the vertical scrollbar. Default true.
  * @param {string=} start-x Initial horizontal scroll position. Default 0.
@@ -43,23 +43,23 @@
  * of the content.  Defaults to true on iOS, false on Android.
  * @param {number=} scroll-event-interval Number of milliseconds between each firing of the 'on-scroll' expression. Default 10.
  */
-IonicModule
-.directive('ionContent', [
+AtajoUiModule
+.directive('auiContent', [
   '$timeout',
   '$controller',
-  '$ionicBind',
-  '$ionicConfig',
-function($timeout, $controller, $ionicBind, $ionicConfig) {
+  '$atajoUiBind',
+  '$atajoUiConfig',
+function($timeout, $controller, $atajoUiBind, $atajoUiConfig) {
   return {
     restrict: 'E',
-    require: '^?ionNavView',
+    require: '^?auiNavView',
     scope: true,
     priority: 800,
     compile: function(element, attr) {
       var innerElement;
       var scrollCtrl;
 
-      element.addClass('scroll-content ionic-scroll');
+      element.addClass('scroll-content atajoui-scroll');
 
       if (attr.scroll != 'false') {
         //We cannot use normal transclude here because it breaks element.data()
@@ -71,11 +71,11 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
         element.addClass('scroll-content-false');
       }
 
-      var nativeScrolling = attr.overflowScroll !== "false" && (attr.overflowScroll === "true" || !$ionicConfig.scrolling.jsScrolling());
+      var nativeScrolling = attr.overflowScroll !== "false" && (attr.overflowScroll === "true" || !$atajoUiConfig.scrolling.jsScrolling());
 
-      // collection-repeat requires JS scrolling
+      // collectaui-repeat requires JS scrolling
       if (nativeScrolling) {
-        nativeScrolling = !element[0].querySelector('[collection-repeat]');
+        nativeScrolling = !element[0].querySelector('[collectaui-repeat]');
       }
       return { pre: prelink };
       function prelink($scope, $element, $attr) {
@@ -92,12 +92,12 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
           $element.addClass(className);
         });
 
-        //Only this ionContent should use these variables from parent scopes
+        //Only this auiContent should use these variables from parent scopes
         $scope.$hasHeader = $scope.$hasSubheader =
           $scope.$hasFooter = $scope.$hasSubfooter =
           $scope.$hasTabs = $scope.$hasTabsTop =
           false;
-        $ionicBind($scope, $attr, {
+        $atajoUiBind($scope, $attr, {
           $onScroll: '&onScroll',
           $onScrollComplete: '&onScrollComplete',
           hasBouncing: '@',
@@ -154,7 +154,7 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
           }
 
           // init scroll controller with appropriate options
-          scrollCtrl = $controller('$ionicScroll', {
+          scrollCtrl = $controller('$atajoUiScroll', {
             $scope: $scope,
             scrollViewOptions: scrollViewOptions
           });

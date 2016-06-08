@@ -95,7 +95,7 @@ function makeChangelog(options) {
   var version = options.version || pkg.version;
   var deferred = q.defer();
   changelog({
-    repository: 'https://github.com/driftyco/ionic',
+    repository: 'https://github.com/KholofeloMoyaba/atajo-ui',
     version: version,
     subtitle: subtitle,
     file: file,
@@ -113,22 +113,22 @@ gulp.task('bundle', [
   'vendor',
   'version'
 ], function() {
-  gulp.src(buildConfig.ionicBundleFiles.map(function(src) {
+  gulp.src(buildConfig.atajoUiBundleFiles.map(function(src) {
       return src.replace(/.js$/, '.min.js');
     }), {
       base: buildConfig.dist,
       cwd: buildConfig.dist
     })
       .pipe(header(buildConfig.bundleBanner))
-      .pipe(concat('ionic.bundle.min.js'))
+      .pipe(concat('atajoui.bundle.min.js'))
       .pipe(gulp.dest(buildConfig.dist + '/js'));
 
-  return gulp.src(buildConfig.ionicBundleFiles, {
+  return gulp.src(buildConfig.atajoUiBundleFiles, {
     base: buildConfig.dist,
     cwd: buildConfig.dist
   })
     .pipe(header(buildConfig.bundleBanner))
-    .pipe(concat('ionic.bundle.js'))
+    .pipe(concat('atajoui.bundle.js'))
     .pipe(gulp.dest(buildConfig.dist + '/js'));
 });
 
@@ -162,10 +162,10 @@ gulp.task('vendor', function() {
 });
 
 gulp.task('scripts', function() {
-  return gulp.src(buildConfig.ionicFiles)
+  return gulp.src(buildConfig.atajoUiFiles)
     .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
     .pipe(template({ pkg: pkg }))
-    .pipe(concat('ionic.js'))
+    .pipe(concat('atajoui.js'))
     .pipe(header(buildConfig.closureStart))
     .pipe(footer(buildConfig.closureEnd))
     .pipe(header(banner))
@@ -177,9 +177,9 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('scripts-ng', function() {
-  return gulp.src(buildConfig.angularIonicFiles)
+  return gulp.src(buildConfig.angularAtajoUiFiles)
     .pipe(gulpif(IS_RELEASE_BUILD, stripDebug()))
-    .pipe(concat('ionic-angular.js'))
+    .pipe(concat('atajoui-angular.js'))
     .pipe(header(buildConfig.closureStart))
     .pipe(footer(buildConfig.closureEnd))
     .pipe(header(banner))
@@ -191,7 +191,7 @@ gulp.task('scripts-ng', function() {
 });
 
 gulp.task('sass', function(done) {
-  gulp.src('scss/ionic.scss')
+  gulp.src('scss/atajoui.scss')
     .pipe(header(banner))
     .pipe(sass({
       onError: function(err) {
@@ -203,7 +203,7 @@ gulp.task('sass', function(done) {
         }
       }
     }))
-    .pipe(concat('ionic.css'))
+    .pipe(concat('atajoui.css'))
     .pipe(gulp.dest(buildConfig.dist + '/css'))
     .pipe(gulpif(IS_RELEASE_BUILD, minifyCss()))
     .pipe(rename({ extname: '.min.css' }))
@@ -227,46 +227,6 @@ gulp.task('version', function() {
     .pipe(gulp.dest(buildConfig.dist));
 });
 
-/*
-gulp.task('release-tweet', function(done) {
-  var oauth = {
-    consumerKey: process.env.TWITTER_CONSUMER_KEY,
-    consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-    accessToken: process.env.TWITTER_ACCESS_TOKEN,
-    accessTokenSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET
-  };
-  var client = new twitter(oauth);
-  client.statuses(
-    'update',
-    {
-      status: argv.test ?
-        'This is a test.' :
-        buildConfig.releaseMessage()
-    },
-    oauth.accessToken,
-    oauth.accessTokenSecret,
-    done
-  );
-});
- */
-
-/*
-gulp.task('release-irc', function(done) {
-  var client = irc({
-    host: 'irc.freenode.net',
-    secure: true,
-    nick: 'ionitron',
-    username: 'ionitron',
-    realName: 'ionitron',
-    channels: ['#ionic']
-  }, function() {
-    client.say('#ionic', argv.test ? 'This is a test.' : buildConfig.releaseMessage(), function() {
-      client.quit('', done);
-    });
-  });
-});
-*/
-
 gulp.task('clean', function(done){
   rimraf('dist', {}, function(err){
     done(err);
@@ -286,7 +246,7 @@ gulp.task('preparePackageJson', function(done){
   }
 
   var existingPackage = require('./package.json');
-  existingPackage.name = "ionic-angular";
+  existingPackage.name = "atajoui-angular";
   existingPackage.version = existingPackage.version + "-" + createTimestamp();
   delete existingPackage.dependencies;
   delete existingPackage.devDependencies;
@@ -327,7 +287,7 @@ gulp.task("publishToNpm", ['prepareForNpm'], function(done){
 
 gulp.task('release-github', function(done) {
   var github = new GithubApi({
-    version: '3.0.0'
+    version: '0.0.1'
   });
   github.authenticate({
     type: 'oauth',
@@ -339,8 +299,8 @@ gulp.task('release-github', function(done) {
   .then(function(log) {
     var version = 'v' + pkg.version;
     github.releases.createRelease({
-      owner: 'driftyco',
-      repo: 'ionic',
+      owner: 'KholofeloMoyaba',
+      repo: 'atajo-ui',
       tag_name: version,
       name: version + ' "' + pkg.codename + '"',
       body: log
@@ -349,55 +309,55 @@ gulp.task('release-github', function(done) {
   .fail(done);
 });
 
-gulp.task('release-discourse', function(done) {
-  var oldPostUrl = buildConfig.releasePostUrl;
-  var newPostUrl;
+// gulp.task('release-discourse', function(done) {
+//   var oldPostUrl = buildConfig.releasePostUrl;
+//   var newPostUrl;
 
-  return makeChangelog({
-    standalone: true
-  })
-  .then(function(changelog) {
-    var content = 'Download Instructions: https://github.com/driftyco/ionic#quick-start\n\n' + changelog;
-    return qRequest({
-      url: 'http://forum.ionicframework.com/posts',
-      method: 'post',
-      form: {
-        api_key: process.env.DISCOURSE_TOKEN,
-        api_username: 'Ionitron',
-        title: argv.test ?
-          ('This is a test. ' + Date.now()) :
-          'v' + pkg.version + ' "' + pkg.codename + '" released!',
-        raw: argv.test ?
-          ('This is a test. Again! ' + Date.now()) :
-          content
-      }
-    });
-  })
-  .then(function(res) {
-    var body = JSON.parse(res.body);
-    newPostUrl = 'http://forum.ionicframework.com/t/' + body.topic_slug + '/' + body.topic_id;
-    fs.writeFileSync(buildConfig.releasePostFile, newPostUrl);
+//   return makeChangelog({
+//     standalone: true
+//   })
+//   .then(function(changelog) {
+//     var content = 'Download Instructions: https://github.com/driftyco/ionic#quick-start\n\n' + changelog;
+//     return qRequest({
+//       url: 'http://forum.ionicframework.com/posts',
+//       method: 'post',
+//       form: {
+//         api_key: process.env.DISCOURSE_TOKEN,
+//         api_username: 'Ionitron',
+//         title: argv.test ?
+//           ('This is a test. ' + Date.now()) :
+//           'v' + pkg.version + ' "' + pkg.codename + '" released!',
+//         raw: argv.test ?
+//           ('This is a test. Again! ' + Date.now()) :
+//           content
+//       }
+//     });
+//   })
+//   .then(function(res) {
+//     var body = JSON.parse(res.body);
+//     newPostUrl = 'http://forum.ionicframework.com/t/' + body.topic_slug + '/' + body.topic_id;
+//     fs.writeFileSync(buildConfig.releasePostFile, newPostUrl);
 
-    return q.all([
-      updatePost(newPostUrl, 'closed', true),
-      updatePost(newPostUrl, 'pinned', true),
-      oldPostUrl && updatePost(oldPostUrl, 'pinned', false)
-    ]);
-  });
+//     return q.all([
+//       updatePost(newPostUrl, 'closed', true),
+//       updatePost(newPostUrl, 'pinned', true),
+//       oldPostUrl && updatePost(oldPostUrl, 'pinned', false)
+//     ]);
+//   });
 
-  function updatePost(url, statusType, isEnabled) {
-    return qRequest({
-      url: url + '/status',
-      method: 'put',
-      form: {
-        api_key: process.env.DISCOURSE_TOKEN,
-        api_username: 'Ionitron',
-        status: statusType,
-        enabled: !!isEnabled
-      }
-    });
-  }
-});
+//   function updatePost(url, statusType, isEnabled) {
+//     return qRequest({
+//       url: url + '/status',
+//       method: 'put',
+//       form: {
+//         api_key: process.env.DISCOURSE_TOKEN,
+//         api_username: 'Ionitron',
+//         status: statusType,
+//         enabled: !!isEnabled
+//       }
+//     });
+//   }
+// });
 
 function notContains(disallowed) {
   disallowed = disallowed || [];

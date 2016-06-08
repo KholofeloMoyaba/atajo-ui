@@ -7,25 +7,25 @@ var LOADING_TPL =
 
 /**
  * @ngdoc service
- * @name $ionicLoading
- * @module ionic
+ * @name $atajoUiLoading
+ * @module atajoui
  * @description
  * An overlay that can be used to indicate activity while blocking user
  * interaction.
  *
  * @usage
  * ```js
- * angular.module('LoadingApp', ['ionic'])
- * .controller('LoadingCtrl', function($scope, $ionicLoading) {
+ * angular.module('LoadingApp', ['atajoui'])
+ * .controller('LoadingCtrl', function($scope, $atajoUiLoading) {
  *   $scope.show = function() {
- *     $ionicLoading.show({
+ *     $atajoUiLoading.show({
  *       template: 'Loading...'
  *     }).then(function(){
  *        console.log("The loading indicator is now displayed");
  *     });
  *   };
  *   $scope.hide = function(){
- *     $ionicLoading.hide().then(function(){
+ *     $atajoUiLoading.hide().then(function(){
  *        console.log("The loading indicator is now hidden");
  *     });
  *   };
@@ -34,44 +34,44 @@ var LOADING_TPL =
  */
 /**
  * @ngdoc object
- * @name $ionicLoadingConfig
- * @module ionic
+ * @name $atajoUiLoadingConfig
+ * @module atajoui
  * @description
- * Set the default options to be passed to the {@link ionic.service:$ionicLoading} service.
+ * Set the default options to be passed to the {@link atajoui.service:$atajoUiLoading} service.
  *
  * @usage
  * ```js
- * var app = angular.module('myApp', ['ionic'])
- * app.constant('$ionicLoadingConfig', {
+ * var app = angular.module('myApp', ['atajoui'])
+ * app.constant('$atajoUiLoadingConfig', {
  *   template: 'Default Loading Template...'
  * });
- * app.controller('AppCtrl', function($scope, $ionicLoading) {
+ * app.controller('AppCtrl', function($scope, $atajoUiLoading) {
  *   $scope.showLoading = function() {
- *     //options default to values in $ionicLoadingConfig
- *     $ionicLoading.show().then(function(){
+ *     //options default to values in $atajoUiLoadingConfig
+ *     $atajoUiLoading.show().then(function(){
  *        console.log("The loading indicator is now displayed");
  *     });
  *   };
  * });
  * ```
  */
-IonicModule
-.constant('$ionicLoadingConfig', {
-  template: '<ion-spinner></ion-spinner>'
+AtajoUiModule
+.constant('$atajoUiLoadingConfig', {
+  template: '<aui-spinner></aui-spinner>'
 })
-.factory('$ionicLoading', [
-  '$ionicLoadingConfig',
-  '$ionicBody',
-  '$ionicTemplateLoader',
-  '$ionicBackdrop',
+.factory('$atajoUiLoading', [
+  '$atajoUiLoadingConfig',
+  '$atajoUiBody',
+  '$atajoUiTemplateLoader',
+  '$atajoUiBackdrop',
   '$timeout',
   '$q',
   '$log',
   '$compile',
-  '$ionicPlatform',
+  '$atajoUiPlatform',
   '$rootScope',
-  'IONIC_BACK_PRIORITY',
-function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $compile, $ionicPlatform, $rootScope, IONIC_BACK_PRIORITY) {
+  'ATAJOUI_BACK_PRIORITY',
+function($atajoUiLoadingConfig, $atajoUiBody, $atajoUiTemplateLoader, $atajoUiBackdrop, $timeout, $q, $log, $compile, $atajoUiPlatform, $rootScope, ATAJOUI_BACK_PRIORITY) {
 
   var loaderInstance;
   //default values
@@ -83,7 +83,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
   return {
     /**
      * @ngdoc method
-     * @name $ionicLoading#show
+     * @name $atajoUiLoading#show
      * @description Shows a loading indicator. If the indicator is already shown,
      * it will set the options given and keep the indicator shown.
      * @returns {promise} A promise which is resolved when the loading indicator is presented.
@@ -101,7 +101,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
     show: showLoader,
     /**
      * @ngdoc method
-     * @name $ionicLoading#hide
+     * @name $atajoUiLoading#hide
      * @description Hides the loading indicator, if shown.
      * @returns {promise} A promise which is resolved when the loading indicator is hidden.
      */
@@ -114,14 +114,14 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
 
   function getLoader() {
     if (!loaderInstance) {
-      loaderInstance = $ionicTemplateLoader.compile({
+      loaderInstance = $atajoUiTemplateLoader.compile({
         template: LOADING_TPL,
-        appendTo: $ionicBody.get()
+        appendTo: $atajoUiBody.get()
       })
       .then(function(self) {
         self.show = function(options) {
           var templatePromise = options.templateUrl ?
-            $ionicTemplateLoader.load(options.templateUrl) :
+            $atajoUiTemplateLoader.load(options.templateUrl) :
             //options.content: deprecated
             $q.when(options.template || options.content || '');
 
@@ -131,8 +131,8 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
             //options.showBackdrop: deprecated
             self.hasBackdrop = !options.noBackdrop && options.showBackdrop !== false;
             if (self.hasBackdrop) {
-              $ionicBackdrop.retain();
-              $ionicBackdrop.getElement().addClass('backdrop-loading');
+              $atajoUiBackdrop.retain();
+              $atajoUiBackdrop.getElement().addClass('backdrop-loading');
             }
           }
 
@@ -146,9 +146,9 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
 
           deregisterBackAction();
           //Disable hardware back button while loading
-          deregisterBackAction = $ionicPlatform.registerBackButtonAction(
+          deregisterBackAction = $atajoUiPlatform.registerBackButtonAction(
             noop,
-            IONIC_BACK_PRIORITY.loading
+            ATAJOUI_BACK_PRIORITY.loading
           );
 
           templatePromise.then(function(html) {
@@ -161,10 +161,10 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
             //Don't show until template changes
             if (self.isShown) {
               self.element.addClass('visible');
-              ionic.requestAnimationFrame(function() {
+              atajoui.requestAnimationFrame(function() {
                 if (self.isShown) {
                   self.element.addClass('active');
-                  $ionicBody.addClass('loading-active');
+                  $atajoUiBody.addClass('loading-active');
                 }
               });
             }
@@ -177,13 +177,13 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
           deregisterBackAction();
           if (self.isShown) {
             if (self.hasBackdrop) {
-              $ionicBackdrop.release();
-              $ionicBackdrop.getElement().removeClass('backdrop-loading');
+              $atajoUiBackdrop.release();
+              $atajoUiBackdrop.getElement().removeClass('backdrop-loading');
             }
             self.element.removeClass('active');
-            $ionicBody.removeClass('loading-active');
+            $atajoUiBody.removeClass('loading-active');
             self.element.removeClass('visible');
-            ionic.requestAnimationFrame(function() {
+            atajoui.requestAnimationFrame(function() {
               !self.isShown && self.element.removeClass('visible');
             });
           }
@@ -200,7 +200,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
   }
 
   function showLoader(options) {
-    options = extend({}, $ionicLoadingConfig || {}, options || {});
+    options = extend({}, $atajoUiLoadingConfig || {}, options || {});
     // use a default delay of 100 to avoid some issues reported on github
     // https://github.com/driftyco/ionic/issues/3717
     var delay = options.delay || options.showDelay || 0;

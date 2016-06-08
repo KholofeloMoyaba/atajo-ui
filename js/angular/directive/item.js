@@ -1,13 +1,13 @@
 /**
 * @ngdoc directive
-* @name ionItem
-* @parent ionic.directive:ionList
-* @module ionic
+* @name auiItem
+* @parent atajoui.directive:auiList
+* @module atajoui
 * @restrict E
 * Creates a list-item that can easily be swiped,
 * deleted, reordered, edited, and more.
 *
-* See {@link ionic.directive:ionList} for a complete example & explanation.
+* See {@link atajoui.directive:auiList} for a complete example & explanation.
 *
 * Can be assigned any item class name. See the
 * [list CSS documentation](/docs/components/#list).
@@ -15,16 +15,16 @@
 * @usage
 *
 * ```html
-* <ion-list>
-*   <ion-item>Hello!</ion-item>
-*   <ion-item href="#/detail">
+* <aui-list>
+*   <aui-item>Hello!</aui-item>
+*   <aui-item href="#/detail">
 *     Link to detail page
-*   </ion-item>
-* </ion-list>
+*   </aui-item>
+* </aui-list>
 * ```
 */
-IonicModule
-.directive('ionItem', ['$$rAF', function($$rAF) {
+AtajoUiModule
+.directive('auiItem', ['$$rAF', function($$rAF) {
   return {
     restrict: 'E',
     controller: ['$scope', '$element', function($scope, $element) {
@@ -38,7 +38,7 @@ IonicModule
                      isDefined($attrs.uiSref);
       var isComplexItem = isAnchor ||
         //Lame way of testing, but we have to know at compile what to do with the element
-        /ion-(delete|option|reorder)-button/i.test($element.html());
+        /aui-(delete|option|reorder)-button/i.test($element.html());
 
       if (isComplexItem) {
         var innerElement = jqLite(isAnchor ? '<a></a>' : '<div></div>');
@@ -70,13 +70,13 @@ IonicModule
         var content = $element[0].querySelector('.item-content');
         if (content) {
           $scope.$on('$collectionRepeatLeave', function() {
-            if (content && content.$$ionicOptionsOpen) {
-              content.style[ionic.CSS.TRANSFORM] = '';
-              content.style[ionic.CSS.TRANSITION] = 'none';
+            if (content && content.$$atajoUiOptionsOpen) {
+              content.style[atajoui.CSS.TRANSFORM] = '';
+              content.style[atajoui.CSS.TRANSITION] = 'none';
               $$rAF(function() {
-                content.style[ionic.CSS.TRANSITION] = '';
+                content.style[atajoui.CSS.TRANSITION] = '';
               });
-              content.$$ionicOptionsOpen = false;
+              content.$$atajoUiOptionsOpen = false;
             }
           });
         }

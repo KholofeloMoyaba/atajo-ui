@@ -1,8 +1,8 @@
 /**
 * @ngdoc directive
-* @name ionList
-* @module ionic
-* @delegate ionic.service:$ionicListDelegate
+* @name auiList
+* @module atajoui
+* @delegate atajoui.service:$atajoUiListDelegate
 * @codepen JsHjf
 * @restrict E
 * @description
@@ -13,54 +13,54 @@
 * element. The containing element requires the `list` class and each list item requires
 * the `item` class.
 *
-* However, using the ionList and ionItem directives make it easy to support various
+* However, using the auiList and auiItem directives make it easy to support various
 * interaction modes such as swipe to edit, drag to reorder, and removing items.
 *
-* Related: {@link ionic.directive:ionItem}, {@link ionic.directive:ionOptionButton}
-* {@link ionic.directive:ionReorderButton}, {@link ionic.directive:ionDeleteButton}, [`list CSS documentation`](/docs/components/#list).
+* Related: {@link atajoui.directive:auiItem}, {@link atajoui.directive:auiOptionButton}
+* {@link atajoui.directive:auiReorderButton}, {@link atajoui.directive:auiDeleteButton}, [`list CSS documentation`](/docs/components/#list).
 *
 * @usage
 *
 * Basic Usage:
 *
 * ```html
-* <ion-list>
-*   <ion-item ng-repeat="item in items">
+* <aui-list>
+*   <aui-item ng-repeat="item in items">
 *     {% raw %}Hello, {{item}}!{% endraw %}
-*   </ion-item>
-* </ion-list>
+*   </aui-item>
+* </aui-list>
 * ```
 *
 * Advanced Usage: Thumbnails, Delete buttons, Reordering, Swiping
 *
 * ```html
-* <ion-list ng-controller="MyCtrl"
+* <aui-list ng-controller="MyCtrl"
 *           show-delete="shouldShowDelete"
 *           show-reorder="shouldShowReorder"
 *           can-swipe="listCanSwipe">
-*   <ion-item ng-repeat="item in items"
+*   <aui-item ng-repeat="item in items"
 *             class="item-thumbnail-left">
 *
 *     {% raw %}<img ng-src="{{item.img}}">
 *     <h2>{{item.title}}</h2>
 *     <p>{{item.description}}</p>{% endraw %}
-*     <ion-option-button class="button-positive"
+*     <aui-optaui-button class="button-positive"
 *                        ng-click="share(item)">
 *       Share
-*     </ion-option-button>
-*     <ion-option-button class="button-info"
+*     </aui-optaui-button>
+*     <aui-optaui-button class="button-info"
 *                        ng-click="edit(item)">
 *       Edit
-*     </ion-option-button>
-*     <ion-delete-button class="ion-minus-circled"
+*     </aui-optaui-button>
+*     <aui-delete-button class="aui-minus-circled"
 *                        ng-click="items.splice($index, 1)">
-*     </ion-delete-button>
-*     <ion-reorder-button class="ion-navicon"
+*     </aui-delete-button>
+*     <aui-reorder-button class="aui-navicon"
 *                         on-reorder="reorderItem(item, $fromIndex, $toIndex)">
-*     </ion-reorder-button>
+*     </aui-reorder-button>
 *
-*   </ion-item>
-* </ion-list>
+*   </aui-item>
+* </aui-list>
 * ```
 *
 *```javascript
@@ -72,7 +72,7 @@
 *```
 *
 * @param {string=} delegate-handle The handle used to identify this list with
-* {@link ionic.service:$ionicListDelegate}.
+* {@link atajoui.service:$atajoUiListDelegate}.
 * @param type {string=} The type of list to use (list-inset or card)
 * @param show-delete {boolean=} Whether the delete buttons for the items in the list are
 * currently shown or hidden.
@@ -81,14 +81,14 @@
 * @param can-swipe {boolean=} Whether the items in the list are allowed to be swiped to reveal
 * option buttons. Default: true.
 */
-IonicModule
-.directive('ionList', [
+AtajoUiModule
+.directive('auiList', [
   '$timeout',
 function($timeout) {
   return {
     restrict: 'E',
-    require: ['ionList', '^?$ionicScroll'],
-    controller: '$ionicList',
+    require: ['auiList', '^?$atajoUiScroll'],
+    controller: '$atajoUiList',
     compile: function($element, $attr) {
       var listEl = jqLite('<div class="list">')
         .append($element.contents())
@@ -104,7 +104,7 @@ function($timeout) {
         $timeout(init);
 
         function init() {
-          var listView = listCtrl.listView = new ionic.views.ListView({
+          var listView = listCtrl.listView = new atajoui.views.ListView({
             el: $element[0],
             listEl: $element.children()[0],
             scrollEl: scrollCtrl && scrollCtrl.element,
@@ -182,7 +182,7 @@ function($timeout) {
 
           function setButtonShown(el, shown) {
             shown() && el.addClass('visible') || el.removeClass('active');
-            ionic.requestAnimationFrame(function() {
+            atajoui.requestAnimationFrame(function() {
               shown() && el.addClass('active') || el.removeClass('visible');
             });
           }

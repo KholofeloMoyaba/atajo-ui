@@ -1,8 +1,8 @@
 /**
  * @private
  */
-IonicModule
-.factory('$ionicBind', ['$parse', '$interpolate', function($parse, $interpolate) {
+AtajoUiModule
+.factory('$atajoUiBind', ['$parse', '$interpolate', function($parse, $interpolate) {
   var LOCAL_REGEXP = /^\s*([@=&])(\??)\s*(\w*)\s*$/;
   return function(scope, attrs, bindDefinition) {
     forEach(bindDefinition || {}, function(definition, scopeName) {

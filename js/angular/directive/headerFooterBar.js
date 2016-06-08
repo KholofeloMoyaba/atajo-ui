@@ -1,11 +1,11 @@
 
-IonicModule
-//.directive('ionHeaderBar', tapScrollToTopDirective())
+AtajoUiModule
+//.directive('auiHeaderBar', tapScrollToTopDirective())
 
 /**
  * @ngdoc directive
- * @name ionHeaderBar
- * @module ionic
+ * @name auiHeaderBar
+ * @module atajoui
  * @restrict E
  *
  * @description
@@ -25,7 +25,7 @@ IonicModule
  *
  * @usage
  * ```html
- * <ion-header-bar align-title="left" class="bar-positive">
+ * <aui-header-bar align-title="left" class="bar-positive">
  *   <div class="buttons">
  *     <button class="button" ng-click="doSomething()">Left Button</button>
  *   </div>
@@ -33,18 +33,18 @@ IonicModule
  *   <div class="buttons">
  *     <button class="button">Right Button</button>
  *   </div>
- * </ion-header-bar>
- * <ion-content class="has-header">
+ * </aui-header-bar>
+ * <aui-content class="has-header">
  *   Some content!
- * </ion-content>
+ * </aui-content>
  * ```
  */
-.directive('ionHeaderBar', headerFooterBarDirective(true))
+.directive('auiHeaderBar', headerFooterBarDirective(true))
 
 /**
  * @ngdoc directive
- * @name ionFooterBar
- * @module ionic
+ * @name auiFooterBar
+ * @module atajoui
  * @restrict E
  *
  * @description
@@ -53,7 +53,7 @@ IonicModule
  * Can also be a subfooter (higher up) if the 'bar-subfooter' class is applied.
  * See [the footer CSS docs](/docs/components/#footer).
  *
- * Note: If you use ionFooterBar in combination with ng-if, the surrounding content
+ * Note: If you use auiFooterBar in combination with ng-if, the surrounding content
  * will not align correctly.  This will be fixed soon.
  *
  * @param {string=} align-title Where to align the title.
@@ -61,10 +61,10 @@ IonicModule
  *
  * @usage
  * ```html
- * <ion-content class="has-footer">
+ * <aui-content class="has-footer">
  *   Some content!
- * </ion-content>
- * <ion-footer-bar align-title="left" class="bar-assertive">
+ * </aui-content>
+ * <aui-footer-bar align-title="left" class="bar-assertive">
  *   <div class="buttons">
  *     <button class="button">Left Button</button>
  *   </div>
@@ -72,22 +72,22 @@ IonicModule
  *   <div class="buttons" ng-click="doSomething()">
  *     <button class="button">Right Button</button>
  *   </div>
- * </ion-footer-bar>
+ * </aui-footer-bar>
  * ```
  */
-.directive('ionFooterBar', headerFooterBarDirective(false));
+.directive('auiFooterBar', headerFooterBarDirective(false));
 
 function tapScrollToTopDirective() { //eslint-disable-line no-unused-vars
-  return ['$ionicScrollDelegate', function($ionicScrollDelegate) {
+  return ['$atajoUiScrollDelegate', function($atajoUiScrollDelegate) {
     return {
       restrict: 'E',
       link: function($scope, $element, $attr) {
         if ($attr.noTapScroll == 'true') {
           return;
         }
-        ionic.on('tap', onTap, $element[0]);
+        atajoui.on('tap', onTap, $element[0]);
         $scope.$on('$destroy', function() {
-          ionic.off('tap', onTap, $element[0]);
+          atajoui.off('tap', onTap, $element[0]);
         });
 
         function onTap(e) {
@@ -104,12 +104,12 @@ function tapScrollToTopDirective() { //eslint-disable-line no-unused-vars
           }
           var touch = e.gesture && e.gesture.touches[0] || e.detail.touches[0];
           var bounds = $element[0].getBoundingClientRect();
-          if (ionic.DomUtil.rectContains(
+          if (atajoui.DomUtil.rectContains(
             touch.pageX, touch.pageY,
             bounds.left, bounds.top - 20,
             bounds.left + bounds.width, bounds.top + bounds.height
           )) {
-            $ionicScrollDelegate.scrollTop(true);
+            $atajoUiScrollDelegate.scrollTop(true);
           }
         }
       }
@@ -121,7 +121,7 @@ function headerFooterBarDirective(isHeader) {
   return ['$document', '$timeout', function($document, $timeout) {
     return {
       restrict: 'E',
-      controller: '$ionicHeaderBar',
+      controller: '$atajoUiHeaderBar',
       compile: function(tElement) {
         tElement.addClass(isHeader ? 'bar bar-header' : 'bar bar-footer');
         // top style tabs? if so, remove bottom border for seamless display
@@ -137,15 +137,15 @@ function headerFooterBarDirective(isHeader) {
               var isSubheader = value.indexOf('bar-subheader') !== -1;
               $scope.$hasHeader = isShown && !isSubheader;
               $scope.$hasSubheader = isShown && isSubheader;
-              $scope.$emit('$ionicSubheader', $scope.$hasSubheader);
+              $scope.$emit('$atajoUiSubheader', $scope.$hasSubheader);
             });
             $scope.$on('$destroy', function() {
               delete $scope.$hasHeader;
               delete $scope.$hasSubheader;
             });
             ctrl.align();
-            $scope.$on('$ionicHeader.align', function() {
-              ionic.requestAnimationFrame(function() {
+            $scope.$on('$atajoUiHeader.align', function() {
+              atajoui.requestAnimationFrame(function() {
                 ctrl.align();
               });
             });
@@ -165,8 +165,8 @@ function headerFooterBarDirective(isHeader) {
               $element.toggleClass('has-tabs', !!val);
             });
             ctrl.align();
-            $scope.$on('$ionicFooter.align', function() {
-              ionic.requestAnimationFrame(function() {
+            $scope.$on('$atajoUiFooter.align', function() {
+              atajoui.requestAnimationFrame(function() {
                 ctrl.align();
               });
             });

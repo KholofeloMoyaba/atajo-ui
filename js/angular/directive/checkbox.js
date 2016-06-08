@@ -1,8 +1,8 @@
 
 /**
  * @ngdoc directive
- * @name ionCheckbox
- * @module ionic
+ * @name auiCheckbox
+ * @module atajoui
  * @restrict E
  * @codepen hqcju
  * @description
@@ -12,12 +12,12 @@
  *
  * @usage
  * ```html
- * <ion-checkbox ng-model="isChecked">Checkbox Label</ion-checkbox>
+ * <aui-checkbox ng-model="isChecked">Checkbox Label</aui-checkbox>
  * ```
  */
 
-IonicModule
-.directive('ionCheckbox', ['$ionicConfig', function($ionicConfig) {
+AtajoUiModule
+.directive('auiCheckbox', ['$atajoUiConfig', function($atajoUiConfig) {
   return {
     restrict: 'E',
     replace: true,
@@ -50,7 +50,7 @@ IonicModule
         }
       });
       var checkboxWrapper = element[0].querySelector('.checkbox');
-      checkboxWrapper.classList.add('checkbox-' + $ionicConfig.form.checkbox());
+      checkboxWrapper.classList.add('checkbox-' + $atajoUiConfig.form.checkbox());
     }
   };
 }]);

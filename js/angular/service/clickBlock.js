@@ -1,9 +1,9 @@
-IonicModule
-.factory('$ionicClickBlock', [
+AtajoUiModule
+.factory('$atajoUiClickBlock', [
   '$document',
-  '$ionicBody',
+  '$atajoUiBody',
   '$timeout',
-function($document, $ionicBody, $timeout) {
+function($document, $atajoUiBody, $timeout) {
   var CSS_HIDE = 'click-block-hide';
   var cbEle, fallbackTimer, pendingShow;
 
@@ -19,7 +19,7 @@ function($document, $ionicBody, $timeout) {
       } else {
         cbEle = $document[0].createElement('div');
         cbEle.className = 'click-block';
-        $ionicBody.append(cbEle);
+        $atajoUiBody.append(cbEle);
         cbEle.addEventListener('touchstart', preventClick);
         cbEle.addEventListener('mousedown', preventClick);
       }

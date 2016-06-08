@@ -1,7 +1,7 @@
 /**
  * @ngdoc service
- * @name $ionicBackdrop
- * @module ionic
+ * @name $atajoUiBackdrop
+ * @module atajoui
  * @description
  * Shows and hides a backdrop over the UI.  Appears behind popups, loading,
  * and other overlays.
@@ -10,7 +10,7 @@
  * ever needed in the DOM at a time.
  *
  * Therefore, each component that requires the backdrop to be shown calls
- * `$ionicBackdrop.retain()` when it wants the backdrop, then `$ionicBackdrop.release()`
+ * `$atajoUiBackdrop.retain()` when it wants the backdrop, then `$atajoUiBackdrop.release()`
  * when it is done with the backdrop.
  *
  * For each time `retain` is called, the backdrop will be shown until `release` is called.
@@ -25,12 +25,12 @@
  * @usage
  *
  * ```js
- * function MyController($scope, $ionicBackdrop, $timeout, $rootScope) {
+ * function MyController($scope, $atajoUiBackdrop, $timeout, $rootScope) {
  *   //Show a backdrop for one second
  *   $scope.action = function() {
- *     $ionicBackdrop.retain();
+ *     $atajoUiBackdrop.retain();
  *     $timeout(function() {
- *       $ionicBackdrop.release();
+ *       $atajoUiBackdrop.release();
  *     }, 1000);
  *   };
  *
@@ -47,8 +47,8 @@
  * }
  * ```
  */
-IonicModule
-.factory('$ionicBackdrop', [
+AtajoUiModule
+.factory('$atajoUiBackdrop', [
   '$document', '$timeout', '$$rAF', '$rootScope',
 function($document, $timeout, $$rAF, $rootScope) {
 
@@ -60,13 +60,13 @@ function($document, $timeout, $$rAF, $rootScope) {
   return {
     /**
      * @ngdoc method
-     * @name $ionicBackdrop#retain
+     * @name $atajoUiBackdrop#retain
      * @description Retains the backdrop.
      */
     retain: retain,
     /**
      * @ngdoc method
-     * @name $ionicBackdrop#release
+     * @name $atajoUiBackdrop#release
      * @description
      * Releases the backdrop.
      */

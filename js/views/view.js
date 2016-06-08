@@ -1,13 +1,13 @@
-(function(ionic) {
+(function(atajoui) {
 'use strict';
-  ionic.views.View = function() {
+  atajoui.views.View = function() {
     this.initialize.apply(this, arguments);
   };
 
-  ionic.views.View.inherit = ionic.inherit;
+  atajoui.views.View.inherit = atajoui.inherit;
 
-  ionic.extend(ionic.views.View.prototype, {
+  atajoui.extend(atajoui.views.View.prototype, {
     initialize: function() {}
   });
 
-})(window.ionic);
+})(window.atajoui);

@@ -1,8 +1,8 @@
 /**
  * @ngdoc directive
- * @name ionScroll
- * @module ionic
- * @delegate ionic.service:$ionicScrollDelegate
+ * @name auiScroll
+ * @module atajoui
+ * @delegate atajoui.service:$atajoUiScrollDelegate
  * @codepen mwFuh
  * @restrict E
  *
@@ -14,22 +14,22 @@
  * Basic usage:
  *
  * ```html
- * <ion-scroll zooming="true" direction="xy" style="width: 500px; height: 500px">
+ * <aui-scroll zooming="true" direction="xy" style="width: 500px; height: 500px">
  *   <div style="width: 5000px; height: 5000px; background: url('https://upload.wikimedia.org/wikipedia/commons/a/ad/Europe_geological_map-en.jpg') repeat"></div>
- *  </ion-scroll>
+ *  </aui-scroll>
  * ```
  *
  * Note that it's important to set the height of the scroll box as well as the height of the inner
  * content to enable scrolling. This makes it possible to have full control over scrollable areas.
  *
- * If you'd just like to have a center content scrolling area, use {@link ionic.directive:ionContent} instead.
+ * If you'd just like to have a center content scrolling area, use {@link atajoui.directive:auiContent} instead.
  *
  * @param {string=} delegate-handle The handle used to identify this scrollView
- * with {@link ionic.service:$ionicScrollDelegate}.
+ * with {@link atajoui.service:$atajoUiScrollDelegate}.
  * @param {string=} direction Which way to scroll. 'x' or 'y' or 'xy'. Default 'y'.
  * @param {boolean=} locking Whether to lock scrolling in one direction at a time. Useful to set to false when zoomed in or scrolling in two directions. Default true.
  * @param {boolean=} paging Whether to scroll with paging.
- * @param {expression=} on-refresh Called on pull-to-refresh, triggered by an {@link ionic.directive:ionRefresher}.
+ * @param {expression=} on-refresh Called on pull-to-refresh, triggered by an {@link atajoui.directive:auiRefresher}.
  * @param {expression=} on-scroll Called whenever the user scrolls.
  * @param {boolean=} scrollbar-x Whether to show the horizontal scrollbar. Default true.
  * @param {boolean=} scrollbar-y Whether to show the vertical scrollbar. Default true.
@@ -39,30 +39,30 @@
  * @param {boolean=} has-bouncing Whether to allow scrolling to bounce past the edges
  * of the content.  Defaults to true on iOS, false on Android.
  */
-IonicModule
-.directive('ionScroll', [
+AtajoUiModule
+.directive('auiScroll', [
   '$timeout',
   '$controller',
-  '$ionicBind',
-  '$ionicConfig',
-function($timeout, $controller, $ionicBind, $ionicConfig) {
+  '$atajoUiBind',
+  '$atajoUiConfig',
+function($timeout, $controller, $atajoUiBind, $atajoUiConfig) {
   return {
     restrict: 'E',
     scope: true,
     controller: function() {},
     compile: function(element, attr) {
-      element.addClass('scroll-view ionic-scroll');
+      element.addClass('scroll-view atajoui-scroll');
 
       //We cannot transclude here because it breaks element.data() inheritance on compile
       var innerElement = jqLite('<div class="scroll"></div>');
       innerElement.append(element.contents());
       element.append(innerElement);
 
-      var nativeScrolling = attr.overflowScroll !== "false" && (attr.overflowScroll === "true" || !$ionicConfig.scrolling.jsScrolling());
+      var nativeScrolling = attr.overflowScroll !== "false" && (attr.overflowScroll === "true" || !$atajoUiConfig.scrolling.jsScrolling());
 
       return { pre: prelink };
       function prelink($scope, $element, $attr) {
-        $ionicBind($scope, $attr, {
+        $atajoUiBind($scope, $attr, {
           direction: '@',
           paging: '@',
           $onScroll: '&onScroll',
@@ -115,7 +115,7 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
           scrollViewOptions.bouncing = false;
         }
 
-        $controller('$ionicScroll', {
+        $controller('$atajoUiScroll', {
           $scope: $scope,
           scrollViewOptions: scrollViewOptions
         });

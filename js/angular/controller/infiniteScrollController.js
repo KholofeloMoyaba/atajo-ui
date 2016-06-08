@@ -1,5 +1,5 @@
-IonicModule
-.controller('$ionInfiniteScroll', [
+AtajoUiModule
+.controller('$auiInfiniteScroll', [
   '$scope',
   '$attrs',
   '$element',
@@ -9,7 +9,7 @@ function($scope, $attrs, $element, $timeout) {
   self.isLoading = false;
 
   $scope.icon = function() {
-    return isDefined($attrs.icon) ? $attrs.icon : 'ion-load-d';
+    return isDefined($attrs.icon) ? $attrs.icon : 'aui-load-d';
   };
 
   $scope.spinner = function() {
@@ -28,10 +28,10 @@ function($scope, $attrs, $element, $timeout) {
   });
 
   // debounce checking infinite scroll events
-  self.checkBounds = ionic.Utils.throttle(checkInfiniteBounds, 300);
+  self.checkBounds = atajoui.Utils.throttle(checkInfiniteBounds, 300);
 
   function onInfinite() {
-    ionic.requestAnimationFrame(function() {
+    atajoui.requestAnimationFrame(function() {
       $element[0].classList.add('active');
     });
     self.isLoading = true;
@@ -39,7 +39,7 @@ function($scope, $attrs, $element, $timeout) {
   }
 
   function finishInfiniteScroll() {
-    ionic.requestAnimationFrame(function() {
+    atajoui.requestAnimationFrame(function() {
       $element[0].classList.remove('active');
     });
     $timeout(function() {

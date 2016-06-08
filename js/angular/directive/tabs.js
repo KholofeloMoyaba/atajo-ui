@@ -1,8 +1,8 @@
 /**
  * @ngdoc directive
- * @name ionTabs
- * @module ionic
- * @delegate ionic.service:$ionicTabsDelegate
+ * @name auiTabs
+ * @module atajoui
+ * @delegate atajoui.service:$atajoUiTabsDelegate
  * @restrict E
  * @codepen odqCz
  *
@@ -15,46 +15,46 @@
  *
  * For iOS, tabs will appear at the bottom of the screen. For Android, tabs will be at the top
  * of the screen, below the nav-bar. This follows each OS's design specification, but can be
- * configured with the {@link ionic.provider:$ionicConfigProvider}.
+ * configured with the {@link atajoui.provider:$atajoUiConfigProvider}.
  *
- * See the {@link ionic.directive:ionTab} directive's documentation for more details on
+ * See the {@link atajoui.directive:auiTab} directive's documentation for more details on
  * individual tabs.
  *
- * Note: do not place ion-tabs inside of an ion-content element; it has been known to cause a
+ * Note: do not place aui-tabs inside of an aui-content element; it has been known to cause a
  * certain CSS bug.
  *
  * @usage
  * ```html
- * <ion-tabs class="tabs-positive tabs-icon-top">
+ * <aui-tabs class="tabs-positive tabs-icon-top">
  *
- *   <ion-tab title="Home" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline">
+ *   <aui-tab title="Home" icon-on="aui-ios-filing" icon-off="aui-ios-filing-outline">
  *     <!-- Tab 1 content -->
- *   </ion-tab>
+ *   </aui-tab>
  *
- *   <ion-tab title="About" icon-on="ion-ios-clock" icon-off="ion-ios-clock-outline">
+ *   <aui-tab title="About" icon-on="aui-ios-clock" icon-off="aui-ios-clock-outline">
  *     <!-- Tab 2 content -->
- *   </ion-tab>
+ *   </aui-tab>
  *
- *   <ion-tab title="Settings" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline">
+ *   <aui-tab title="Settings" icon-on="aui-ios-gear" icon-off="aui-ios-gear-outline">
  *     <!-- Tab 3 content -->
- *   </ion-tab>
+ *   </aui-tab>
  *
- * </ion-tabs>
+ * </aui-tabs>
  * ```
  *
  * @param {string=} delegate-handle The handle used to identify these tabs
- * with {@link ionic.service:$ionicTabsDelegate}.
+ * with {@link atajoui.service:$atajoUiTabsDelegate}.
  */
 
-IonicModule
-.directive('ionTabs', [
-  '$ionicTabsDelegate',
-  '$ionicConfig',
-function($ionicTabsDelegate, $ionicConfig) {
+AtajoUiModule
+.directive('auiTabs', [
+  '$atajoUiTabsDelegate',
+  '$atajoUiConfig',
+function($atajoUiTabsDelegate, $atajoUiConfig) {
   return {
     restrict: 'E',
     scope: true,
-    controller: '$ionicTabs',
+    controller: '$atajoUiTabs',
     compile: function(tElement) {
       //We cannot use regular transclude here because it breaks element.data()
       //inheritance on compile
@@ -62,11 +62,11 @@ function($ionicTabsDelegate, $ionicConfig) {
       innerElement.append(tElement.contents());
 
       tElement.append(innerElement)
-              .addClass('tabs-' + $ionicConfig.tabs.position() + ' tabs-' + $ionicConfig.tabs.style());
+              .addClass('tabs-' + $atajoUiConfig.tabs.position() + ' tabs-' + $atajoUiConfig.tabs.style());
 
       return { pre: prelink, post: postLink };
       function prelink($scope, $element, $attr, tabsCtrl) {
-        var deregisterInstance = $ionicTabsDelegate._registerInstance(
+        var deregisterInstance = $atajoUiTabsDelegate._registerInstance(
           tabsCtrl, $attr.delegateHandle, tabsCtrl.hasActiveScope
         );
 
@@ -79,7 +79,7 @@ function($ionicTabsDelegate, $ionicConfig) {
           var isHidden = value.indexOf('tabs-item-hide') !== -1;
           $scope.$hasTabs = !isTabsTop && !isHidden;
           $scope.$hasTabsTop = isTabsTop && !isHidden;
-          $scope.$emit('$ionicTabs.top', $scope.$hasTabsTop);
+          $scope.$emit('$atajoUiTabs.top', $scope.$hasTabsTop);
         });
 
         function emitLifecycleEvent(ev, data) {
@@ -90,9 +90,9 @@ function($ionicTabsDelegate, $ionicConfig) {
           }
         }
 
-        $scope.$on('$ionicNavView.beforeLeave', emitLifecycleEvent);
-        $scope.$on('$ionicNavView.afterLeave', emitLifecycleEvent);
-        $scope.$on('$ionicNavView.leave', emitLifecycleEvent);
+        $scope.$on('$atajoUiNavView.beforeLeave', emitLifecycleEvent);
+        $scope.$on('$atajoUiNavView.afterLeave', emitLifecycleEvent);
+        $scope.$on('$atajoUiNavView.leave', emitLifecycleEvent);
 
         $scope.$on('$destroy', function() {
           // variable to inform child tabs that they're all being blown away

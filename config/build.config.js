@@ -12,31 +12,29 @@ module.exports = {
 
   banner:
     '/*!\n' +
-    ' * Copyright 2015 Drifty Co.\n' +
+    ' * Copyright 2016 Kholofelo Moyaba.\n' +
     ' * http://drifty.com/\n' +
     ' *\n' +
-    ' * Ionic, v<%= pkg.version %>\n' +
-    ' * A powerful HTML5 mobile app framework.\n' +
-    ' * http://ionicframework.com/\n' +
+    ' * Atajo UI, v<%= pkg.version %>\n' +
+    ' * HTML UI package based on ionicframework\n' +
     ' *\n' +
-    ' * By @maxlynch, @benjsperry, @adamdbradley <3\n' +
     ' *\n' +
     ' * Licensed under the MIT license. Please see LICENSE for more information.\n'+
     ' *\n' +
     ' */\n\n',
   bundleBanner:
     '/*!\n' +
-    ' * ionic.bundle.js is a concatenation of:\n' +
-    ' * ionic.js, angular.js, angular-animate.js,\n'+
+    ' * atajoui.bundle.js is a concatenation of:\n' +
+    ' * atajoui.js, angular.js, angular-animate.js,\n'+
     ' * angular-sanitize.js, angular-ui-router.js,\n'+
-    ' * and ionic-angular.js\n'+
+    ' * and atajoui-angular.js\n'+
     ' */\n\n',
   closureStart: '(function() {\n',
   closureEnd: '\n})();',
 
-  ionicFiles: [
+  atajoUiFiles: [
     // Base
-    'js/ionic.js',
+    'js/atajoui.js',
 
     // Utils
     'js/utils/delegateService.js',
@@ -64,7 +62,7 @@ module.exports = {
     'js/views/toggleView.js'
   ],
 
-  angularIonicFiles: [
+  angularAtajoUiFiles: [
     'js/angular/*.js',
     'js/angular/service/**/*.js',
     'js/angular/controller/**/*.js',
@@ -90,13 +88,13 @@ module.exports = {
     'fonts/ionicons.woff'
   ],
 
-  ionicBundleFiles: [
-    'js/ionic.js',
+  atajoUiBundleFiles: [
+    'js/atajoui.js',
     'js/angular/angular.js',
     'js/angular/angular-animate.js',
     'js/angular/angular-sanitize.js',
     'js/angular-ui/angular-ui-router.js',
-    'js/ionic-angular.js'
+    'js/atajoui-angular.js'
   ],
 
   //Exclamation can be no longer than 14 chars
@@ -108,7 +106,7 @@ module.exports = {
   //and can have up to a 14 char long exclamation prepended.
   releaseMessage: function() {
     return this.exclamations[Math.floor(Math.random()*this.exclamations.length)] + '! ' +
-      'Just released @IonicFramework v' + pkg.version + ' "' + pkg.codename + '"! ' +
+      'Just released @AtajoUI v' + pkg.version + ' "' + pkg.codename + '"! ' +
       this.releasePostUrl;
   },
 
