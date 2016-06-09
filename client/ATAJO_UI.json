@@ -1,0 +1,10 @@
+{
+    "IMPORTS": {
+        "SCRIPTS": [
+            "atajoui.bundle.min.js"
+        ],
+        "CSS": [
+            "atajoui.min.css"
+        ]
+    }
+}

@@ -13,13 +13,12 @@ module.exports = {
   banner:
     '/*!\n' +
     ' * Copyright 2016 Kholofelo Moyaba.\n' +
-    ' * http://drifty.com/\n' +
     ' *\n' +
     ' * Atajo UI, v<%= pkg.version %>\n' +
     ' * HTML UI package based on ionicframework\n' +
     ' *\n' +
     ' *\n' +
-    ' * Licensed under the MIT license. Please see LICENSE for more information.\n'+
+    ' * Private package. Licensed under the MIT license. Please see LICENSE for more information.\n'+
     ' *\n' +
     ' */\n\n',
   bundleBanner:
