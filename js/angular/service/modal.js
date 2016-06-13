@@ -153,12 +153,12 @@ function($rootScope, $atajoUiBody, $compile, $timeout, $atajoUiPlatform, $atajoU
       var scrollCtrl = modalEl.data('$$atajoUiScrollController');
       scrollCtrl && scrollCtrl.resize();
 
-      if (target && self.positauiView) {
-        self.positauiView(target, modalEl);
+      if (target && self.positionView) {
+        self.positionView(target, modalEl);
         // set up a listener for in case the window size changes
 
         self._onWindowResize = function() {
-          if (self._isShown) self.positauiView(target, modalEl);
+          if (self._isShown) self.positionView(target, modalEl);
         };
         atajoui.on('resize', self._onWindowResize, window);
       }
@@ -237,7 +237,7 @@ function($rootScope, $atajoUiBody, $compile, $timeout, $atajoUiPlatform, $atajoU
       atajoui.views.Modal.prototype.hide.call(self);
 
       // clean up event listeners
-      if (self.positauiView) {
+      if (self.positionView) {
         atajoui.off('resize', self._onWindowResize, window);
       }
 

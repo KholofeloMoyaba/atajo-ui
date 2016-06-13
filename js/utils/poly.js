@@ -37,7 +37,7 @@
     var isWebkit = atajoui.CSS.TRANSITION.indexOf('webkit') > -1;
 
     // transition duration
-    atajoui.CSS.TRANSITION_DURATION = (isWebkit ? '-webkit-' : '') + 'transitaui-duration';
+    atajoui.CSS.TRANSITION_DURATION = (isWebkit ? '-webkit-' : '') + 'transition-duration';
 
     // To be sure transitionend works everywhere, include *both* the webkit and non-webkit events
     atajoui.CSS.TRANSITIONEND = (isWebkit ? 'webkitTransitionEnd ' : '') + 'transitionend';

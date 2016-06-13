@@ -31,15 +31,15 @@ AtajoUiModule
       $document.bind('keyup', keyUp);
       $element.bind('click', backdropClick);
     },
-    template: '<div class="actaui-sheet-backdrop">' +
-                '<div class="actaui-sheet-wrapper">' +
-                  '<div class="actaui-sheet" ng-class="{\'actaui-sheet-has-icons\': $actionSheetHasIcon}">' +
-                    '<div class="actaui-sheet-group actaui-sheet-options">' +
-                      '<div class="actaui-sheet-title" ng-if="titleText" ng-bind-html="titleText"></div>' +
-                      '<button class="button actaui-sheet-option" ng-click="buttonClicked($index)" ng-class="b.className" ng-repeat="b in buttons" ng-bind-html="b.text"></button>' +
-                      '<button class="button destructive actaui-sheet-destructive" ng-if="destructiveText" ng-click="destructiveButtonClicked()" ng-bind-html="destructiveText"></button>' +
+    template: '<div class="action-sheet-backdrop">' +
+                '<div class="action-sheet-wrapper">' +
+                  '<div class="action-sheet" ng-class="{\'action-sheet-has-icons\': $actionSheetHasIcon}">' +
+                    '<div class="action-sheet-group action-sheet-options">' +
+                      '<div class="action-sheet-title" ng-if="titleText" ng-bind-html="titleText"></div>' +
+                      '<button class="button action-sheet-option" ng-click="buttonClicked($index)" ng-class="b.className" ng-repeat="b in buttons" ng-bind-html="b.text"></button>' +
+                      '<button class="button destructive action-sheet-destructive" ng-if="destructiveText" ng-click="destructiveButtonClicked()" ng-bind-html="destructiveText"></button>' +
                     '</div>' +
-                    '<div class="actaui-sheet-group actaui-sheet-cancel" ng-if="cancelText">' +
+                    '<div class="action-sheet-group action-sheet-cancel" ng-if="cancelText">' +
                       '<button class="button" ng-click="cancel()" ng-bind-html="cancelText"></button>' +
                     '</div>' +
                   '</div>' +

@@ -601,16 +601,16 @@ atajoui.views.Scroll = atajoui.views.View.inherit({
   */
 
   /** Minimum left scroll position during deceleration */
-  __minDeceleratauiScrollLeft: null,
+  __minDecelerationScrollLeft: null,
 
   /** Minimum top scroll position during deceleration */
-  __minDeceleratauiScrollTop: null,
+  __minDecelerationScrollTop: null,
 
   /** Maximum left scroll position during deceleration */
-  __maxDeceleratauiScrollLeft: null,
+  __maxDecelerationScrollLeft: null,
 
   /** Maximum top scroll position during deceleration */
-  __maxDeceleratauiScrollTop: null,
+  __maxDecelerationScrollTop: null,
 
   /** Current factor to modify horizontal scroll position with on every step */
   __decelerationVelocityX: null,
@@ -1098,7 +1098,7 @@ atajoui.views.Scroll = atajoui.views.View.inherit({
   /**
    * Move and scale the scrollbars as the page scrolls.
    */
-  __repositauiScrollbars: function() {
+  __repositionScrollbars: function() {
     var self = this,
         heightScale, widthScale,
         widthDiff, heightDiff,
@@ -1295,7 +1295,7 @@ atajoui.views.Scroll = atajoui.views.View.inherit({
           content.style[transformProperty] = translate3d;
           self.contentTransform = translate3d;
         }
-        self.__repositauiScrollbars();
+        self.__repositionScrollbars();
         if (!wasResize) {
           self.triggerScrollEvent();
         }
@@ -1305,7 +1305,7 @@ atajoui.views.Scroll = atajoui.views.View.inherit({
 
       return function(left, top, zoom, wasResize) {
         content.style[transformProperty] = 'translate(' + (-left) + 'px,' + (-top) + 'px) scale(' + zoom + ')';
-        self.__repositauiScrollbars();
+        self.__repositionScrollbars();
         if (!wasResize) {
           self.triggerScrollEvent();
         }
@@ -1317,7 +1317,7 @@ atajoui.views.Scroll = atajoui.views.View.inherit({
         content.style.marginLeft = left ? (-left / zoom) + 'px' : '';
         content.style.marginTop = top ? (-top / zoom) + 'px' : '';
         content.style.zoom = zoom || '';
-        self.__repositauiScrollbars();
+        self.__repositionScrollbars();
         if (!wasResize) {
           self.triggerScrollEvent();
         }
@@ -2260,18 +2260,18 @@ atajoui.views.Scroll = atajoui.views.View.inherit({
 
       // We limit deceleration not to the min/max values of the allowed range, but to the size of the visible client area.
       // Each page should have exactly the size of the client area.
-      self.__minDeceleratauiScrollLeft = Math.floor(scrollLeft / clientWidth) * clientWidth;
-      self.__minDeceleratauiScrollTop = Math.floor(scrollTop / clientHeight) * clientHeight;
-      self.__maxDeceleratauiScrollLeft = Math.ceil(scrollLeft / clientWidth) * clientWidth;
-      self.__maxDeceleratauiScrollTop = Math.ceil(scrollTop / clientHeight) * clientHeight;
+      self.__minDecelerationScrollLeft = Math.floor(scrollLeft / clientWidth) * clientWidth;
+      self.__minDecelerationScrollTop = Math.floor(scrollTop / clientHeight) * clientHeight;
+      self.__maxDecelerationScrollLeft = Math.ceil(scrollLeft / clientWidth) * clientWidth;
+      self.__maxDecelerationScrollTop = Math.ceil(scrollTop / clientHeight) * clientHeight;
 
     } else {
 
-      self.__minDeceleratauiScrollLeft = 0;
-      self.__minDeceleratauiScrollTop = 0;
-      self.__maxDeceleratauiScrollLeft = self.__maxScrollLeft;
-      self.__maxDeceleratauiScrollTop = self.__maxScrollTop;
-      if (self.__refreshActive) self.__minDeceleratauiScrollTop = self.__refreshHeight * -1;
+      self.__minDecelerationScrollLeft = 0;
+      self.__minDecelerationScrollTop = 0;
+      self.__maxDecelerationScrollLeft = self.__maxScrollLeft;
+      self.__maxDecelerationScrollTop = self.__maxScrollTop;
+      if (self.__refreshActive) self.__minDecelerationScrollTop = self.__refreshHeight * -1;
     }
 
     // Wrap class method
@@ -2345,13 +2345,13 @@ atajoui.views.Scroll = atajoui.views.View.inherit({
 
     if (!self.options.bouncing) {
 
-      var scrollLeftFixed = Math.max(Math.min(self.__maxDeceleratauiScrollLeft, scrollLeft), self.__minDeceleratauiScrollLeft);
+      var scrollLeftFixed = Math.max(Math.min(self.__maxDecelerationScrollLeft, scrollLeft), self.__minDecelerationScrollLeft);
       if (scrollLeftFixed !== scrollLeft) {
         scrollLeft = scrollLeftFixed;
         self.__decelerationVelocityX = 0;
       }
 
-      var scrollTopFixed = Math.max(Math.min(self.__maxDeceleratauiScrollTop, scrollTop), self.__minDeceleratauiScrollTop);
+      var scrollTopFixed = Math.max(Math.min(self.__maxDecelerationScrollTop, scrollTop), self.__minDecelerationScrollTop);
       if (scrollTopFixed !== scrollTop) {
         scrollTop = scrollTopFixed;
         self.__decelerationVelocityY = 0;
@@ -2408,21 +2408,21 @@ atajoui.views.Scroll = atajoui.views.View.inherit({
       var penetrationAcceleration = self.options.penetrationAcceleration;
 
       // Check limits
-      if (scrollLeft < self.__minDeceleratauiScrollLeft) {
-        scrollOutsideX = self.__minDeceleratauiScrollLeft - scrollLeft;
-      } else if (scrollLeft > self.__maxDeceleratauiScrollLeft) {
-        scrollOutsideX = self.__maxDeceleratauiScrollLeft - scrollLeft;
+      if (scrollLeft < self.__minDecelerationScrollLeft) {
+        scrollOutsideX = self.__minDecelerationScrollLeft - scrollLeft;
+      } else if (scrollLeft > self.__maxDecelerationScrollLeft) {
+        scrollOutsideX = self.__maxDecelerationScrollLeft - scrollLeft;
       }
 
-      if (scrollTop < self.__minDeceleratauiScrollTop) {
-        scrollOutsideY = self.__minDeceleratauiScrollTop - scrollTop;
-      } else if (scrollTop > self.__maxDeceleratauiScrollTop) {
-        scrollOutsideY = self.__maxDeceleratauiScrollTop - scrollTop;
+      if (scrollTop < self.__minDecelerationScrollTop) {
+        scrollOutsideY = self.__minDecelerationScrollTop - scrollTop;
+      } else if (scrollTop > self.__maxDecelerationScrollTop) {
+        scrollOutsideY = self.__maxDecelerationScrollTop - scrollTop;
       }
 
       // Slow down until slow enough, then flip back to snap position
       if (scrollOutsideX !== 0) {
-        var isHeadingOutwardsX = scrollOutsideX * self.__decelerationVelocityX <= self.__minDeceleratauiScrollLeft;
+        var isHeadingOutwardsX = scrollOutsideX * self.__decelerationVelocityX <= self.__minDecelerationScrollLeft;
         if (isHeadingOutwardsX) {
           self.__decelerationVelocityX += scrollOutsideX * penetrationDeceleration;
         }
@@ -2434,7 +2434,7 @@ atajoui.views.Scroll = atajoui.views.View.inherit({
       }
 
       if (scrollOutsideY !== 0) {
-        var isHeadingOutwardsY = scrollOutsideY * self.__decelerationVelocityY <= self.__minDeceleratauiScrollTop;
+        var isHeadingOutwardsY = scrollOutsideY * self.__decelerationVelocityY <= self.__minDecelerationScrollTop;
         if (isHeadingOutwardsY) {
           self.__decelerationVelocityY += scrollOutsideY * penetrationDeceleration;
         }

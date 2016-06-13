@@ -22,8 +22,8 @@ var ITEM_TPL_OPTION_BUTTONS =
 * <aui-list>
 *   <aui-item>
 *     I love kittens!
-*     <aui-optaui-button class="button-positive">Share</aui-optaui-button>
-*     <aui-optaui-button class="button-assertive">Edit</aui-optaui-button>
+*     <aui-option-button class="button-positive">Share</aui-option-button>
+*     <aui-option-button class="button-assertive">Edit</aui-option-button>
 *   </aui-item>
 * </aui-list>
 * ```

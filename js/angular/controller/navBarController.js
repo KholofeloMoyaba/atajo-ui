@@ -65,7 +65,7 @@ function($scope, $element, $attrs, $compile, $timeout, $atajoUiNavBarDelegate, $
       // create default button elements
       navEle[itemType] = createNavElement(itemType);
       // append and position buttons
-      positauiItem(navEle[itemType], itemType);
+      positionItem(navEle[itemType], itemType);
     });
 
     // add header-item to the root children
@@ -97,7 +97,7 @@ function($scope, $element, $attrs, $compile, $timeout, $atajoUiNavBarDelegate, $
           }
 
           // there's a custom nav bar item
-          positauiItem(navBarItemEle, itemType);
+          positionItem(navBarItemEle, itemType);
 
           if (navEle[itemType]) {
             // make sure the default on this itemType is hidden
@@ -152,7 +152,7 @@ function($scope, $element, $attrs, $compile, $timeout, $atajoUiNavBarDelegate, $
       }
     };
 
-    function positauiItem(ele, itemType) {
+    function positionItem(ele, itemType) {
       if (!ele) return;
 
       if (itemType === 'title') {

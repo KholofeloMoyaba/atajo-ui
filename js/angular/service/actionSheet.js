@@ -117,10 +117,10 @@ function($rootScope, $compile, $animate, $timeout, $atajoUiTemplateLoader, $ataj
     textForIcon(scope.destructiveText);
 
     // Compile the template
-    var element = scope.element = $compile('<aui-actaui-sheet ng-class="cssClass" buttons="buttons"></aui-actaui-sheet>')(scope);
+    var element = scope.element = $compile('<aui-action-sheet ng-class="cssClass" buttons="buttons"></aui-action-sheet>')(scope);
 
     // Grab the sheet element for animation
-    var sheetEl = jqLite(element[0].querySelector('.actaui-sheet-wrapper'));
+    var sheetEl = jqLite(element[0].querySelector('.action-sheet-wrapper'));
 
     var stateChangeListenDone = scope.cancelOnStateChange ?
       $rootScope.$on('$stateChangeSuccess', function() { scope.cancel(); }) :
@@ -131,11 +131,11 @@ function($rootScope, $compile, $animate, $timeout, $atajoUiTemplateLoader, $ataj
       if (scope.removed) return;
 
       scope.removed = true;
-      sheetEl.removeClass('actaui-sheet-up');
+      sheetEl.removeClass('action-sheet-up');
       $timeout(function() {
         // wait to remove this due to a 300ms delay native
         // click which would trigging whatever was underneath this
-        $atajoUiBody.removeClass('actaui-sheet-open');
+        $atajoUiBody.removeClass('action-sheet-open');
       }, 400);
       scope.$deregisterBackButton();
       stateChangeListenDone();
@@ -153,7 +153,7 @@ function($rootScope, $compile, $animate, $timeout, $atajoUiTemplateLoader, $ataj
       if (scope.removed) return;
 
       $atajoUiBody.append(element)
-                .addClass('actaui-sheet-open');
+                .addClass('action-sheet-open');
 
       $animate.addClass(element, 'active').then(function() {
         if (scope.removed) return;
@@ -161,7 +161,7 @@ function($rootScope, $compile, $animate, $timeout, $atajoUiTemplateLoader, $ataj
       });
       $timeout(function() {
         if (scope.removed) return;
-        sheetEl.addClass('actaui-sheet-up');
+        sheetEl.addClass('action-sheet-up');
       }, 20, false);
     };
 

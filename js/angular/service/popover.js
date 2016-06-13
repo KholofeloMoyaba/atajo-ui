@@ -85,10 +85,10 @@ function($atajoUiModal, $atajoUiPosition, $document, $window) {
     viewType: 'popover',
     hideDelay: 1,
     animation: 'none',
-    positauiView: positauiView
+    positionView: positionView
   };
 
-  function positauiView(target, popoverEle) {
+  function positionView(target, popoverEle) {
     var targetEle = jqLite(target.target || target);
     var buttonOffset = $atajoUiPosition.offset(targetEle);
     var popoverWidth = popoverEle.prop('offsetWidth');

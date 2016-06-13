@@ -69,10 +69,10 @@ AtajoUiModule
     require: ['?^$atajoUiScroll', 'auiRefresher'],
     controller: '$atajoUiRefresher',
     template:
-    '<div class="scroll-refresher invisible" collectaui-repeat-ignore>' +
+    '<div class="scroll-refresher invisible" collection-repeat-ignore>' +
       '<div class="atajoui-refresher-content" ' +
       'ng-class="{\'atajoui-refresher-with-text\': pullingText || refreshingText}">' +
-        '<div class="icon-pulling" ng-class="{\'pulling-rotataui-disabled\':disablePullingRotation}">' +
+        '<div class="icon-pulling" ng-class="{\'pulling-rotation-disabled\':disablePullingRotation}">' +
           '<i class="icon {{pullingIcon}}"></i>' +
         '</div>' +
         '<div class="text-pulling" ng-bind-html="pullingText"></div>' +

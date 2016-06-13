@@ -158,10 +158,10 @@
             slideNextClass: 'swiper-slide-next',
             slidePrevClass: 'swiper-slide-prev',
             wrapperClass: 'swiper-wrapper',
-            bulletClass: 'swiper-paginataui-bullet',
-            bulletActiveClass: 'swiper-paginataui-bullet-active',
+            bulletClass: 'swiper-pagination-bullet',
+            bulletActiveClass: 'swiper-pagination-bullet-active',
             buttonDisabledClass: 'swiper-button-disabled',
-            paginationHiddenClass: 'swiper-paginataui-hidden',
+            paginationHiddenClass: 'swiper-pagination-hidden',
             // Observer
             observer: false,
             observeParents: false,
@@ -377,7 +377,7 @@
         if (s.params.pagination) {
             s.paginationContainer = $(s.params.pagination);
             if (s.params.paginationClickable) {
-                s.paginationContainer.addClass('swiper-paginataui-clickable');
+                s.paginationContainer.addClass('swiper-pagination-clickable');
             }
         }
 

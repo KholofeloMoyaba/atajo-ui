@@ -44,14 +44,14 @@
 *     {% raw %}<img ng-src="{{item.img}}">
 *     <h2>{{item.title}}</h2>
 *     <p>{{item.description}}</p>{% endraw %}
-*     <aui-optaui-button class="button-positive"
+*     <aui-option-button class="button-positive"
 *                        ng-click="share(item)">
 *       Share
-*     </aui-optaui-button>
-*     <aui-optaui-button class="button-info"
+*     </aui-option-button>
+*     <aui-option-button class="button-info"
 *                        ng-click="edit(item)">
 *       Edit
-*     </aui-optaui-button>
+*     </aui-option-button>
 *     <aui-delete-button class="aui-minus-circled"
 *                        ng-click="items.splice($index, 1)">
 *     </aui-delete-button>

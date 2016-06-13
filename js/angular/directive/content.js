@@ -73,9 +73,9 @@ function($timeout, $controller, $atajoUiBind, $atajoUiConfig) {
 
       var nativeScrolling = attr.overflowScroll !== "false" && (attr.overflowScroll === "true" || !$atajoUiConfig.scrolling.jsScrolling());
 
-      // collectaui-repeat requires JS scrolling
+      // collection-repeat requires JS scrolling
       if (nativeScrolling) {
-        nativeScrolling = !element[0].querySelector('[collectaui-repeat]');
+        nativeScrolling = !element[0].querySelector('[collection-repeat]');
       }
       return { pre: prelink };
       function prelink($scope, $element, $attr) {
